@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Igor x Carlos no Cartola</title>
-<meta name="description" content="Igor Pro F.C contra RB Papai no Cartola 2026: pontos, capitão, reserva de luxo, setores, gols, custo, Corinthians, Palmeiras e projeção final.">
+<meta name="description" content="Igor Pro F.C contra RB Papai no Cartola __TEMPORADA__: pontos, capitão, reserva de luxo, setores, gols, custo, Corinthians, Palmeiras e simulações.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="__SITE__">
 <meta property="og:site_name" content="Igor x Carlos no Cartola">
-<meta property="og:title" content="Igor x Carlos no Cartola 2026">
+<meta property="og:title" content="Igor x Carlos no Cartola __TEMPORADA__">
 <meta property="og:description" content="__OG_DESC__">
 <meta property="og:image" content="__OG_IMG__">
 <meta property="og:image:width" content="1200">
@@ -109,6 +109,13 @@ a { color: inherit; }
 .strip { background: var(--night); color: var(--night-mute); }
 .strip .wrap { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 26px; padding-block: 12px; font-size: 15px; }
 .strip b { color: var(--night-ink); font-weight: 600; }
+.aviso { background: var(--igor-soft); color: var(--ink); border-bottom: 1px solid var(--rule); }
+.aviso .wrap { padding-block: 12px; font-size: 16px; font-weight: 600; }
+.aviso a { color: var(--red); font-weight: 700; }
+.temporadas { display: inline-flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.temporadas a { color: inherit; text-decoration: none; padding: 2px 8px; border-radius: 999px; border: 1px solid rgba(255,255,255,.35); }
+.temporadas a.on { background: #fff; color: #1d45c4; border-color: #fff; }
+.temporadas a:hover, .temporadas a:focus-visible { border-color: #fff; outline: none; }
 
 nav.jump { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); border-bottom: 1px solid var(--rule); }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 11; background: var(--surface); }
@@ -373,7 +380,7 @@ footer a { color: var(--night-ink); }
 
 <header class="hero" id="placar">
   <div class="half c">
-    <div class="hero-top"><span>Cartola FC 2026</span><span id="faixaRodadas"></span></div>
+    <div class="hero-top"><span id="temporadaSel">Cartola FC __TEMPORADA__</span><span id="faixaRodadas"></span></div>
     <div class="team">
       <svg viewBox="0 0 100 120" aria-hidden="true"><path d="M4 4H96V62Q96 98 50 116Q4 98 4 62Z" fill="#2f62e8" stroke="#d9302a" stroke-width="5"/><rect x="40" y="6" width="16" height="106" fill="#3fb4ff"/><rect x="6" y="32" width="88" height="15" fill="#3fb4ff"/></svg>
       <div><b>RB Papai</b><span>Carlos</span></div>
@@ -392,6 +399,7 @@ footer a { color: var(--night-ink); }
   </div>
 </header>
 <div class="strip"><div class="wrap" id="boardSub"></div></div>
+<div class="aviso" id="aviso" hidden><div class="wrap" id="avisoTxt"></div></div>
 
 <nav class="jump" aria-label="Abas do site">
   <div class="wrap">
@@ -666,7 +674,18 @@ const META = DATA.meta, N = META.ultima;
 const lamb = x => x.scouts.gols_contra + x.scouts.penaltis_perdidos;
 $('faixaRodadas').textContent = `Rodadas 1 a ${N}`;
 document.querySelectorAll('.nRod').forEach(e => { e.textContent = N; });
-$('footData').textContent = `Os números vêm da API pública do Cartola FC e foram atualizados em ${META.atualizado}, com as rodadas 1 a ${N}. O site confere a API algumas vezes por dia e se atualiza sozinho quando sai uma rodada nova.`;
+$('footData').textContent = META.atual
+  ? `Os números vêm da API pública do Cartola FC e foram atualizados em ${META.atualizado}, com as rodadas 1 a ${N}. O site confere a API algumas vezes por dia e se atualiza sozinho quando sai uma rodada nova.`
+  : `Temporada ${META.temporada}${N >= META.total ? ' encerrada' : ''}, rodadas 1 a ${N}. Os números vêm da API pública do Cartola FC e foram guardados em ${META.atualizado}.`;
+// Temporadas: seletor no topo (quando ha mais de uma) e avisos
+{
+  const anos = META.temporadas || [META.temporada];
+  if (anos.length > 1) $('temporadaSel').innerHTML = `<span class="temporadas">Cartola FC ${anos.map(a => `<a href="${esc(META.links[a])}" class="${a === META.temporada ? 'on' : ''}"${a === META.temporada ? ' aria-current="page"' : ''}>${a}</a>`).join('')}</span>`;
+  const maisRecente = Math.max(...anos);
+  let aviso = META.aviso || '';
+  if (!aviso && META.temporada !== maisRecente) aviso = `Você está vendo a temporada ${META.temporada}, que já terminou. <a href="${esc(META.links[maisRecente])}">Ver a temporada ${maisRecente} →</a>`;
+  if (aviso) { $('avisoTxt').innerHTML = aviso; $('aviso').hidden = false; }
+}
 {
   const sem = ['carlos', 'igor'].flatMap(k => DATA.times[k].luxo.usos.filter(u => u.substituiu == null).map(u => [k, u.rodada]));
   const lista = (k, nome) => { const rs = sem.filter(s => s[0] === k).map(s => 'a ' + s[1] + 'ª'); return rs.length ? `${rs.join(' e ')} do ${nome}` : ''; };
@@ -699,7 +718,7 @@ const mini = cl => CAMISAS[cl] ? `<img class="mini" src="${esc(CAMISAS[cl])}" al
   linhas.push(`${nome(lid)} ${META.restantes ? 'lidera' : 'terminou na frente'} por ${fmt(Math.abs(I.total - C.total))} pontos depois de ${N} rodadas. No confronto rodada a rodada, ${vrod}.`);
   if (N > 19) {
     const t1 = C.turno1 > I.turno1 ? 'c' : 'i', t2 = C.turno2 > I.turno2 ? 'c' : 'i';
-    linhas.push(`O 1º turno ficou com ${nome(t1)}, por ${fmt(Math.abs(C.turno1 - I.turno1))} pontos. No 2º turno, ${nome(t2)} ${N < 38 ? 'está na frente' : 'venceu'} por ${fmt(Math.abs(C.turno2 - I.turno2))}${t1 !== t2 ? ', e foi aí que a briga virou' : ''}.`);
+    linhas.push(`O 1º turno ficou com ${nome(t1)}, por ${fmt(Math.abs(C.turno1 - I.turno1))} pontos. No 2º turno, ${nome(t2)} ${N < META.total ? 'está na frente' : 'venceu'} por ${fmt(Math.abs(C.turno2 - I.turno2))}${t1 !== t2 ? ', e foi aí que a briga virou' : ''}.`);
   }
   const Q = DATA.quesitos, ganhosC = Q.filter(q => q.win === 'c'), ganhosI = Q.filter(q => q.win === 'i');
   const [menor, mk] = ganhosC.length <= ganhosI.length ? [ganhosC, 'c'] : [ganhosI, 'i'];
@@ -1002,7 +1021,7 @@ const lb = t => t.luxo.melhor;
 $('luxoStats').innerHTML =
   statVs('Ganho total', C.luxo.ganho_total, I.luxo.ganho_total, 'Pontos a mais em relação ao titular que saiu') +
   statVs('Vezes que entrou', C.luxo.acionado, I.luxo.acionado, `Superou um titular que jogou: ${realLuxo(C).length} e ${realLuxo(I).length}. Titular não jogou: ${ausLuxo(C).length} e ${ausLuxo(I).length}.`, 0) +
-  statDuo('Melhor troca', { nome: lb(C).nome, clube: lb(C).clube, v: lb(C).ganho }, { nome: lb(I).nome, clube: lb(I).clube, v: lb(I).ganho }, `${esc(lb(C).nome)} no lugar de ${esc(lb(C).substituiu)} na ${lb(C).rodada}ª. ${esc(lb(I).nome)} no lugar de ${esc(lb(I).substituiu)} na ${lb(I).rodada}ª.`, 1, false, '+');
+  (lb(C) && lb(I) ? statDuo('Melhor troca', { nome: lb(C).nome, clube: lb(C).clube, v: lb(C).ganho }, { nome: lb(I).nome, clube: lb(I).clube, v: lb(I).ganho }, `${esc(lb(C).nome)} no lugar de ${esc(lb(C).substituiu)} na ${lb(C).rodada}ª. ${esc(lb(I).nome)} no lugar de ${esc(lb(I).substituiu)} na ${lb(I).rodada}ª.`, 1, false, '+') : '');
 const luxoTable = t => '<thead><tr><th class="n">Rod.</th><th>Entrou</th><th>Saiu</th><th class="n">Ganho</th></tr></thead><tbody>' +
   t.luxo.usos.map(u => `<tr><td class="n muted">${u.rodada}ª</td><td><span class="pos">${esc(u.pos)}</span>${esc(u.nome)} <span class="muted">${fmt(u.pts)}</span></td><td>${u.substituiu == null ? '<span class="muted">sem dados</span>' : `${esc(u.substituiu)} <span class="muted">${fmt(u.substituido_pts)}${u.substituido_jogou ? '' : ', titular não jogou'}</span>`}</td><td class="n ${u.ganho != null ? 'gain' : 'muted'}">${u.ganho == null ? 'sem dados' : '+' + fmt(u.ganho)}</td></tr>`).join('') + '</tbody>';
 $('luxoC').innerHTML = luxoTable(C); $('luxoI').innerHTML = luxoTable(I);
@@ -1024,8 +1043,8 @@ $('bestSector').innerHTML = '<thead><tr><th>Setor</th><th>Carlos</th><th>Igor</t
   $('golStats').innerHTML =
     statVs('Gols', a.gols, b.gols, 'Gols marcados pelos jogadores escalados', 0) +
     statVs('Assistências', a.assist, b.assist, 'Passes para gol dos jogadores escalados', 0) +
-    statDuo('Artilheiro', { nome: a.artilheiros[0].nome, clube: a.artilheiros[0].clube, v: a.artilheiros[0].n }, { nome: b.artilheiros[0].nome, clube: b.artilheiros[0].clube, v: b.artilheiros[0].n }, 'Gols marcados nas rodadas em que estava escalado', 0) +
-    statDuo('Garçom', { nome: a.garcons[0].nome, clube: a.garcons[0].clube, v: a.garcons[0].n }, { nome: b.garcons[0].nome, clube: b.garcons[0].clube, v: b.garcons[0].n }, 'Assistências nas rodadas em que estava escalado', 0) +
+    (a.artilheiros[0] && b.artilheiros[0] ? statDuo('Artilheiro', { nome: a.artilheiros[0].nome, clube: a.artilheiros[0].clube, v: a.artilheiros[0].n }, { nome: b.artilheiros[0].nome, clube: b.artilheiros[0].clube, v: b.artilheiros[0].n }, 'Gols marcados nas rodadas em que estava escalado', 0) : '') +
+    (a.garcons[0] && b.garcons[0] ? statDuo('Garçom', { nome: a.garcons[0].nome, clube: a.garcons[0].clube, v: a.garcons[0].n }, { nome: b.garcons[0].nome, clube: b.garcons[0].clube, v: b.garcons[0].n }, 'Assistências nas rodadas em que estava escalado', 0) : '') +
     statVs('Jogos sem sofrer gol', a.sg, b.sg, 'Soma de goleiros, defensores e técnicos com saldo de gol', 0) +
     statVs('Defesas do goleiro', a.defesas, b.defesas, `Desarmes de todo o time: ${int(a.desarmes)} e ${int(b.desarmes)}`, 0) +
     statVs('Cartões', a.amarelos + a.vermelhos, b.amarelos + b.vermelhos, `Amarelos ${a.amarelos} e ${b.amarelos}. Vermelhos ${a.vermelhos} e ${b.vermelhos}. Menos é melhor.`, 0, true) +
@@ -1042,7 +1061,7 @@ $('bestSector').innerHTML = '<thead><tr><th>Setor</th><th>Carlos</th><th>Igor</t
     statVs('Pontos por cartoleta', ptsPorC(C, XC), ptsPorC(I, XI), `Total de pontos dividido pelo total gasto nas ${N} escalações`, 3) +
     statVs('Custo médio do time', a.medio, b.medio, 'Cartoletas por rodada, somando os 12 escalados. Menor é melhor.', 1, true) +
     statVs('Total gasto', a.total, b.total, `Em cartoletas, nas ${N} rodadas`, 0, true) +
-    statDuo('Melhor compra', { nome: a.melhores[0].nome, clube: a.melhores[0].clube, v: a.melhores[0].pts_por_c }, { nome: b.melhores[0].nome, clube: b.melhores[0].clube, v: b.melhores[0].pts_por_c }, 'Pontos por cartoleta, com 3 jogos ou mais', 2) +
+    (a.melhores.length && b.melhores.length ? statDuo('Melhor compra', { nome: a.melhores[0].nome, clube: a.melhores[0].clube, v: a.melhores[0].pts_por_c }, { nome: b.melhores[0].nome, clube: b.melhores[0].clube, v: b.melhores[0].pts_por_c }, 'Pontos por cartoleta, com 3 jogos ou mais', 2) : '') +
     (a.decepcoes.length && b.decepcoes.length ? statDuo('Maior decepção', { nome: a.decepcoes[0].nome, clube: a.decepcoes[0].clube, v: a.decepcoes[0].pts_por_c }, { nome: b.decepcoes[0].nome, clube: b.decepcoes[0].clube, v: b.decepcoes[0].pts_por_c }, `Pontos por cartoleta. Preço médio de ${esc(fmt(a.decepcoes[0].preco_medio, 2))} e ${esc(fmt(b.decepcoes[0].preco_medio, 2))}. Menor é pior.`, 2, true) : '');
   const buy = list => '<thead><tr><th>Jogador</th><th class="n">Jogos</th><th class="n">Preço médio</th><th class="n">Pontos</th><th class="n">Pts/C$</th></tr></thead><tbody>' +
     list.map(j => `<tr><td><span class="pos">${esc(j.pos)}</span>${mini(j.clube)}${esc(j.nome)} <span class="muted">${esc(j.clube)}</span></td><td class="n">${j.jogos}</td><td class="n">${fmt(j.preco_medio, 2)}</td><td class="n">${fmt(j.pts)}</td><td class="n">${fmt(j.pts_por_c, 2)}</td></tr>`).join('') + '</tbody>';
@@ -1085,7 +1104,7 @@ $('corStats').innerHTML =
   statVs('Média por corintiano', KC.media, KI.media, 'Pontos por escalação, sem o bônus do capitão', 2) +
   statVs('Capitão corintiano', KC.capitao_vezes, KI.capitao_vezes, `Pontos desses capitães: ${fmt(KC.capitao_pts)} e ${fmt(KI.capitao_pts)}`, 0) +
   statVs('Reserva de luxo corintiano', KC.luxo_ganho, KI.luxo_ganho, `Ganho em ${KC.luxo_usos} e ${KI.luxo_usos} trocas`) +
-  statDuo('Melhor atuação', { nome: KC.melhor_jogo.nome, clube: 'COR', v: KC.melhor_jogo.pts }, { nome: KI.melhor_jogo.nome, clube: 'COR', v: KI.melhor_jogo.pts }, `Na ${KC.melhor_jogo.rodada}ª e na ${KI.melhor_jogo.rodada}ª rodada`);
+  (KC.melhor_jogo && KI.melhor_jogo ? statDuo('Melhor atuação', { nome: KC.melhor_jogo.nome, clube: 'COR', v: KC.melhor_jogo.pts }, { nome: KI.melhor_jogo.nome, clube: 'COR', v: KI.melhor_jogo.pts }, `Na ${KC.melhor_jogo.rodada}ª e na ${KI.melhor_jogo.rodada}ª rodada`) : '');
 const clubTable = list => '<thead><tr><th>Jogador</th><th class="n">Jogos</th><th class="n">Pontos</th><th class="n">Média</th></tr></thead><tbody>' +
   list.slice(0, 8).map(j => `<tr><td><span class="pos">${esc(j.pos)}</span>${esc(j.nome)}</td><td class="n">${j.jogos}</td><td class="n">${fmt(j.pts)}</td><td class="n">${fmt(j.media, 2)}</td></tr>`).join('') + '</tbody>';
 $('corC').innerHTML = clubTable(KC.jogadores); $('corI').innerHTML = clubTable(KI.jogadores);
@@ -1120,7 +1139,7 @@ if (!META.restantes) {
   const vezes = sobre.filter(v => v > precisa).length;
   const melhores = sobre.slice().sort((a, b) => b - a).slice(0, R).reduce((s, v) => s + v, 0);
   const chance = igorLidera ? PJ.chance_carlos : PJ.chance_igor;
-  $('projEyebrow').textContent = R === 1 ? `Rodada ${N + 1}` : `Rodadas ${N + 1} a 38`;
+  $('projEyebrow').textContent = R === 1 ? `Rodada ${N + 1}` : `Rodadas ${N + 1} a ${META.total}`;
   $('projecao').querySelector('h2').textContent = `Ainda dá para o ${atras}?`;
   $('projText').textContent = `${R === 1 ? 'Falta 1 rodada' : `Faltam ${R} rodadas`} e o ${lider} está ${fmt(gap)} pontos na frente. Para virar, o ${atras} precisa tirar em média ${fmt(precisa)} pontos por rodada sobre o ${lider}, e isso aconteceu ${vezes === 1 ? '1 vez' : vezes + ' vezes'} nas ${N} rodadas jogadas. A simulação sorteia ${R === 1 ? '1 rodada já jogada' : R + ' rodadas já jogadas'} e repete o resultado, ${int(PJ.simulacoes)} vezes.`;
   const fim = PJ.mediana >= 0 ? ['Igor', 'i'] : ['Carlos', 'c'];
@@ -1182,7 +1201,7 @@ $('clubTable').innerHTML = pairTable(C.clubes, I.clubes, 'clube', 'Clube (escala
   const de = $('labDe'), ate = $('labAte'), desc = $('labDesc');
   de.max = ate.max = N; de.value = 1; ate.value = N;
   $('labChecks').innerHTML = PARTES.map(([k, n]) => `<label class="chk"><input type="checkbox" id="lab_${k}" value="${k}" checked>${n}</label>`).join('');
-  const presets = [['Tudo', 1, N], ['1º turno', 1, Math.min(19, N)], ['2º turno', Math.min(20, N), N], ['Últimas 5', Math.max(1, N - 4), N]];
+  const presets = [['Tudo', 1, N]].concat(N >= 20 ? [['1º turno', 1, 19], ['2º turno', 20, N]] : [], N > 5 ? [['Últimas 5', N - 4, N]] : []);
   $('labPresets').innerHTML = presets.map(([n, a, b], k) => `<button type="button" class="btn-sm" data-p="${k}">${n}</button>`).join('');
   $('labPresets').addEventListener('click', e => { const b = e.target.closest('[data-p]'); if (!b) return; const p = presets[+b.dataset.p]; de.value = p[1]; ate.value = p[2]; calcular(); });
   function calcular() {

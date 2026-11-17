@@ -10,7 +10,7 @@ RODADAS = list(range(1, ULTIMA + 1))
 TIMES = [('carlos', '15426262'), ('igor', '4503052')]
 POS = {1: 'GOL', 2: 'LAT', 3: 'ZAG', 4: 'MEI', 5: 'ATA', 6: 'TEC'}
 POS_KEY = {1: 'gol', 2: 'lat', 3: 'zag', 4: 'mei', 5: 'ata', 6: 'tec'}
-RESTANTES = 38 - ULTIMA
+RESTANTES = int(os.environ.get("TOTAL_RODADAS", "38")) - ULTIMA
 
 
 def load(name):

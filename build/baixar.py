@@ -38,7 +38,7 @@ def salvar(nome, dados):
 status = get('/mercado/status')
 # A rodada atual e a que esta aberta ou em andamento; a ultima pontuada e a anterior,
 # a nao ser que o campeonato ja tenha terminado.
-ultima = 38 if status.get('game_over') else status['rodada_atual'] - 1
+ultima = int(os.environ.get("TOTAL_RODADAS", "38")) if status.get("game_over") else status['rodada_atual'] - 1
 salvar('status.json', status)
 salvar('clubes.json', get('/clubes'))
 salvar('esquemas.json', get('/esquemas'))
