@@ -1,0 +1,894 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Igor x Carlos no Cartola</title>
+<meta name="description" content="Igor Pro F.C contra RB Papai no Cartola 2026: pontos, capitão, reserva de luxo, setores, gols, custo, Corinthians, Palmeiras e projeção final.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="__SITE__">
+<meta property="og:site_name" content="Igor x Carlos no Cartola">
+<meta property="og:title" content="Igor x Carlos no Cartola 2026">
+<meta property="og:description" content="__OG_DESC__">
+<meta property="og:image" content="__OG_IMG__">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Escudos do RB Papai e do Igor Pro F.C com o placar de quesitos">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0d1424">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120'%3E%3Cpath d='M4 4H96V62Q96 98 50 116Q4 98 4 62Z' fill='%23111' stroke='%23d9302a' stroke-width='6'/%3E%3Crect x='42' y='6' width='16' height='106' fill='%23f2c230'/%3E%3Crect x='6' y='32' width='88' height='15' fill='%23f2c230'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: o topo e os dois escudos lado a lado (azul do RB Papai, preto e ouro do Igor Pro F.C) costurados pelo vermelho
+   que os dois escudos tem na borda; depois, secoes empilhadas onde Carlos fica sempre a esquerda e Igor a direita. */
+:root {
+  --bg: #eef1f6;
+  --surface: #ffffff;
+  --surface-2: #f6f8fb;
+  --ink: #0e1626;
+  --mute: #5a6478;
+  --rule: #d9dee8;
+  --red: #d9302a;
+  --carlos: #1f4fd6;
+  --carlos-fill: #2f62e8;
+  --carlos-sky: #3fb4ff;
+  --carlos-soft: #e1e9ff;
+  --igor: #8a6400;
+  --igor-fill: #e8b10f;
+  --igor-black: #111111;
+  --igor-soft: #fbf0c8;
+  --good: #1d7a45;
+  --night: #0d1424;
+  --night-2: #172036;
+  --night-ink: #f2f5fa;
+  --night-mute: #9aa6bd;
+  --display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --body: "Barlow", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0a0f1a; --surface: #121a2a; --surface-2: #0f1624; --ink: #e9eef7; --mute: #97a3ba; --rule: #232d42;
+    --carlos: #86a8ff; --carlos-soft: #1a2850; --igor: #f2c230; --igor-soft: #3a2f0c; --good: #4cc27c;
+    --night: #060a12; --night-2: #111a2c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0a0f1a; --surface: #121a2a; --surface-2: #0f1624; --ink: #e9eef7; --mute: #97a3ba; --rule: #232d42;
+  --carlos: #86a8ff; --carlos-soft: #1a2850; --igor: #f2c230; --igor-soft: #3a2f0c; --good: #4cc27c;
+  --night: #060a12; --night-2: #111a2c;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.55 var(--body); padding-bottom: env(safe-area-inset-bottom, 0px); }
+.wrap { max-width: 1080px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3, .num, .eyebrow { font-family: var(--display); }
+h2 { font-size: clamp(32px, 5.4vw, 52px); line-height: .95; font-weight: 900; text-transform: uppercase; letter-spacing: .005em; margin: 0; text-wrap: balance; }
+h3 { font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; margin: 0 0 6px; display: flex; align-items: center; gap: 8px; }
+p { margin: 0; max-width: 65ch; }
+.eyebrow { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--red); margin-bottom: 8px; }
+.eyebrow::before { content: ""; width: 26px; height: 4px; background: var(--red); border-radius: 2px; }
+.c { color: var(--carlos); } .i { color: var(--igor); }
+.num { font-variant-numeric: tabular-nums; }
+a { color: inherit; }
+
+/* Mini escudos usados nos titulos */
+.sh { display: inline-block; width: 16px; height: 19px; flex: none; background-size: contain; background-repeat: no-repeat; }
+.sh.c { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120'%3E%3Cpath d='M4 4H96V62Q96 98 50 116Q4 98 4 62Z' fill='%232f62e8' stroke='%23d9302a' stroke-width='7'/%3E%3Crect x='40' y='6' width='17' height='106' fill='%233fb4ff'/%3E%3Crect x='6' y='32' width='88' height='16' fill='%233fb4ff'/%3E%3C/svg%3E"); }
+.sh.i { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120'%3E%3Cpath d='M4 4H96V62Q96 98 50 116Q4 98 4 62Z' fill='%23111' stroke='%23d9302a' stroke-width='7'/%3E%3Crect x='42' y='6' width='17' height='106' fill='%23f2c230'/%3E%3Crect x='6' y='32' width='88' height='16' fill='%23f2c230'/%3E%3C/svg%3E"); }
+
+/* ---------- Placar ---------- */
+.hero { position: relative; display: grid; grid-template-columns: 1fr 1fr; color: #fff; overflow: hidden; }
+.half { position: relative; padding-block: 34px 120px; min-width: 0; overflow: hidden; }
+.hero .half.c, .hero .half.i { color: #fff; }
+.half.c { background: linear-gradient(160deg, #2f62e8 0%, #1d45c4 100%); }
+.half.i { background: linear-gradient(200deg, #1b1b1b 0%, #070707 100%); }
+.half::before, .half::after { content: ""; position: absolute; opacity: .22; }
+.half.c::before { left: 38%; top: -10%; bottom: -10%; width: 15%; background: #3fb4ff; }
+.half.c::after { left: -10%; right: -10%; top: 30%; height: 13%; background: #3fb4ff; }
+.half.i::before { left: 47%; top: -10%; bottom: -10%; width: 15%; background: #f2c230; opacity: .2; }
+.half.i::after { left: -10%; right: -10%; top: 30%; height: 13%; background: #f2c230; opacity: .2; }
+.seam { position: absolute; left: 50%; top: 0; bottom: 0; width: 8px; margin-left: -4px; background: var(--red); z-index: 1; }
+.team { position: relative; z-index: 2; display: flex; align-items: center; gap: clamp(10px, 2vw, 18px); padding-inline: max(16px, env(safe-area-inset-left, 0px)) 24px; }
+.half.i .team { flex-direction: row-reverse; text-align: right; padding-inline: 24px max(16px, env(safe-area-inset-right, 0px)); }
+.team svg { width: clamp(52px, 9vw, 92px); flex: none; filter: drop-shadow(0 4px 10px rgba(0,0,0,.35)); }
+.team b { display: block; font-family: var(--display); font-size: clamp(24px, 4.6vw, 46px); font-weight: 900; text-transform: uppercase; line-height: .95; }
+.team span { opacity: .8; font-size: 15px; }
+.hero-top { position: absolute; z-index: 2; top: 12px; left: 0; right: 0; display: flex; justify-content: space-between; font-family: var(--display); font-size: 13px; letter-spacing: .16em; text-transform: uppercase; opacity: .85; padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px)); }
+.hero-top + .team { margin-top: 18px; }
+.plate { position: absolute; z-index: 3; left: 50%; bottom: 22px; transform: translateX(-50%); background: var(--night); border: 3px solid var(--red); border-radius: 12px; padding: 8px 18px 10px; display: grid; justify-items: center; gap: 2px; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+.digits { display: flex; align-items: baseline; gap: 14px; font-family: var(--display); font-weight: 900; line-height: .9; font-variant-numeric: tabular-nums; }
+.digits .d { font-size: clamp(48px, 9vw, 88px); }
+.digits .d.c { color: #8fb3ff; } .digits .d.i { color: #f2c230; }
+.digits .x { font-size: 28px; color: var(--night-mute); }
+.plate small { font-family: var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--night-mute); font-size: 12px; }
+.strip { background: var(--night); color: var(--night-mute); }
+.strip .wrap { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 26px; padding-block: 12px; font-size: 15px; }
+.strip b { color: var(--night-ink); font-weight: 600; }
+
+nav.jump { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); border-bottom: 1px solid var(--rule); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 11; background: var(--surface); }
+nav.jump .wrap { display: flex; gap: 6px; overflow-x: auto; padding-block: 10px; scrollbar-width: none; }
+nav.jump a { flex: none; font-family: var(--display); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: 14px; text-decoration: none; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--rule); }
+nav.jump a:hover, nav.jump a:focus-visible { border-color: var(--red); color: var(--red); outline: none; }
+
+section { padding-block: 56px 8px; scroll-margin-top: 56px; }
+section > .wrap { display: grid; gap: 20px; }
+.lede { color: var(--mute); font-size: 17px; }
+.panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 18px; min-width: 0; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+
+/* Quesitos */
+.tally { display: flex; justify-content: space-between; align-items: center; padding: 2px 4px 12px; border-bottom: 3px solid var(--red); font-family: var(--display); font-weight: 900; font-size: 24px; text-transform: uppercase; }
+.tally span { display: flex; align-items: center; gap: 8px; }
+.q { display: grid; grid-template-columns: 1fr minmax(130px, 1.3fr) 1fr; align-items: center; gap: 12px; padding: 9px 4px; border-bottom: 1px solid var(--rule); }
+.q:last-child { border-bottom: 0; }
+.q .lbl { text-align: center; font-size: 14px; color: var(--mute); line-height: 1.25; }
+.q .v { font-family: var(--display); font-size: 24px; font-weight: 800; font-variant-numeric: tabular-nums; display: flex; align-items: center; gap: 8px; }
+.q .v.r { justify-content: flex-end; }
+.q .v:not(.win) { color: var(--mute); font-weight: 600; }
+.q .v.win::after { content: "VENCEU"; font-size: 11px; letter-spacing: .12em; font-weight: 800; padding: 2px 6px; border-radius: 4px; }
+.q .v.r.win::after { order: -1; }
+.q .v.c.win::after { background: var(--carlos-fill); color: #fff; }
+.q .v.i.win::after { background: var(--igor-black); color: #f2c230; }
+
+/* Cartoes */
+.stat .k { font-size: 13px; color: var(--mute); text-transform: uppercase; letter-spacing: .08em; font-weight: 700; }
+.vs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+.vs > div { min-width: 0; }
+.stat .big { font-family: var(--display); font-size: 40px; font-weight: 800; line-height: 1.05; font-variant-numeric: tabular-nums; }
+.stat .big.lose { opacity: .45; }
+.stat .s { color: var(--mute); font-size: 14px; }
+.stat .foot { margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--rule); }
+
+/* Graficos */
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart text { fill: var(--mute); font: 500 12px var(--body); }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 14px; color: var(--mute); margin-bottom: 6px; }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.tip { position: fixed; pointer-events: none; background: var(--night); color: var(--night-ink); border-left: 3px solid var(--red); font-size: 13px; padding: 6px 9px; border-radius: 6px; z-index: 30; max-width: 260px; line-height: 1.35; }
+
+/* Setores */
+.fly { display: grid; gap: 14px; }
+.fly .row { display: grid; grid-template-columns: 1fr 92px 1fr; align-items: center; gap: 10px; }
+.fly .lab { text-align: center; font-family: var(--display); font-weight: 800; text-transform: uppercase; letter-spacing: .06em; font-size: 17px; line-height: 1.1; }
+.fly .lab small { display: block; font-family: var(--body); font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--mute); font-size: 12px; }
+.fly .bar { height: 32px; display: flex; align-items: center; }
+.fly .bar.l { justify-content: flex-end; }
+.fly .fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding: 0 9px; font-family: var(--display); font-weight: 800; font-size: 17px; min-width: 56px; font-variant-numeric: tabular-nums; }
+.fly .l .fill { background: linear-gradient(90deg, #3fb4ff, #2f62e8); color: #fff; justify-content: flex-start; }
+.fly .r .fill { background: linear-gradient(90deg, #111, #2a2a2a); color: #f2c230; justify-content: flex-end; border: 1px solid #f2c230; }
+.fly .fill.lose { opacity: .4; }
+
+/* Tabelas */
+.tbl { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-family: var(--display); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: 13px; color: var(--mute); }
+td.n, th.n { text-align: right; white-space: nowrap; }
+.pos { display: inline-block; font-family: var(--display); font-weight: 700; font-size: 12px; letter-spacing: .06em; padding: 1px 6px; border-radius: 4px; background: var(--surface-2); border: 1px solid var(--rule); margin-right: 6px; }
+.pill { display: inline-flex; align-items: center; gap: 5px; font-family: var(--display); font-weight: 800; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; }
+.pill.c { background: var(--carlos-fill); color: #fff; }
+.pill.i { background: var(--igor-black); color: #f2c230; }
+.muted { color: var(--mute); }
+.gain { color: var(--good); font-weight: 600; }
+
+/* Faixas de clube */
+.band { margin-top: 56px; padding-block: 0; color: var(--night-ink); }
+.band .wrap { padding-block: 48px; }
+.band .lede, .band .stat .k, .band .stat .s, .band .muted, .band th, .band .legend { color: var(--bandmute); }
+.band .chart text { fill: var(--bandmute); }
+.band .panel { background: var(--bandpanel); border-color: var(--bandrule); color: var(--night-ink); }
+.band th, .band td, .band .stat .foot { border-color: var(--bandrule); }
+.band .pos { background: transparent; border-color: var(--bandrule); }
+.band .c { color: #9cbcff; } .band .i { color: #f2c230; }
+.band .eyebrow { color: var(--bandaccent); } .band .eyebrow::before { background: var(--bandaccent); }
+.band .verdict { font-family: var(--display); font-size: clamp(22px, 3.4vw, 32px); font-weight: 700; line-height: 1.15; max-width: 42ch; text-wrap: balance; }
+.timao { background: #0b0b0b; --bandmute: #a3a3a3; --bandpanel: #171717; --bandrule: #2c2c2c; --bandaccent: #ffffff; }
+.timao h2 { letter-spacing: .02em; }
+.verdao { background: linear-gradient(170deg, #0e5a33 0%, #073d22 100%); --bandmute: #a9cdb8; --bandpanel: rgba(0,0,0,.22); --bandrule: rgba(255,255,255,.14); --bandaccent: #ffffff; }
+
+/* Explorador de rodada */
+.rx-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.rx-nav { width: 42px; height: 42px; border-radius: 10px; border: 1px solid var(--rule); background: var(--surface); color: var(--ink); font: 700 26px/1 var(--display); cursor: pointer; }
+.rx-nav:hover:not(:disabled), .rx-nav:focus-visible { border-color: var(--red); color: var(--red); outline: none; }
+.rx-nav:disabled { opacity: .35; cursor: default; }
+.rx-sel { display: flex; align-items: center; gap: 8px; font-family: var(--display); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: 14px; color: var(--mute); }
+.rx-sel select { font: 800 22px var(--display); color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 4px 10px; cursor: pointer; }
+.rx-sel select:focus-visible { outline: 2px solid var(--red); outline-offset: 1px; }
+.rx-score { margin-left: auto; display: flex; align-items: center; gap: 10px; font-family: var(--display); font-size: 28px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.rx-info { font-size: 14px; max-width: none; }
+.rx-team h3 { justify-content: space-between; }
+.rx-team h3 .tot { font-size: 26px; font-variant-numeric: tabular-nums; }
+.rx-team h3 .esq { color: var(--mute); font-size: 14px; font-weight: 600; letter-spacing: .06em; }
+.pitch { position: relative; margin-top: 8px; border-radius: 10px; overflow: hidden; padding: 14px 4px; display: grid; gap: 14px;
+  background: repeating-linear-gradient(180deg, #2e8a4b 0 44px, #297d43 44px 88px); border: 2px solid rgba(255,255,255,.55); }
+.pitch::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; border-top: 2px solid rgba(255,255,255,.45); }
+.pitch::after { content: ""; position: absolute; left: 50%; top: 50%; width: 76px; height: 76px; margin: -38px 0 0 -38px; border: 2px solid rgba(255,255,255,.45); border-radius: 50%; }
+.prow { position: relative; z-index: 1; display: flex; justify-content: space-evenly; gap: 2px; }
+.pl { flex: 0 1 20%; min-width: 0; display: grid; justify-items: center; gap: 3px; text-align: center; }
+.shirt { position: relative; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font: 800 12px var(--display); letter-spacing: .04em; border: 3px solid; }
+.rx-team.c .shirt { background: #2f62e8; border-color: #3fb4ff; color: #fff; }
+.rx-team.i .shirt { background: #111; border-color: #f2c230; color: #f2c230; }
+.pl.comum .shirt { outline: 2px dashed #fff; outline-offset: 3px; }
+.pl.fora .shirt { opacity: .5; }
+.rx-badge { position: absolute; top: -6px; right: -8px; width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font: 800 11px var(--body); color: #fff; border: 1.5px solid #fff; }
+.legend .rx-badge { position: static; display: inline-grid; margin-right: 6px; vertical-align: -3px; border-color: var(--surface); }
+.rx-badge.cap { background: var(--red); }
+.rx-badge.lux { background: #7a3cff; }
+.pl .nm { max-width: 100%; font-size: 12px; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 1px 2px rgba(0,0,0,.7); }
+.pt { font: 800 13px var(--display); font-variant-numeric: tabular-nums; padding: 0 6px; border-radius: 4px; background: #fff; color: #0e1626; }
+.pt.hi { background: #f2c230; color: #111; }
+.pt.neg { background: #ffd6d3; color: #a3201b; }
+.rx-ring { display: inline-block; width: 12px; height: 12px; border-radius: 50%; outline: 2px dashed var(--mute); outline-offset: 1px; margin-right: 6px; vertical-align: -1px; }
+.rx-dot { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.rx-dot.hi { background: #f2c230; } .rx-dot.neg { background: #ffd6d3; border: 1px solid #a3201b; }
+.rx-below { display: grid; gap: 6px; margin-top: 12px; font-size: 14px; }
+.rx-below .lbl { font-family: var(--display); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: 12px; color: var(--mute); }
+.rx-bench { display: flex; flex-wrap: wrap; gap: 6px; }
+.rx-chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 8px; border: 1px solid var(--rule); border-radius: 999px; background: var(--surface-2); white-space: nowrap; }
+.rx-chip.fora { opacity: .55; }
+.rx-chip .pt { font-size: 12px; }
+
+.hist-note { display: flex; justify-content: space-between; font-size: 13px; color: var(--mute); }
+
+footer { margin-top: 56px; background: var(--night); color: var(--night-mute); font-size: 14px; border-top: 6px solid var(--red); }
+footer .wrap { display: grid; gap: 10px; padding-block: 36px 48px; }
+footer p { max-width: 80ch; }
+footer a { color: var(--night-ink); }
+
+@media (max-width: 640px) {
+  .hero { grid-template-columns: 1fr; }
+  .half { padding-block: 26px 26px; }
+  .half.i { padding-bottom: 96px; }
+  .half.i .team { flex-direction: row; text-align: left; padding-inline: max(16px, env(safe-area-inset-left, 0px)) 16px; }
+  .seam { left: 0; right: 0; top: 50%; bottom: auto; width: auto; height: 6px; margin: -3px 0 0; }
+  .hero-top { position: static; padding-bottom: 12px; }
+  .hero-top + .team { margin-top: 0; }
+  .q { grid-template-columns: 1fr 1fr; }
+  .q .lbl { grid-column: 1 / -1; grid-row: 1; }
+  .q .v.win::after { content: "✓"; }
+  .fly .row { grid-template-columns: 1fr 66px 1fr; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .plate { animation: drop .7s ease-out both; }
+  @keyframes drop { from { transform: translate(-50%, -14px); opacity: .2; } to { transform: translate(-50%, 0); opacity: 1; } }
+}
+</style>
+</head>
+<body>
+
+<header class="hero" id="placar">
+  <div class="half c">
+    <div class="hero-top"><span>Cartola FC 2026</span><span id="faixaRodadas"></span></div>
+    <div class="team">
+      <svg viewBox="0 0 100 120" aria-hidden="true"><path d="M4 4H96V62Q96 98 50 116Q4 98 4 62Z" fill="#2f62e8" stroke="#d9302a" stroke-width="5"/><rect x="40" y="6" width="16" height="106" fill="#3fb4ff"/><rect x="6" y="32" width="88" height="15" fill="#3fb4ff"/></svg>
+      <div><b>RB Papai</b><span>Carlos</span></div>
+    </div>
+  </div>
+  <div class="half i">
+    <div class="team">
+      <svg viewBox="0 0 100 120" aria-hidden="true"><path d="M4 4H96V62Q96 98 50 116Q4 98 4 62Z" fill="#111" stroke="#d9302a" stroke-width="5"/><rect x="42" y="6" width="16" height="106" fill="#f2c230"/><rect x="6" y="32" width="88" height="15" fill="#f2c230"/></svg>
+      <div><b>Igor Pro F.C</b><span>Igor</span></div>
+    </div>
+  </div>
+  <div class="seam" aria-hidden="true"></div>
+  <div class="plate" aria-label="Placar de quesitos">
+    <div class="digits"><span class="d c num" id="qC">0</span><span class="x">×</span><span class="d i num" id="qI">0</span></div>
+    <small>quesitos vencidos</small>
+  </div>
+</header>
+<div class="strip"><div class="wrap" id="boardSub"></div></div>
+
+<nav class="jump" aria-label="Seções">
+  <div class="wrap">
+    <a href="#quesitos">Quesitos</a><a href="#campeonato">Campeonato</a><a href="#rodada">Rodada a rodada</a><a href="#capitao">Capitão</a><a href="#luxo">Reserva de luxo</a><a href="#setores">Setores</a><a href="#gols">Gols</a><a href="#custo">Custo</a><a href="#ideal">Time ideal</a><a href="#corinthians">Corinthians</a><a href="#palmeiras">Palmeiras</a><a href="#projecao">Projeção</a><a href="#jogadores">Jogadores</a>
+  </div>
+</nav>
+
+<section id="quesitos">
+  <div class="wrap">
+    <div><div class="eyebrow">Placar geral</div><h2>Quem venceu cada quesito</h2></div>
+    <p class="lede">O placar do topo soma os quesitos abaixo. Em cada um ganha quem tem o número maior, menos onde está escrito que menor é melhor.</p>
+    <div class="panel">
+      <div class="tally"><span class="c"><i class="sh c"></i>Carlos</span><span class="i">Igor<i class="sh i"></i></span></div>
+      <div id="qList"></div>
+    </div>
+  </div>
+</section>
+
+<section id="campeonato">
+  <div class="wrap">
+    <div><div class="eyebrow">Rodada a rodada</div><h2>Quem estava na frente</h2></div>
+    <p class="lede" id="leadText"></p>
+    <div class="panel">
+      <div class="legend"><span><i style="background:var(--igor-fill)"></i>Igor na frente</span><span><i style="background:var(--carlos-fill)"></i>Carlos na frente</span><span>Diferença no total acumulado, em pontos</span></div>
+      <div class="chart" id="leadChart"></div>
+    </div>
+    <div class="panel">
+      <div class="legend"><span><i style="background:var(--carlos-fill)"></i>Carlos</span><span><i style="background:var(--igor-fill)"></i>Igor</span><span>Pontos em cada rodada</span></div>
+      <div class="chart" id="roundChart"></div>
+    </div>
+    <div class="grid2">
+      <div class="panel"><h3>Mês a mês</h3><div class="tbl"><table id="monthTable"></table></div></div>
+      <div class="panel"><h3>Turnos e marcas</h3><div class="tbl"><table id="turnTable"></table></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="rodada">
+  <div class="wrap">
+    <div><div class="eyebrow">Escalações</div><h2>Rodada a rodada</h2></div>
+    <p class="lede">Escolha uma rodada para ver os dois times em campo, com os pontos de cada jogador.</p>
+    <div class="rx-bar">
+      <button type="button" class="rx-nav" id="rxPrev" aria-label="Rodada anterior">‹</button>
+      <label class="rx-sel" for="rxSel"><span>Rodada</span><select id="rxSel"></select></label>
+      <button type="button" class="rx-nav" id="rxNext" aria-label="Próxima rodada">›</button>
+      <div class="rx-score" id="rxScore" aria-live="polite"></div>
+    </div>
+    <p class="muted rx-info" id="rxInfo"></p>
+    <div class="grid2">
+      <div class="panel rx-team" id="rxC"></div>
+      <div class="panel rx-team" id="rxI"></div>
+    </div>
+    <div class="legend"><span><b class="rx-badge cap">C</b>capitão, vale 1,5x</span><span><b class="rx-badge lux">L</b>reserva de luxo que entrou</span><span><i class="rx-ring"></i>escalado pelos dois</span><span><i class="rx-dot hi"></i>10 pontos ou mais</span><span><i class="rx-dot neg"></i>pontuação negativa</span></div>
+  </div>
+</section>
+
+<section id="capitao">
+  <div class="wrap">
+    <div><div class="eyebrow">Braçadeira</div><h2>Capitão</h2></div>
+    <p class="lede">O capitão vale 1,5 vez. Nas <span class="nRod"></span> rodadas dos dois times, o total bate com a soma dos 12 escalados mais metade dos pontos do capitão.</p>
+    <div class="grid3" id="capStats"></div>
+    <div class="panel">
+      <div class="legend"><span><i style="background:var(--carlos-fill)"></i>Capitão do Carlos</span><span><i style="background:var(--igor-fill)"></i>Capitão do Igor</span><span>Pontos do capitão já com o 1,5x</span></div>
+      <div class="chart" id="capChart"></div>
+    </div>
+    <div class="grid2">
+      <div class="panel"><h3 class="c"><i class="sh c"></i>Capitães do Carlos</h3><div class="tbl"><table id="capTopC"></table></div></div>
+      <div class="panel"><h3 class="i"><i class="sh i"></i>Capitães do Igor</h3><div class="tbl"><table id="capTopI"></table></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="luxo">
+  <div class="wrap">
+    <div><div class="eyebrow">Banco de reservas</div><h2>Reserva de luxo</h2></div>
+    <p class="lede">O reserva de luxo entra no lugar do titular da mesma posição quando faz mais pontos que ele, e o ganho é a diferença entre os dois. Se o titular nem entrou em campo, a troca vira uma substituição comum e aparece como "titular não jogou".</p>
+    <div class="grid3" id="luxoStats"></div>
+    <div class="grid2">
+      <div class="panel"><h3 class="c"><i class="sh c"></i>Usos do Carlos</h3><div class="tbl"><table id="luxoC"></table></div></div>
+      <div class="panel"><h3 class="i"><i class="sh i"></i>Usos do Igor</h3><div class="tbl"><table id="luxoI"></table></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="setores">
+  <div class="wrap">
+    <div><div class="eyebrow">Aproveitamento</div><h2>Média por setor</h2></div>
+    <p class="lede">Quantos pontos, em média, cada atleta escalado fez no seu setor, sem contar o bônus do capitão. Na defesa entram laterais e zagueiros. A barra apagada é a de quem perdeu o setor.</p>
+    <div class="panel">
+      <div class="tally" style="font-size:20px"><span class="c"><i class="sh c"></i>Carlos</span><span class="i">Igor<i class="sh i"></i></span></div>
+      <div class="fly" id="fly"></div>
+    </div>
+    <div class="panel">
+      <h3>Melhor jogador de cada setor</h3>
+      <p class="muted" style="font-size:14px">Quem mais somou pontos no setor ao longo do campeonato.</p>
+      <div class="tbl"><table id="bestSector"></table></div>
+    </div>
+  </div>
+</section>
+
+<section id="gols">
+  <div class="wrap">
+    <div><div class="eyebrow">Scouts</div><h2>Gols, assistências e lambanças</h2></div>
+    <p class="lede" id="golsText"></p>
+    <div class="grid3" id="golStats"></div>
+    <div class="grid2">
+      <div class="panel"><h3 class="c"><i class="sh c"></i>Artilheiros e garçons do Carlos</h3><div class="tbl"><table id="golC"></table></div></div>
+      <div class="panel"><h3 class="i"><i class="sh i"></i>Artilheiros e garçons do Igor</h3><div class="tbl"><table id="golI"></table></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="custo">
+  <div class="wrap">
+    <div><div class="eyebrow">Cartoletas</div><h2>Custo-benefício</h2></div>
+    <p class="lede">Quantos pontos cada um tirou de cada cartoleta gasta na escalação. O preço considerado é o que o jogador custava quando foi escalado.</p>
+    <div class="grid3" id="custoStats"></div>
+    <div class="grid2">
+      <div class="panel"><h3 class="c"><i class="sh c"></i>Melhores compras do Carlos</h3><p class="muted" style="font-size:14px">Mínimo de 3 jogos escalado.</p><div class="tbl"><table id="buyC"></table></div></div>
+      <div class="panel"><h3 class="i"><i class="sh i"></i>Melhores compras do Igor</h3><p class="muted" style="font-size:14px">Mínimo de 3 jogos escalado.</p><div class="tbl"><table id="buyI"></table></div></div>
+      <div class="panel"><h3 class="c"><i class="sh c"></i>Caros que decepcionaram (Carlos)</h3><p class="muted" style="font-size:14px">Preço médio de 12 cartoletas ou mais, 3 jogos ou mais.</p><div class="tbl"><table id="flopC"></table></div></div>
+      <div class="panel"><h3 class="i"><i class="sh i"></i>Caros que decepcionaram (Igor)</h3><p class="muted" style="font-size:14px">Preço médio de 12 cartoletas ou mais, 3 jogos ou mais.</p><div class="tbl"><table id="flopI"></table></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="ideal">
+  <div class="wrap">
+    <div><div class="eyebrow">Perfeição</div><h2>Distância do time ideal</h2></div>
+    <p class="lede">O time ideal de cada rodada junta os melhores pontuadores de cada posição, no melhor esquema e com o melhor capitão, sem limite de cartoletas. O aproveitamento é quanto do time ideal cada um conseguiu fazer.</p>
+    <div class="grid3" id="idealStats"></div>
+    <div class="panel">
+      <div class="legend"><span><i style="background:var(--carlos-fill)"></i>Carlos</span><span><i style="background:var(--igor-fill)"></i>Igor</span><span>Aproveitamento do time ideal em cada rodada, em %</span></div>
+      <div class="chart" id="idealChart"></div>
+    </div>
+  </div>
+</section>
+
+<section class="band timao" id="corinthians">
+  <div class="wrap">
+    <div><div class="eyebrow">Time do coração</div><h2>Corinthians</h2></div>
+    <p class="verdict" id="corVerdict"></p>
+    <div class="grid3" id="corStats"></div>
+    <div class="panel">
+      <div class="legend"><span><i style="background:var(--carlos-fill)"></i>Corintianos do Carlos</span><span><i style="background:var(--igor-fill)"></i>Corintianos do Igor</span><span>Pontos feitos por jogadores do Corinthians em cada rodada</span></div>
+      <div class="chart" id="corChart"></div>
+    </div>
+    <div class="grid2">
+      <div class="panel"><h3 class="c"><i class="sh c"></i>Corintianos do Carlos</h3><div class="tbl"><table id="corC"></table></div></div>
+      <div class="panel"><h3 class="i"><i class="sh i"></i>Corintianos do Igor</h3><div class="tbl"><table id="corI"></table></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="band verdao" id="palmeiras" style="margin-top:0">
+  <div class="wrap">
+    <div><div class="eyebrow">Com o rival</div><h2>A parceria com o Palmeiras</h2></div>
+    <p class="verdict" id="palVerdict"></p>
+    <div class="grid3" id="palStats"></div>
+    <div class="grid2">
+      <div class="panel"><h3 class="c"><i class="sh c"></i>Palmeirenses do Carlos</h3><div class="tbl"><table id="palC"></table></div></div>
+      <div class="panel"><h3 class="i"><i class="sh i"></i>Palmeirenses do Igor</h3><div class="tbl"><table id="palI"></table></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="projecao">
+  <div class="wrap">
+    <div><div class="eyebrow" id="projEyebrow"></div><h2>Ainda dá para o Carlos?</h2></div>
+    <p class="lede" id="projText"></p>
+    <div class="grid3" id="projStats"></div>
+    <div class="panel">
+      <div class="legend"><span><i style="background:var(--igor-fill)"></i>Igor termina na frente</span><span><i style="background:var(--carlos-fill)"></i>Carlos termina na frente</span><span>Vantagem final do Igor nas simulações, em faixas de 20 pontos</span></div>
+      <div class="chart" id="histChart"></div>
+    </div>
+  </div>
+</section>
+
+<section id="jogadores">
+  <div class="wrap">
+    <div><div class="eyebrow">Elenco</div><h2>Jogadores</h2></div>
+    <p class="lede" id="commonText"></p>
+    <div class="grid2">
+      <div class="panel"><h3 class="c"><i class="sh c"></i>Mais escalados do Carlos</h3><div class="tbl"><table id="escC"></table></div></div>
+      <div class="panel"><h3 class="i"><i class="sh i"></i>Mais escalados do Igor</h3><div class="tbl"><table id="escI"></table></div></div>
+      <div class="panel"><h3 class="c"><i class="sh c"></i>Maiores atuações do Carlos</h3><div class="tbl"><table id="actC"></table></div></div>
+      <div class="panel"><h3 class="i"><i class="sh i"></i>Maiores atuações do Igor</h3><div class="tbl"><table id="actI"></table></div></div>
+    </div>
+    <div class="grid2">
+      <div class="panel"><h3>Esquemas táticos</h3><div class="tbl"><table id="esqTable"></table></div></div>
+      <div class="panel"><h3>Clubes mais usados</h3><div class="tbl"><table id="clubTable"></table></div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p id="footData"></p>
+    <p id="footLuxo"></p>
+    <p>O preço de cada jogador é o valor depois da rodada menos a variação daquela rodada, que é o que ele custava na hora da escalação.</p>
+  </div>
+</footer>
+
+<div class="tip" id="tip" hidden></div>
+
+<script>
+const DATA = __DATA__;
+const C = DATA.times.carlos, I = DATA.times.igor;
+const XC = DATA.extras.times.carlos, XI = DATA.extras.times.igor, PJ = DATA.extras.projecao;
+const fmt = (v, d = 1) => Number(v).toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d });
+const int = v => Number(v).toLocaleString('pt-BR');
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+const $ = id => document.getElementById(id);
+const last = t => t.rodadas[t.rodadas.length - 1];
+const maxRound = t => t.rodadas.reduce((a, b) => b.pontos > a.pontos ? b : a);
+const minRound = t => t.rodadas.reduce((a, b) => b.pontos < a.pontos ? b : a);
+const SETORES = [['gol', 'Goleiro', 'GOL'], ['def', 'Defesa', 'LAT + ZAG'], ['mei', 'Meio-campo', 'MEI'], ['ata', 'Ataque', 'ATA'], ['tec', 'Técnico', 'TEC']];
+const ptsPorC = (t, x) => t.total / x.custo.total;
+
+// ---- Rodadas cobertas ----
+const META = DATA.meta, N = META.ultima;
+const lamb = x => x.scouts.gols_contra + x.scouts.penaltis_perdidos;
+$('faixaRodadas').textContent = `Rodadas 1 a ${N}`;
+document.querySelectorAll('.nRod').forEach(e => { e.textContent = N; });
+$('footData').textContent = `Os números vêm da API pública do Cartola FC e foram atualizados em ${META.atualizado}, com as rodadas 1 a ${N}. O site confere a API algumas vezes por dia e se atualiza sozinho quando sai uma rodada nova.`;
+{
+  const sem = ['carlos', 'igor'].flatMap(k => DATA.times[k].luxo.usos.filter(u => u.substituiu == null).map(u => [k, u.rodada]));
+  const lista = (k, nome) => { const rs = sem.filter(s => s[0] === k).map(s => 'a ' + s[1] + 'ª'); return rs.length ? `${rs.join(' e ')} do ${nome}` : ''; };
+  const partes = [lista('carlos', 'Carlos'), lista('igor', 'Igor')].filter(Boolean);
+  $('footLuxo').textContent = partes.length ? `Em ${sem.length === 1 ? 'uma rodada' : sem.length + ' rodadas'} o Cartola não diz quem saiu para o reserva de luxo entrar: ${partes.join(' e ')}. Esses usos estão na lista, mas sem ganho e fora do total.` : '';
+}
+
+// ---- Quesitos (calculados no build, a mesma lista da imagem de previa) ----
+let qC = 0, qI = 0;
+$('qList').innerHTML = DATA.quesitos.map(({ lbl, a, b, d, win }) => {
+  if (win === 'c') qC++; if (win === 'i') qI++;
+  const f = v => d === -1 ? int(v) + 'º' : fmt(v, d);
+  return `<div class="q"><div class="v c ${win === 'c' ? 'win' : ''}">${f(a)}</div><div class="lbl">${esc(lbl)}</div><div class="v i r ${win === 'i' ? 'win' : ''}">${f(b)}</div></div>`;
+}).join('');
+$('qC').textContent = qC; $('qI').textContent = qI;
+$('boardSub').innerHTML = `<span>Pontos: <b class="num">${fmt(C.total)}</b> × <b class="num">${fmt(I.total)}</b></span><span>Rodadas vencidas: <b class="num">${DATA.vitorias.carlos}</b> × <b class="num">${DATA.vitorias.igor}</b></span><span>Vantagem do ${PJ.vantagem >= 0 ? 'Igor' : 'Carlos'}: <b class="num">${fmt(Math.abs(PJ.vantagem))}</b> pontos</span>`;
+
+// ---- Tooltip ----
+const tip = $('tip');
+function showTip(e, html) { tip.innerHTML = html; tip.hidden = false; const x = Math.min(e.clientX + 14, window.innerWidth - tip.offsetWidth - 8); tip.style.left = Math.max(8, x) + 'px'; tip.style.top = (e.clientY + 14) + 'px'; }
+function hideTip() { tip.hidden = true; }
+function bindTip(node, html) { node.addEventListener('mousemove', e => showTip(e, html)); node.addEventListener('mouseleave', hideTip); node.addEventListener('touchstart', e => showTip(e.touches[0], html), { passive: true }); }
+document.addEventListener('scroll', hideTip, { passive: true });
+
+// ---- SVG ----
+const NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs, parent) { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); if (parent) parent.appendChild(n); return n; }
+function frame(box, h) { box.innerHTML = ''; const W = Math.max(300, box.clientWidth || 600); return { svg: el('svg', { viewBox: `0 0 ${W} ${h}`, role: 'img' }, box), W, H: h }; }
+function niceMax(v) { const s = Math.pow(10, Math.floor(Math.log10(v))); for (const m of [1, 1.2, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10]) if (m * s >= v) return m * s; return 10 * s; }
+function yAxis(svg, x0, x1, y, ticks, f) {
+  ticks.forEach(t => {
+    el('line', { x1: x0, x2: x1, y1: y(t), y2: y(t), stroke: 'currentColor', 'stroke-opacity': t === 0 ? .35 : .12, 'stroke-width': t === 0 ? 1.5 : 1 }, svg);
+    const tx = el('text', { x: x0 - 6, y: y(t) + 4, 'text-anchor': 'end' }, svg); tx.textContent = f ? f(t) : t;
+  });
+}
+function xLabels(svg, n, xc, yb, every) { for (let r = 1; r <= n; r++) if (r === 1 || r % every === 0 || r === n) { const t = el('text', { x: xc(r), y: yb, 'text-anchor': 'middle' }, svg); t.textContent = r; } }
+
+function drawLead() {
+  const box = $('leadChart');
+  const diffs = C.rodadas.map((r, k) => +(I.rodadas[k].acum - r.acum).toFixed(2));
+  const { svg, W, H } = frame(box, 260);
+  const m = { l: 46, r: 12, t: 14, b: 26 }, n = diffs.length;
+  const ext = niceMax(Math.max(...diffs.map(Math.abs)));
+  const x = r => m.l + (r - 1) / (n - 1) * (W - m.l - m.r);
+  const y = v => m.t + (ext - v) / (2 * ext) * (H - m.t - m.b);
+  yAxis(svg, m.l, W - m.r, y, [-ext, -ext / 2, 0, ext / 2, ext], v => (v > 0 ? '+' : '') + fmt(v, 0));
+  xLabels(svg, n, x, H - 6, 5);
+  const defs = el('defs', {}, svg);
+  el('rect', { x: 0, y: 0, width: W, height: y(0) }, el('clipPath', { id: 'above' }, defs));
+  el('rect', { x: 0, y: y(0), width: W, height: H }, el('clipPath', { id: 'below' }, defs));
+  const pts = diffs.map((d, k) => [x(k + 1), y(d)]);
+  const area = 'M' + x(1) + ',' + y(0) + 'L' + pts.map(p => p.join(',')).join('L') + 'L' + x(n) + ',' + y(0) + 'Z';
+  el('path', { d: area, fill: 'var(--igor-fill)', opacity: .4, 'clip-path': 'url(#above)' }, svg);
+  el('path', { d: area, fill: 'var(--carlos-fill)', opacity: .4, 'clip-path': 'url(#below)' }, svg);
+  el('path', { d: 'M' + pts.map(p => p.join(',')).join('L'), fill: 'none', stroke: 'var(--ink)', 'stroke-width': 2 }, svg);
+  diffs.forEach((d, k) => {
+    el('circle', { cx: x(k + 1), cy: y(d), r: k === n - 1 ? 5 : 3, fill: d >= 0 ? 'var(--igor-fill)' : 'var(--carlos-fill)', stroke: 'var(--surface)', 'stroke-width': 1.5 }, svg);
+    const hit = el('rect', { x: x(k + 1) - (W / n) / 2, y: m.t, width: W / n, height: H - m.t - m.b, fill: 'transparent' }, svg);
+    bindTip(hit, `<b>Rodada ${k + 1}</b><br>${d >= 0 ? 'Igor' : 'Carlos'} na frente por ${fmt(Math.abs(d))}<br>Total: Carlos ${fmt(C.rodadas[k].acum)} · Igor ${fmt(I.rodadas[k].acum)}`);
+  });
+  const lastD = diffs[n - 1];
+  const lt = el('text', { x: x(n) - 8, y: y(lastD) - 10, 'text-anchor': 'end', style: 'font-weight:700;fill:var(--ink)' }, svg);
+  lt.textContent = (lastD >= 0 ? 'Igor +' : 'Carlos +') + fmt(Math.abs(lastD));
+  const leads = diffs.map(d => d > 0 ? 'i' : d < 0 ? 'c' : '=');
+  let trocas = 0; for (let k = 1; k < n; k++) if (leads[k] !== leads[k - 1]) trocas++;
+  const rodC = leads.filter(v => v === 'c').length, rodI = leads.filter(v => v === 'i').length;
+  const maxC = Math.min(...diffs), maxI = Math.max(...diffs);
+  $('leadText').textContent = `A liderança trocou de mãos ${trocas} vezes. Carlos fechou ${rodC} rodadas na frente no acumulado e Igor fechou ${rodI}. O Carlos chegou a abrir ${fmt(Math.abs(maxC))} pontos na rodada ${diffs.indexOf(maxC) + 1}, e a maior vantagem do Igor foi de ${fmt(maxI)}, na rodada ${diffs.indexOf(maxI) + 1}.`;
+}
+
+function grouped(boxId, a, b, labelA, labelB, h, fmtY) {
+  const box = $(boxId);
+  const { svg, W, H } = frame(box, h || 240);
+  const m = { l: 40, r: 8, t: 12, b: 26 }, n = a.length;
+  const top = niceMax(Math.max(...a, ...b));
+  const minV = Math.min(0, ...a, ...b);
+  const lo = minV < 0 ? -Math.ceil(-minV / 5) * 5 : 0;
+  const y = v => m.t + (top - v) / (top - lo) * (H - m.t - m.b);
+  const band = (W - m.l - m.r) / n, bw = Math.max(2, band * 0.36);
+  const xc = r => m.l + (r - 0.5) * band;
+  const ticks = []; for (let t = 0; t <= top + 1e-9; t += top / 4) ticks.push(t); if (lo < 0) ticks.unshift(lo);
+  yAxis(svg, m.l, W - m.r, y, ticks, fmtY || (v => fmt(v, 0)));
+  xLabels(svg, n, xc, H - 6, 5);
+  for (let k = 0; k < n; k++) {
+    [[a[k], 'var(--carlos-fill)', -bw - 0.5], [b[k], 'var(--igor-fill)', 0.5]].forEach(([v, col, off]) => {
+      el('rect', { x: xc(k + 1) + off, y: Math.min(y(v), y(0)), width: bw, height: Math.max(1, Math.abs(y(v) - y(0))), fill: col, rx: 1.5 }, svg);
+    });
+    const hit = el('rect', { x: xc(k + 1) - band / 2, y: m.t, width: band, height: H - m.t - m.b, fill: 'transparent' }, svg);
+    bindTip(hit, `<b>Rodada ${k + 1}</b><br>${labelA(k)}<br>${labelB(k)}`);
+  }
+}
+
+function lines(boxId, a, b, labelA, labelB, h, fmtY) {
+  const box = $(boxId);
+  const { svg, W, H } = frame(box, h || 220);
+  const m = { l: 40, r: 12, t: 12, b: 26 }, n = a.length;
+  const top = niceMax(Math.max(...a, ...b));
+  const x = r => m.l + (r - 1) / (n - 1) * (W - m.l - m.r);
+  const y = v => m.t + (top - v) / top * (H - m.t - m.b);
+  yAxis(svg, m.l, W - m.r, y, [0, top / 4, top / 2, 3 * top / 4, top], fmtY || (v => fmt(v, 0)));
+  xLabels(svg, n, x, H - 6, 5);
+  [[a, 'var(--carlos-fill)'], [b, 'var(--igor-fill)']].forEach(([s, col]) => {
+    el('path', { d: 'M' + s.map((v, k) => x(k + 1) + ',' + y(v)).join('L'), fill: 'none', stroke: col, 'stroke-width': 2.5, 'stroke-linejoin': 'round' }, svg);
+    s.forEach((v, k) => el('circle', { cx: x(k + 1), cy: y(v), r: 2.6, fill: col }, svg));
+  });
+  for (let k = 0; k < n; k++) {
+    const hit = el('rect', { x: x(k + 1) - (W / n) / 2, y: m.t, width: W / n, height: H - m.t - m.b, fill: 'transparent' }, svg);
+    bindTip(hit, `<b>Rodada ${k + 1}</b><br>${labelA(k)}<br>${labelB(k)}`);
+  }
+}
+
+function drawHist() {
+  const box = $('histChart');
+  const hist = PJ.hist.filter(b => b.pct >= 0.01);
+  const { svg, W, H } = frame(box, 230);
+  const m = { l: 40, r: 8, t: 22, b: 34 }, n = hist.length;
+  const top = niceMax(Math.max(...hist.map(b => b.pct)));
+  const y = v => m.t + (top - v) / top * (H - m.t - m.b);
+  const band = (W - m.l - m.r) / n;
+  yAxis(svg, m.l, W - m.r, y, [0, top / 2, top], v => fmt(v, 0) + '%');
+  hist.forEach((b, k) => {
+    const x0 = m.l + k * band;
+    el('rect', { x: x0 + 2, y: y(b.pct), width: band - 4, height: Math.max(1, y(0) - y(b.pct)), fill: b.ate <= 0 ? 'var(--carlos-fill)' : 'var(--igor-fill)', rx: 2 }, svg);
+    if (k % (n > 10 ? 2 : 1) === 0) { const t = el('text', { x: x0 + band / 2, y: H - 16, 'text-anchor': 'middle' }, svg); t.textContent = b.de; }
+    const hit = el('rect', { x: x0, y: m.t, width: band, height: H - m.t - m.b, fill: 'transparent' }, svg);
+    bindTip(hit, `Igor termina com vantagem entre ${b.de} e ${b.ate} pontos<br><b>${fmt(b.pct, 2)}%</b> das simulações`);
+  });
+  const t = el('text', { x: (W + m.l) / 2, y: H - 2, 'text-anchor': 'middle' }, svg); t.textContent = 'Vantagem final do Igor (pontos). Abaixo de zero, Carlos vira.';
+}
+
+// ---- Campeonato ----
+const winPill = (a, b) => a > b ? '<span class="pill c">Carlos</span>' : b > a ? '<span class="pill i">Igor</span>' : '<span class="pill">Empate</span>';
+$('monthTable').innerHTML = '<thead><tr><th>Mês</th><th class="n">Rodadas</th><th class="n">Carlos</th><th class="n">Igor</th><th class="n">Venceu</th></tr></thead><tbody>' +
+  DATA.meses.map(m => `<tr><td>${esc(m.mes)}</td><td class="n muted">${m.rodadas.length === 1 ? m.rodadas[0] : m.rodadas[0] + ' a ' + m.rodadas[m.rodadas.length - 1]}</td><td class="n">${fmt(m.carlos)}</td><td class="n">${fmt(m.igor)}</td><td class="n">${winPill(m.carlos, m.igor)}</td></tr>`).join('') + '</tbody>';
+const turnRows = [
+  ['1º turno', fmt(C.turno1), fmt(I.turno1), winPill(C.turno1, I.turno1)],
+  ['2º turno', fmt(C.turno2), fmt(I.turno2), winPill(C.turno2, I.turno2)],
+  ['Média por rodada', fmt(C.media, 2), fmt(I.media, 2), winPill(C.media, I.media)],
+  ['Melhor rodada', `${fmt(maxRound(C).pontos)} <span class="muted">(${maxRound(C).rodada}ª)</span>`, `${fmt(maxRound(I).pontos)} <span class="muted">(${maxRound(I).rodada}ª)</span>`, winPill(maxRound(C).pontos, maxRound(I).pontos)],
+  ['Pior rodada', `${fmt(minRound(C).pontos)} <span class="muted">(${minRound(C).rodada}ª)</span>`, `${fmt(minRound(I).pontos)} <span class="muted">(${minRound(I).rodada}ª)</span>`, winPill(minRound(C).pontos, minRound(I).pontos)],
+  ['Rodadas com 100+', C.mitadas, I.mitadas, winPill(C.mitadas, I.mitadas)],
+  ['Atletas diferentes usados', C.atletas_diferentes, I.atletas_diferentes, '<span class="muted">sem vencedor</span>'],
+];
+$('turnTable').innerHTML = '<thead><tr><th></th><th class="n">Carlos</th><th class="n">Igor</th><th class="n">Melhor</th></tr></thead><tbody>' +
+  turnRows.map(r => `<tr><td>${r[0]}</td><td class="n">${r[1]}</td><td class="n">${r[2]}</td><td class="n">${r[3]}</td></tr>`).join('') + '</tbody>';
+
+// ---- Explorador de rodada ----
+{
+  const ESC = DATA.extras.escalacoes, IDEAL = DATA.extras.ideal;
+  const sel = $('rxSel');
+  sel.innerHTML = Array.from({ length: N }, (_, k) => `<option value="${k + 1}">${k + 1}ª</option>`).join('');
+  const ptClass = v => v >= 10 ? 'hi' : v < 0 ? 'neg' : '';
+  const jogador = (a, comuns) => `<div class="pl ${comuns.has(a.i) ? 'comum' : ''} ${a.jogou ? '' : 'fora'}" title="${esc(a.n)} (${esc(a.p)}, ${esc(a.c)}): ${fmt(a.pts)} pts${a.cap ? ', capitão, conta ' + fmt(a.pts * 1.5) : ''}${a.jogou ? '' : ', não entrou em campo'}">
+      <div class="shirt">${esc(a.c)}${a.cap ? '<b class="rx-badge cap">C</b>' : a.lux ? '<b class="rx-badge lux">L</b>' : ''}</div>
+      <div class="nm">${esc(a.n)}</div><div class="pt ${ptClass(a.pts)}">${fmt(a.pts)}</div></div>`;
+  function time(lin, outro, cls, nome, sh) {
+    const comuns = new Set(outro.atletas.map(a => a.i));
+    const by = p => lin.atletas.filter(a => a.p === p);
+    const lats = by('LAT'), zags = by('ZAG');
+    const def = lats.length === 2 ? [lats[0], ...zags, lats[1]] : [...lats, ...zags];
+    const linhas = [by('ATA'), by('MEI'), def, by('GOL')].filter(l => l.length);
+    const tec = by('TEC')[0];
+    const chip = a => `<span class="rx-chip ${a.jogou ? '' : 'fora'}"><span class="pos">${esc(a.p)}</span>${esc(a.n)} <span class="pt ${ptClass(a.pts)}">${fmt(a.pts)}</span></span>`;
+    return `<h3 class="${cls}"><span style="display:flex;align-items:center;gap:8px"><i class="sh ${cls}"></i>${nome} <span class="esq">${esc(lin.esquema)}</span></span><span class="tot">${fmt(lin.pts)}</span></h3>
+      <div class="pitch">${linhas.map(l => `<div class="prow">${l.map(a => jogador(a, comuns)).join('')}</div>`).join('')}</div>
+      <div class="rx-below">
+        ${tec ? `<div><span class="lbl">Técnico</span> ${chip(tec)}</div>` : ''}
+        ${lin.banco.length ? `<div class="lbl">Banco no fim da rodada</div><div class="rx-bench">${lin.banco.map(chip).join('')}</div>` : ''}
+      </div>`;
+  }
+  function mostrar(r, mexerNoLink) {
+    r = Math.max(1, Math.min(N, r));
+    sel.value = r;
+    const lc = ESC.carlos[r - 1], li = ESC.igor[r - 1], id = IDEAL[r - 1];
+    $('rxC').className = 'panel rx-team c'; $('rxI').className = 'panel rx-team i';
+    $('rxC').innerHTML = time(lc, li, 'c', 'Carlos');
+    $('rxI').innerHTML = time(li, lc, 'i', 'Igor');
+    const comuns = lc.atletas.filter(a => li.atletas.some(b => b.i === a.i)).length;
+    $('rxScore').innerHTML = `<span class="c">${fmt(lc.pts)}</span><span class="muted" style="font-size:20px">×</span><span class="i">${fmt(li.pts)}</span>${winPill(lc.pts, li.pts)}`;
+    $('rxInfo').textContent = `Time ideal da rodada: ${fmt(id.pts)} pontos no ${id.esquema}, com ${id.capitao} de capitão. Maior pontuador: ${id.destaque}, com ${fmt(id.destaque_pts)}. ${comuns === 0 ? 'Nenhum jogador em comum.' : comuns === 1 ? '1 jogador em comum.' : comuns + ' jogadores em comum.'}`;
+    $('rxPrev').disabled = r === 1; $('rxNext').disabled = r === N;
+    if (mexerNoLink) history.replaceState(null, '', '#rodada-' + r);
+  }
+  sel.addEventListener('change', () => mostrar(+sel.value, true));
+  $('rxPrev').addEventListener('click', () => mostrar(+sel.value - 1, true));
+  $('rxNext').addEventListener('click', () => mostrar(+sel.value + 1, true));
+  // ancoras #rodada-1 ... #rodada-N no topo da secao, para o navegador rolar sozinho ao abrir um link direto
+  $('rodada').insertAdjacentHTML('afterbegin', Array.from({ length: N }, (_, k) => `<span id="rodada-${k + 1}" style="position:absolute;scroll-margin-top:64px"></span>`).join(''));
+  const alvo = /^#rodada-(\d+)$/.exec(location.hash);
+  mostrar(alvo ? +alvo[1] : N, false);
+  window.addEventListener('hashchange', () => { const m = /^#rodada-(\d+)$/.exec(location.hash); if (m) mostrar(+m[1], false); });
+  if (alvo) window.addEventListener('load', () => $('rodada-' + alvo[1]) && $('rodada-' + alvo[1]).scrollIntoView({ behavior: 'instant' }));
+}
+
+// ---- Cartao comparativo ----
+function statVs(k, a, b, s, d = 1, lower = false) {
+  const na = typeof a === 'number', nb = typeof b === 'number';
+  const cw = na && nb ? (lower ? a < b : a > b) : true, iw = na && nb ? (lower ? b < a : b > a) : true;
+  const show = (v) => typeof v === 'number' ? fmt(v, d) : v;
+  return `<div class="panel stat"><div class="k">${k}</div><div class="vs"><div><div class="big c ${cw || a === b ? '' : 'lose'}">${show(a)}</div><div class="s">Carlos</div></div><div><div class="big i ${iw || a === b ? '' : 'lose'}">${show(b)}</div><div class="s">Igor</div></div></div>${s ? `<div class="s foot">${s}</div>` : ''}</div>`;
+}
+
+function statOne(k, v, cls, s) {
+  return `<div class="panel stat"><div class="k">${k}</div><div class="big ${cls}" style="margin-top:4px">${v}</div>${s ? `<div class="s foot">${s}</div>` : ''}</div>`;
+}
+
+// ---- Capitao ----
+const capLost = t => t.capitao.rodadas.reduce((s, c) => s + Math.max(0, c.melhor_opcao_pts - c.pts) * 0.5, 0);
+const bc = C.capitao.melhor, bi = I.capitao.melhor;
+$('capStats').innerHTML =
+  statVs('Pontos dos capitães', C.capitao.total_bruto, I.capitao.total_bruto, `Bônus do 1,5x: +${fmt(C.capitao.bonus_total)} e +${fmt(I.capitao.bonus_total)}`) +
+  statVs('Média do capitão', C.capitao.media, I.capitao.media, 'Pontos por rodada, antes do 1,5x', 2) +
+  statVs('Maior capitão', bc.total, bi.total, `${esc(bc.nome)} na ${bc.rodada}ª e ${esc(bi.nome)} na ${bi.rodada}ª, já com o 1,5x`) +
+  statVs('Capitão foi o melhor do time', C.capitao.acertos + '/' + N, I.capitao.acertos + '/' + N, 'Rodadas em que nenhum jogador de linha pontuou mais que o capitão') +
+  statVs('Pontos deixados no banco', capLost(C), capLost(I), 'O que o 1,5x teria rendido a mais com o melhor jogador de linha como capitão. Menor é melhor.', 1, true) +
+  statVs('Pior capitão', C.capitao.pior.pts, I.capitao.pior.pts, `${esc(C.capitao.pior.nome)} na ${C.capitao.pior.rodada}ª e ${esc(I.capitao.pior.nome)} na ${I.capitao.pior.rodada}ª`);
+const capTable = t => '<thead><tr><th>Capitão</th><th class="n">Vezes</th><th class="n">Pontos</th><th class="n">Média</th></tr></thead><tbody>' +
+  t.capitao.mais_escolhidos.map(c => `<tr><td>${esc(c.nome)}</td><td class="n">${c.vezes}</td><td class="n">${fmt(c.pts)}</td><td class="n">${fmt(c.pts / c.vezes, 2)}</td></tr>`).join('') + '</tbody>';
+$('capTopC').innerHTML = capTable(C); $('capTopI').innerHTML = capTable(I);
+
+// ---- Reserva de luxo ----
+const realLuxo = t => t.luxo.usos.filter(u => u.ganho != null && u.substituido_jogou);
+const ausLuxo = t => t.luxo.usos.filter(u => u.ganho != null && !u.substituido_jogou);
+const lb = t => t.luxo.melhor;
+$('luxoStats').innerHTML =
+  statVs('Ganho total', C.luxo.ganho_total, I.luxo.ganho_total, 'Pontos a mais em relação ao titular que saiu') +
+  statVs('Vezes que entrou', C.luxo.acionado, I.luxo.acionado, `Superou um titular que jogou: ${realLuxo(C).length} e ${realLuxo(I).length}. Titular não jogou: ${ausLuxo(C).length} e ${ausLuxo(I).length}.`, 0) +
+  statVs('Melhor troca', lb(C).ganho, lb(I).ganho, `${esc(lb(C).nome)} no lugar de ${esc(lb(C).substituiu)} na ${lb(C).rodada}ª. ${esc(lb(I).nome)} no lugar de ${esc(lb(I).substituiu)} na ${lb(I).rodada}ª.`);
+const luxoTable = t => '<thead><tr><th class="n">Rod.</th><th>Entrou</th><th>Saiu</th><th class="n">Ganho</th></tr></thead><tbody>' +
+  t.luxo.usos.map(u => `<tr><td class="n muted">${u.rodada}ª</td><td><span class="pos">${esc(u.pos)}</span>${esc(u.nome)} <span class="muted">${fmt(u.pts)}</span></td><td>${u.substituiu == null ? '<span class="muted">sem dados</span>' : `${esc(u.substituiu)} <span class="muted">${fmt(u.substituido_pts)}${u.substituido_jogou ? '' : ', titular não jogou'}</span>`}</td><td class="n ${u.ganho != null ? 'gain' : 'muted'}">${u.ganho == null ? 'sem dados' : '+' + fmt(u.ganho)}</td></tr>`).join('') + '</tbody>';
+$('luxoC').innerHTML = luxoTable(C); $('luxoI').innerHTML = luxoTable(I);
+
+// ---- Setores ----
+const flyMax = Math.max(...SETORES.flatMap(([k]) => [C.setores[k].media, I.setores[k].media]));
+$('fly').innerHTML = SETORES.map(([k, n, s]) => {
+  const a = C.setores[k], b = I.setores[k];
+  return `<div class="row"><div class="bar l"><div class="fill ${a.media < b.media ? 'lose' : ''}" style="width:${a.media / flyMax * 100}%" title="${a.n} escalações, ${fmt(a.pts)} pontos">${fmt(a.media, 2)}</div></div><div class="lab">${n}<small>${s}</small></div><div class="bar r"><div class="fill ${b.media < a.media ? 'lose' : ''}" style="width:${b.media / flyMax * 100}%" title="${b.n} escalações, ${fmt(b.pts)} pontos">${fmt(b.media, 2)}</div></div></div>`;
+}).join('') + `<p class="muted" style="font-size:13px;text-align:center;max-width:none">Escalações no campeonato: ${SETORES.map(([k, n]) => `${n.toLowerCase()} ${C.setores[k].n} e ${I.setores[k].n}`).join(' · ')}</p>`;
+$('bestSector').innerHTML = '<thead><tr><th>Setor</th><th>Carlos</th><th>Igor</th></tr></thead><tbody>' +
+  SETORES.map(([k, n]) => { const a = C.melhor_por_setor[k], b = I.melhor_por_setor[k];
+    return `<tr><td>${n}</td><td>${esc(a.nome)} <span class="muted">${fmt(a.pts)} pts em ${a.jogos} jogos</span></td><td>${esc(b.nome)} <span class="muted">${fmt(b.pts)} pts em ${b.jogos} jogos</span></td></tr>`; }).join('') + '</tbody>';
+
+// ---- Gols e scouts ----
+{
+  const a = XC.scouts, b = XI.scouts;
+  $('golsText').textContent = `Os escalados do Igor fizeram ${b.gols} gols, contra ${a.gols} dos escalados do Carlos. Nas assistências o Carlos leva, ${a.assist} a ${b.assist}, e a defesa dele ficou mais vezes sem sofrer gol. Só entram os jogadores que estavam no time na rodada, sem bônus de capitão.`;
+  $('golStats').innerHTML =
+    statVs('Gols', a.gols, b.gols, `Artilheiros: ${esc(a.artilheiros[0].nome)} (${a.artilheiros[0].n}) e ${esc(b.artilheiros[0].nome)} (${b.artilheiros[0].n})`, 0) +
+    statVs('Assistências', a.assist, b.assist, `Garçons: ${esc(a.garcons[0].nome)} (${a.garcons[0].n}) e ${esc(b.garcons[0].nome)} (${b.garcons[0].n})`, 0) +
+    statVs('Jogos sem sofrer gol', a.sg, b.sg, 'Soma de goleiros, defensores e técnicos com saldo de gol', 0) +
+    statVs('Defesas do goleiro', a.defesas, b.defesas, `Desarmes de todo o time: ${int(a.desarmes)} e ${int(b.desarmes)}`, 0) +
+    statVs('Cartões', a.amarelos + a.vermelhos, b.amarelos + b.vermelhos, `Amarelos ${a.amarelos} e ${b.amarelos}. Vermelhos ${a.vermelhos} e ${b.vermelhos}. Menos é melhor.`, 0, true) +
+    statVs('Lambanças', lamb(XC), lamb(XI), `Gols contra ${a.gols_contra} e ${b.gols_contra}. Pênaltis perdidos ${a.penaltis_perdidos} e ${b.penaltis_perdidos}. Menos é melhor.`, 0, true);
+  const t = s => '<thead><tr><th>Artilheiros</th><th class="n">Gols</th><th>Garçons</th><th class="n">Assist.</th></tr></thead><tbody>' +
+    [0, 1, 2].map(k => `<tr><td>${esc((s.artilheiros[k] || {}).nome)}</td><td class="n">${(s.artilheiros[k] || {}).n || ''}</td><td>${esc((s.garcons[k] || {}).nome)}</td><td class="n">${(s.garcons[k] || {}).n || ''}</td></tr>`).join('') + '</tbody>';
+  $('golC').innerHTML = t(a); $('golI').innerHTML = t(b);
+}
+
+// ---- Custo-beneficio ----
+{
+  const a = XC.custo, b = XI.custo;
+  $('custoStats').innerHTML =
+    statVs('Pontos por cartoleta', ptsPorC(C, XC), ptsPorC(I, XI), `Total de pontos dividido pelo total gasto nas ${N} escalações`, 3) +
+    statVs('Custo médio do time', a.medio, b.medio, 'Cartoletas por rodada, somando os 12 escalados. Menor é melhor.', 1, true) +
+    statVs('Total gasto', a.total, b.total, `Em cartoletas, nas ${N} rodadas`, 0, true);
+  const buy = list => '<thead><tr><th>Jogador</th><th class="n">Jogos</th><th class="n">Preço médio</th><th class="n">Pontos</th><th class="n">Pts/C$</th></tr></thead><tbody>' +
+    list.map(j => `<tr><td><span class="pos">${esc(j.pos)}</span>${esc(j.nome)} <span class="muted">${esc(j.clube)}</span></td><td class="n">${j.jogos}</td><td class="n">${fmt(j.preco_medio, 2)}</td><td class="n">${fmt(j.pts)}</td><td class="n">${fmt(j.pts_por_c, 2)}</td></tr>`).join('') + '</tbody>';
+  $('buyC').innerHTML = buy(a.melhores); $('buyI').innerHTML = buy(b.melhores);
+  $('flopC').innerHTML = buy(a.decepcoes); $('flopI').innerHTML = buy(b.decepcoes);
+}
+
+// ---- Time ideal ----
+{
+  const a = XC.ideal, b = XI.ideal, id = DATA.extras.ideal;
+  const mediaIdeal = id.reduce((s, r) => s + r.pts, 0) / id.length;
+  $('idealStats').innerHTML =
+    statVs('Aproveitamento médio', fmt(a.media) + '%', fmt(b.media) + '%', `O time ideal fez ${fmt(mediaIdeal)} pontos por rodada, em média`) +
+    statVs('Melhor rodada', fmt(a.melhor) + '%', fmt(b.melhor) + '%', `Rodada ${a.melhor_r} para o Carlos e ${b.melhor_r} para o Igor`) +
+    statVs('Pior rodada', fmt(a.pior) + '%', fmt(b.pior) + '%', `Rodada ${a.pior_r} para o Carlos e ${b.pior_r} para o Igor`) +
+    statVs('Escalou o maior pontuador', a.teve_destaque, b.teve_destaque, 'Rodadas em que tinha no time o jogador de linha que mais pontuou no Cartola', 0);
+}
+function drawIdeal() {
+  const id = DATA.extras.ideal;
+  lines('idealChart', XC.ideal.aprov, XI.ideal.aprov,
+    k => `Carlos: ${fmt(XC.ideal.aprov[k])}% (${fmt(C.rodadas[k].pontos)} pts)`,
+    k => `Igor: ${fmt(XI.ideal.aprov[k])}% (${fmt(I.rodadas[k].pontos)} pts)<br><span style="opacity:.75">Ideal: ${fmt(id[k].pts)} pts, ${esc(id[k].esquema)}, capitão ${esc(id[k].capitao)}</span>`,
+    220, v => fmt(v, 0) + '%');
+}
+
+// ---- Corinthians ----
+const KC = C.corinthians, KI = I.corinthians;
+{
+  const mais = KI.escalacoes > KC.escalacoes ? 'Igor' : 'Carlos';
+  const ganhou = KI.pts > KC.pts ? 'Igor' : 'Carlos';
+  const eficiente = KC.media > KI.media ? 'Carlos' : 'Igor';
+  let t = `${mais} escalou mais corintianos`;
+  t += ganhou === mais ? ` e foi quem mais ganhou com eles: ${fmt(Math.max(KC.pts, KI.pts))} pontos contra ${fmt(Math.min(KC.pts, KI.pts))}.` : `, mas quem tirou mais pontos deles foi ${ganhou}.`;
+  if (eficiente !== ganhou) t += ` Só que cada corintiano do ${eficiente} rendeu mais, em média.`;
+  $('corVerdict').textContent = t;
+}
+$('corStats').innerHTML =
+  statVs('Escalações de corintianos', KC.escalacoes, KI.escalacoes, `Rodadas com pelo menos um: ${KC.rodadas_com} e ${KI.rodadas_com} de ${N}`, 0) +
+  statVs('Pontos dos corintianos', KC.pts, KI.pts, `${fmt(KC.share)}% do total do Carlos e ${fmt(KI.share)}% do total do Igor`) +
+  statVs('Média por corintiano', KC.media, KI.media, 'Pontos por escalação, sem o bônus do capitão', 2) +
+  statVs('Capitão corintiano', KC.capitao_vezes, KI.capitao_vezes, `Pontos desses capitães: ${fmt(KC.capitao_pts)} e ${fmt(KI.capitao_pts)}`, 0) +
+  statVs('Reserva de luxo corintiano', KC.luxo_ganho, KI.luxo_ganho, `Ganho em ${KC.luxo_usos} e ${KI.luxo_usos} trocas`) +
+  statVs('Melhor atuação', KC.melhor_jogo.pts, KI.melhor_jogo.pts, `${esc(KC.melhor_jogo.nome)} na ${KC.melhor_jogo.rodada}ª e ${esc(KI.melhor_jogo.nome)} na ${KI.melhor_jogo.rodada}ª`);
+const clubTable = list => '<thead><tr><th>Jogador</th><th class="n">Jogos</th><th class="n">Pontos</th><th class="n">Média</th></tr></thead><tbody>' +
+  list.slice(0, 8).map(j => `<tr><td><span class="pos">${esc(j.pos)}</span>${esc(j.nome)}</td><td class="n">${j.jogos}</td><td class="n">${fmt(j.pts)}</td><td class="n">${fmt(j.media, 2)}</td></tr>`).join('') + '</tbody>';
+$('corC').innerHTML = clubTable(KC.jogadores); $('corI').innerHTML = clubTable(KI.jogadores);
+function drawCor() {
+  grouped('corChart', KC.por_rodada.map(r => r.pts), KI.por_rodada.map(r => r.pts),
+    k => `Carlos: ${fmt(KC.por_rodada[k].pts)} com ${KC.por_rodada[k].n} corintiano(s)`, k => `Igor: ${fmt(KI.por_rodada[k].pts)} com ${KI.por_rodada[k].n} corintiano(s)`, 200);
+}
+
+// ---- Palmeiras ----
+{
+  const a = XC.palmeiras, b = XI.palmeiras;
+  const topo = k => DATA.times[k].clubes[0].clube === 'PAL';
+  const maisQueCor = a.pts > KC.pts && b.pts > KI.pts;
+  $('palVerdict').textContent = `${topo('carlos') && topo('igor') ? 'O Palmeiras foi o clube mais escalado pelos dois' : 'O Palmeiras esteve entre os clubes mais escalados'}${maisQueCor ? ' e rendeu mais pontos que o próprio Corinthians' : ''}: ${fmt(a.pts)} pontos para o Carlos e ${fmt(b.pts)} para o Igor. Em ${a.rodadas_com} rodadas o Carlos teve pelo menos um palmeirense no time. O Igor teve em ${b.rodadas_com}.`;
+  $('palStats').innerHTML =
+    statVs('Escalações de palmeirenses', a.escalacoes, b.escalacoes, `Corintianos, para comparar: ${KC.escalacoes} e ${KI.escalacoes}. Aqui, menos é melhor.`, 0, true) +
+    statVs('Pontos dos palmeirenses', a.pts, b.pts, `${fmt(a.share)}% do total do Carlos e ${fmt(b.share)}% do total do Igor`) +
+    statVs('Capitão palmeirense', a.capitao, b.capitao, `Pontos desses capitães: ${fmt(a.capitao_pts)} e ${fmt(b.capitao_pts)}`, 0);
+  $('palC').innerHTML = clubTable(a.jogadores); $('palI').innerHTML = clubTable(b.jogadores);
+}
+
+// ---- Projecao ----
+if (!META.restantes) {
+  $('projecao').hidden = true;
+  document.querySelector('a[href="#projecao"]').hidden = true;
+} else {
+  const R = META.restantes;
+  const igorLidera = PJ.vantagem >= 0;
+  const lider = igorLidera ? 'Igor' : 'Carlos', atras = igorLidera ? 'Carlos' : 'Igor', cAtras = igorLidera ? 'c' : 'i';
+  const gap = Math.abs(PJ.vantagem), precisa = gap / R;
+  // vantagem do perseguidor sobre o lider em cada rodada ja jogada
+  const sobre = C.rodadas.map((r, k) => igorLidera ? r.pontos - I.rodadas[k].pontos : I.rodadas[k].pontos - r.pontos);
+  const vezes = sobre.filter(v => v > precisa).length;
+  const melhores = sobre.slice().sort((a, b) => b - a).slice(0, R).reduce((s, v) => s + v, 0);
+  const chance = igorLidera ? PJ.chance_carlos : PJ.chance_igor;
+  $('projEyebrow').textContent = R === 1 ? `Rodada ${N + 1}` : `Rodadas ${N + 1} a 38`;
+  $('projecao').querySelector('h2').textContent = `Ainda dá para o ${atras}?`;
+  $('projText').textContent = `${R === 1 ? 'Falta 1 rodada' : `Faltam ${R} rodadas`} e o ${lider} está ${fmt(gap)} pontos na frente. Para virar, o ${atras} precisa tirar em média ${fmt(precisa)} pontos por rodada sobre o ${lider}, e isso aconteceu ${vezes === 1 ? '1 vez' : vezes + ' vezes'} nas ${N} rodadas jogadas. A simulação sorteia ${R === 1 ? '1 rodada já jogada' : R + ' rodadas já jogadas'} e repete o resultado, ${int(PJ.simulacoes)} vezes.`;
+  const fim = PJ.mediana >= 0 ? ['Igor', 'i'] : ['Carlos', 'c'];
+  $('projStats').innerHTML =
+    statVs('Chance de terminar na frente', fmt(PJ.chance_carlos, 2) + '%', fmt(PJ.chance_igor, 2) + '%', `${int(Math.round(PJ.simulacoes * chance / 100))} viradas do ${atras} em ${int(PJ.simulacoes)} simulações`) +
+    statOne(`Vantagem final mais provável do ${fim[0]}`, '+' + fmt(Math.abs(PJ.mediana)), fim[1], `Em 80% das simulações, a diferença final fica entre ${fmt(PJ.p10)} e ${fmt(PJ.p90)} pontos a favor do Igor (negativo é a favor do Carlos)`) +
+    statOne(`Melhor rodada do ${atras} contra o ${lider}`, '+' + fmt(Math.max(...sobre)), cAtras, `Somando as ${R === 1 ? 'melhor rodada' : R + ' melhores rodadas'} dele contra o ${lider} no ano, dá ${fmt(melhores)} pontos. ${melhores > gap ? 'Seria o suficiente para virar.' : 'Nem isso bastaria para virar.'}`);
+}
+
+// ---- Jogadores ----
+function playersTable(list, mode) {
+  const head = mode === 'esc' ? '<th class="n">Jogos</th><th class="n">Pontos</th><th class="n">Média</th>' : '<th class="n">Pontos</th><th class="n">Rodada</th>';
+  return `<thead><tr><th>Jogador</th>${head}</tr></thead><tbody>` + list.slice(0, 6).map(j => `<tr><td><span class="pos">${esc(j.pos)}</span>${esc(j.nome)} <span class="muted">${esc(j.clube)}</span></td>${mode === 'esc' ? `<td class="n">${j.jogos}</td><td class="n">${fmt(j.pts)}</td><td class="n">${fmt(j.media, 2)}</td>` : `<td class="n">${fmt(j.max)}</td><td class="n">${j.max_rodada}ª</td>`}</tr>`).join('') + '</tbody>';
+}
+$('escC').innerHTML = playersTable(C.mais_escalados, 'esc'); $('escI').innerHTML = playersTable(I.mais_escalados, 'esc');
+$('actC').innerHTML = playersTable(C.melhores_jogos, 'act'); $('actI').innerHTML = playersTable(I.melhores_jogos, 'act');
+const ec = DATA.em_comum;
+$('commonText').textContent = `Em média, os dois times tiveram ${fmt(ec.media, 1)} jogadores em comum por rodada. O máximo foi ${ec.max}, na ${ec.max_rodada}ª rodada. Carlos usou ${C.atletas_diferentes} atletas diferentes no campeonato e Igor usou ${I.atletas_diferentes}.`;
+function pairTable(a, b, key, label, top) {
+  const names = [...new Set([...a, ...b].map(x => x[key]))];
+  const get = (arr, n) => (arr.find(x => x[key] === n) || {}).vezes || 0;
+  names.sort((x, y) => (get(b, y) + get(a, y)) - (get(b, x) + get(a, x)));
+  return `<thead><tr><th>${label}</th><th class="n">Carlos</th><th class="n">Igor</th></tr></thead><tbody>` + names.slice(0, top || 6).map(n => `<tr><td>${esc(n)}</td><td class="n">${get(a, n) || '<span class="muted">0</span>'}</td><td class="n">${get(b, n) || '<span class="muted">0</span>'}</td></tr>`).join('') + '</tbody>';
+}
+$('esqTable').innerHTML = pairTable(C.esquemas, I.esquemas, 'nome', 'Esquema (rodadas)');
+$('clubTable').innerHTML = pairTable(C.clubes, I.clubes, 'clube', 'Clube (escalações)', 10);
+
+// ---- Desenho responsivo ----
+function drawAll() {
+  drawLead();
+  grouped('roundChart', C.rodadas.map(r => r.pontos), I.rodadas.map(r => r.pontos), k => `Carlos: ${fmt(C.rodadas[k].pontos)}`, k => `Igor: ${fmt(I.rodadas[k].pontos)}`);
+  const cc = C.capitao.rodadas, ci = I.capitao.rodadas;
+  grouped('capChart', cc.map(c => c.total), ci.map(c => c.total), k => `Carlos: ${esc(cc[k].nome)} ${fmt(cc[k].pts)} vira ${fmt(cc[k].total)}`, k => `Igor: ${esc(ci[k].nome)} ${fmt(ci[k].pts)} vira ${fmt(ci[k].total)}`, 220);
+  drawIdeal(); drawCor(); drawHist();
+}
+drawAll();
+let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(drawAll, 150); });
+</script>
+</body>
+</html>
