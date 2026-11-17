@@ -141,7 +141,9 @@ section > .wrap { display: grid; gap: 20px; }
 .stat .k { font-size: 13px; color: var(--mute); text-transform: uppercase; letter-spacing: .08em; font-weight: 700; }
 .vs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
 .vs > div { min-width: 0; }
-.stat .big { font-family: var(--display); font-size: 40px; font-weight: 800; line-height: 1.05; font-variant-numeric: tabular-nums; }
+/* O tamanho do numero acompanha a largura do proprio cartao, para nunca invadir o lado do outro */
+.stat { container-type: inline-size; }
+.stat .big { font-family: var(--display); font-size: clamp(22px, 13cqi, 40px); font-weight: 800; line-height: 1.05; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: clip; }
 .stat .big.lose { opacity: .45; }
 .stat .s { color: var(--mute); font-size: 14px; }
 .stat .foot { margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--rule); }
@@ -204,14 +206,14 @@ td.n, th.n { text-align: right; white-space: nowrap; }
 .cam { width: 56px; height: 56px; object-fit: contain; display: block; filter: drop-shadow(0 2px 4px rgba(0,0,0,.2)); }
 .cam-vazia { display: grid; place-items: center; font: 800 13px var(--display); border: 1px solid var(--rule); border-radius: 8px; }
 .mini { width: 22px; height: 22px; object-fit: contain; vertical-align: -6px; margin-right: 5px; }
-.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 6px; }
-.duo > div { display: grid; grid-template-columns: auto 1fr; gap: 0 10px; align-items: center; min-width: 0; }
-.duo .cam { grid-row: span 2; }
-.duo .big { font-size: 34px; }
+/* Cada lado empilha camisa, numero e nome: nada fica lado a lado disputando espaco */
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
+.duo > div { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; min-width: 0; }
+.duo .cam { width: clamp(36px, 16cqi, 52px); height: clamp(36px, 16cqi, 52px); }
+.duo .big { font-size: clamp(22px, 11cqi, 34px); max-width: 100%; }
 .duo .big.lose { opacity: .45; }
-.duo .nm { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.duo .nm span { color: var(--mute); font-weight: 400; }
-.duo .nm span::before { content: " · "; }
+.duo .nm { max-width: 100%; font-size: 14px; font-weight: 600; line-height: 1.25; overflow-wrap: anywhere; }
+.duo .nm span { display: block; color: var(--mute); font-weight: 400; font-size: 12px; }
 
 /* Tabelas recolhiveis */
 details.dobra > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
@@ -222,6 +224,27 @@ details.dobra > summary h3 { margin: 0; }
 details.dobra[open] > summary { margin-bottom: 8px; }
 details.dobra > summary:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; border-radius: 4px; }
 .band details.dobra > summary::after { border-color: var(--bandmute); }
+
+/* Linha do tempo */
+.tl { list-style: none; margin: 0; padding: 0; position: relative; display: grid; gap: 18px; }
+.tl::before { content: ""; position: absolute; left: 27px; top: 8px; bottom: 8px; width: 3px; border-radius: 2px; background: var(--rule); }
+.tl > li { position: relative; display: grid; grid-template-columns: 58px minmax(0, 1fr); gap: 14px; align-items: start; }
+.tl-r { position: relative; z-index: 1; width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; text-decoration: none; background: var(--night); color: var(--night-ink); border: 3px solid var(--red); font: 800 20px/1 var(--display); font-variant-numeric: tabular-nums; }
+.tl-r:hover, .tl-r:focus-visible { background: var(--red); outline: none; }
+.tl-ms { display: grid; gap: 8px; min-width: 0; }
+.tl-m { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 10px 14px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px 10px; align-items: baseline; }
+.tl-m .q-dot { width: 12px; height: 12px; border-radius: 50%; align-self: center; }
+.tl-m.c .q-dot { background: var(--carlos-fill); }
+.tl-m.i .q-dot { background: #111; box-shadow: 0 0 0 2px var(--igor-fill); }
+.tl-m.x .q-dot { background: var(--red); }
+.tl-m b { font-family: var(--display); font-size: 19px; font-weight: 800; line-height: 1.15; text-transform: uppercase; letter-spacing: .02em; }
+.tl-m p { grid-column: 2; color: var(--mute); font-size: 15px; max-width: 60ch; }
+@media (max-width: 640px) {
+  .tl::before { left: 21px; }
+  .tl > li { grid-template-columns: 46px minmax(0, 1fr); gap: 10px; }
+  .tl-r { width: 46px; height: 46px; font-size: 17px; }
+  .tl-m b { font-size: 17px; }
+}
 
 /* Explorador de rodada */
 .rx-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
@@ -242,12 +265,18 @@ details.dobra > summary:focus-visible { outline: 2px solid var(--red); outline-o
 .pitch::after { content: ""; position: absolute; left: 50%; top: 50%; width: 76px; height: 76px; margin: -38px 0 0 -38px; border: 2px solid rgba(255,255,255,.45); border-radius: 50%; }
 .prow { position: relative; z-index: 1; display: flex; justify-content: space-evenly; gap: 2px; }
 .pl { flex: 0 1 20%; min-width: 0; display: grid; justify-items: center; gap: 3px; text-align: center; }
-.shirt { position: relative; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font: 800 12px var(--display); letter-spacing: .04em; border: 3px solid; }
-.rx-team.c .shirt { background: #2f62e8; border-color: #3fb4ff; color: #fff; }
-.rx-team.i .shirt { background: #111; border-color: #f2c230; color: #f2c230; }
-.pl.comum .shirt { outline: 2px dashed #fff; outline-offset: 3px; }
+/* Camisa do clube em cima de um anel na cor do time (azul do Carlos, preto e ouro do Igor) */
+.shirt { position: relative; width: 48px; height: 48px; display: grid; place-items: center; }
+.shirt::before { content: ""; position: absolute; left: 6px; right: 6px; bottom: -2px; height: 10px; border-radius: 50%; }
+.rx-team.c .shirt::before { background: #3fb4ff; box-shadow: 0 0 0 2px #2f62e8; }
+.rx-team.i .shirt::before { background: #111; box-shadow: 0 0 0 2px #f2c230; }
+.shirt img { position: relative; width: 44px; height: 44px; object-fit: contain; filter: drop-shadow(0 2px 3px rgba(0,0,0,.45)); }
+.shirt .sigla { position: relative; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font: 800 12px var(--display); border: 3px solid; }
+.rx-team.c .shirt .sigla { background: #2f62e8; border-color: #3fb4ff; color: #fff; }
+.rx-team.i .shirt .sigla { background: #111; border-color: #f2c230; color: #f2c230; }
+.pl.comum .shirt { outline: 2px dashed #fff; outline-offset: 2px; border-radius: 50%; }
 .pl.fora .shirt { opacity: .5; }
-.rx-badge { position: absolute; top: -6px; right: -8px; width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font: 800 11px var(--body); color: #fff; border: 1.5px solid #fff; }
+.rx-badge { position: absolute; z-index: 2; top: -4px; right: -6px; width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font: 800 11px var(--body); color: #fff; border: 1.5px solid #fff; }
 .legend .rx-badge { position: static; display: inline-grid; margin-right: 6px; vertical-align: -3px; border-color: var(--surface); }
 .rx-badge.cap { background: var(--red); }
 .rx-badge.lux { background: #7a3cff; }
@@ -285,12 +314,7 @@ footer a { color: var(--night-ink); }
   .q .v.win::after { content: "✓"; }
   .fly .row { grid-template-columns: 1fr 66px 1fr; }
   .duo { gap: 8px; }
-  .duo > div { gap: 0 6px; }
-  .duo .cam { width: 40px; height: 40px; }
-  .duo .big { font-size: 26px; }
-  .duo .nm { font-size: 13px; line-height: 1.25; }
-  .duo .nm span { display: block; font-size: 12px; }
-  .duo .nm span::before { content: none; }
+  .duo .nm { font-size: 13px; }
 }
 @media (prefers-reduced-motion: no-preference) {
   .plate { animation: drop .7s ease-out both; }
@@ -324,7 +348,7 @@ footer a { color: var(--night-ink); }
 
 <nav class="jump" aria-label="Seções">
   <div class="wrap">
-    <a href="#quesitos">Quesitos</a><a href="#campeonato">Campeonato</a><a href="#rodada">Rodada a rodada</a><a href="#capitao">Capitão</a><a href="#luxo">Reserva de luxo</a><a href="#setores">Setores</a><a href="#gols">Gols</a><a href="#custo">Custo</a><a href="#ideal">Time ideal</a><a href="#corinthians">Corinthians</a><a href="#palmeiras">Palmeiras</a><a href="#projecao">Projeção</a><a href="#jogadores">Jogadores</a>
+    <a href="#quesitos">Quesitos</a><a href="#campeonato">Campeonato</a><a href="#momentos">Momentos</a><a href="#rodada">Rodada a rodada</a><a href="#capitao">Capitão</a><a href="#luxo">Reserva de luxo</a><a href="#setores">Setores</a><a href="#gols">Gols</a><a href="#custo">Custo</a><a href="#ideal">Time ideal</a><a href="#corinthians">Corinthians</a><a href="#palmeiras">Palmeiras</a><a href="#projecao">Projeção</a><a href="#jogadores">Jogadores</a>
   </div>
 </nav>
 
@@ -362,6 +386,14 @@ footer a { color: var(--night-ink); }
       <div class="panel"><h3>Mês a mês</h3><div class="tbl"><table id="monthTable"></table></div></div>
       <div class="panel"><h3>Turnos e marcas</h3><div class="tbl"><table id="turnTable"></table></div></div>
     </div>
+  </div>
+</section>
+
+<section id="momentos">
+  <div class="wrap">
+    <div><div class="eyebrow">Linha do tempo</div><h2>Momentos da temporada</h2></div>
+    <p class="lede">As viradas, as rodadas marcantes e as escolhas que mais renderam, em ordem. Toque numa rodada para ver as escalações.</p>
+    <ol class="tl" id="tl"></ol>
   </div>
 </section>
 
@@ -732,6 +764,74 @@ const turnRows = [
 $('turnTable').innerHTML = '<thead><tr><th></th><th class="n">Carlos</th><th class="n">Igor</th><th class="n">Melhor</th></tr></thead><tbody>' +
   turnRows.map(r => `<tr><td>${r[0]}</td><td class="n">${r[1]}</td><td class="n">${r[2]}</td><td class="n">${r[3]}</td></tr>`).join('') + '</tbody>';
 
+// ---- Linha do tempo de momentos (calculada dos dados, cresce sozinha a cada rodada) ----
+{
+  const NM = k => k === 'c' ? 'Carlos' : 'Igor';
+  const T = { c: C, i: I };
+  const M = [];
+  const add = (r, quem, titulo, texto) => M.push({ r, quem, titulo, texto });
+  const pts = k => T[k].rodadas.map(r => r.pontos);
+  const dif = C.rodadas.map((r, k) => I.rodadas[k].acum - r.acum); // > 0: Igor na frente
+
+  // Trocas de liderança no acumulado
+  let lider = null;
+  dif.forEach((d, k) => {
+    const l = d > 0 ? 'i' : d < 0 ? 'c' : null;
+    if (!l || l === lider) return;
+    if (lider === null) add(k + 1, l, `${NM(l)} sai na frente`, `Termina a ${k + 1}ª rodada com ${fmt(Math.abs(d))} pontos de vantagem.`);
+    else add(k + 1, l, `${NM(l)} assume a liderança`, `Passa o ${NM(lider)} no acumulado e abre ${fmt(Math.abs(d))} pontos.`);
+    lider = l;
+  });
+  // Maiores vantagens no acumulado
+  const iMaxC = dif.indexOf(Math.min(...dif)), iMaxI = dif.indexOf(Math.max(...dif));
+  if (dif[iMaxC] < 0) add(iMaxC + 1, 'c', 'Maior vantagem do Carlos', `${fmt(-dif[iMaxC])} pontos à frente no acumulado.`);
+  if (dif[iMaxI] > 0) add(iMaxI + 1, 'i', 'Maior vantagem do Igor', `${fmt(dif[iMaxI])} pontos à frente no acumulado.`);
+
+  // Melhores e piores rodadas (juntas quando caem na mesma rodada)
+  const extremo = (fn, tituloUm, tituloDois, frase) => {
+    const rc = pts('c').indexOf(fn(...pts('c'))) + 1, ri = pts('i').indexOf(fn(...pts('i'))) + 1;
+    const vc = C.rodadas[rc - 1].pontos, vi = I.rodadas[ri - 1].pontos;
+    if (rc === ri) add(rc, 'x', tituloDois, `${frase} Carlos fez ${fmt(vc)} e Igor fez ${fmt(vi)}.`);
+    else { add(rc, 'c', tituloUm('Carlos'), `${fmt(vc)} pontos.`); add(ri, 'i', tituloUm('Igor'), `${fmt(vi)} pontos.`); }
+  };
+  extremo(Math.max, n => `Melhor rodada do ${n}`, 'A melhor rodada dos dois', 'Os dois tiveram a maior pontuação do ano na mesma rodada.');
+  extremo(Math.min, n => `Pior rodada do ${n}`, 'A pior rodada dos dois', 'Os dois tiveram a menor pontuação do ano na mesma rodada.');
+  // Rodadas de 100 pontos ou mais (a melhor rodada de cada um ja aparece acima)
+  const melhorC = pts('c').indexOf(Math.max(...pts('c'))), melhorI = pts('i').indexOf(Math.max(...pts('i')));
+  C.rodadas.forEach((r, k) => {
+    const c100 = r.pontos >= 100 && k !== melhorC, i100 = I.rodadas[k].pontos >= 100 && k !== melhorI;
+    if (c100 && i100) add(k + 1, 'x', 'Os dois passam dos 100', `Carlos fez ${fmt(r.pontos)} e Igor fez ${fmt(I.rodadas[k].pontos)}.`);
+    else if (c100 || i100) { const q = c100 ? 'c' : 'i'; add(k + 1, q, `${NM(q)} passa dos 100`, `${fmt(T[q].rodadas[k].pontos)} pontos na rodada.`); }
+  });
+  // Maiores lavadas numa rodada
+  const margem = C.rodadas.map((r, k) => r.pontos - I.rodadas[k].pontos);
+  const lc = margem.indexOf(Math.max(...margem)), li = margem.indexOf(Math.min(...margem));
+  if (margem[lc] > 0) add(lc + 1, 'c', 'Maior vitória do Carlos numa rodada', `${fmt(C.rodadas[lc].pontos)} a ${fmt(I.rodadas[lc].pontos)}, diferença de ${fmt(margem[lc])}.`);
+  if (margem[li] < 0) add(li + 1, 'i', 'Maior vitória do Igor numa rodada', `${fmt(I.rodadas[li].pontos)} a ${fmt(C.rodadas[li].pontos)}, diferença de ${fmt(-margem[li])}.`);
+  // Maiores sequências de vitórias
+  ['c', 'i'].forEach(q => {
+    let melhor = { n: 0, fim: 0 }, n = 0;
+    margem.forEach((m, k) => { const venceu = q === 'c' ? m > 0 : m < 0; n = venceu ? n + 1 : 0; if (n > melhor.n) melhor = { n, fim: k + 1 }; });
+    if (melhor.n >= 3) add(melhor.fim, q, `${NM(q)} vence ${melhor.n} seguidas`, `Ganhou todas da ${melhor.fim - melhor.n + 1}ª à ${melhor.fim}ª rodada.`);
+  });
+  // Escolhas que renderam
+  ['c', 'i'].forEach(q => {
+    const t = T[q], cap = t.capitao.melhor, lux = t.luxo.melhor, j = t.melhores_jogos[0];
+    add(cap.rodada, q, `Capitão do ano do ${NM(q)}`, `${cap.nome} fez ${fmt(cap.pts)} e virou ${fmt(cap.total)} com a braçadeira.`);
+    if (lux) add(lux.rodada, q, `Melhor reserva de luxo do ${NM(q)}`, `${lux.nome} entrou no lugar de ${lux.substituiu} e rendeu +${fmt(lux.ganho)}.`);
+    // a melhor atuacao so entra se nao for o mesmo jogador e rodada do capitao do ano
+    if (j && !(j.nome === cap.nome && j.max_rodada === cap.rodada)) add(j.max_rodada, q, `Melhor atuação no time do ${NM(q)}`, `${j.nome} (${j.clube}) fez ${fmt(j.max)} pontos.`);
+  });
+  if (DATA.em_comum.max >= 5) add(DATA.em_comum.max_rodada, 'x', 'Times quase iguais', `${DATA.em_comum.max} jogadores escalados pelos dois na mesma rodada.`);
+
+  // Agrupa por rodada
+  const porRodada = {};
+  M.forEach(m => (porRodada[m.r] = porRodada[m.r] || []).push(m));
+  $('tl').innerHTML = Object.keys(porRodada).map(Number).sort((a, b) => a - b).map(r =>
+    `<li><a class="tl-r" href="#rodada-${r}" aria-label="Ver as escalações da rodada ${r}">${r}ª</a><div class="tl-ms">${porRodada[r].map(m =>
+      `<div class="tl-m ${m.quem}"><span class="q-dot" aria-hidden="true"></span><b>${esc(m.titulo)}</b><p>${esc(m.texto)}</p></div>`).join('')}</div></li>`).join('');
+}
+
 // ---- Explorador de rodada ----
 {
   const ESC = DATA.extras.escalacoes, IDEAL = DATA.extras.ideal;
@@ -739,7 +839,7 @@ $('turnTable').innerHTML = '<thead><tr><th></th><th class="n">Carlos</th><th cla
   sel.innerHTML = Array.from({ length: N }, (_, k) => `<option value="${k + 1}">${k + 1}ª</option>`).join('');
   const ptClass = v => v >= 10 ? 'hi' : v < 0 ? 'neg' : '';
   const jogador = (a, comuns) => `<div class="pl ${comuns.has(a.i) ? 'comum' : ''} ${a.jogou ? '' : 'fora'}" title="${esc(a.n)} (${esc(a.p)}, ${esc(a.c)}): ${fmt(a.pts)} pts${a.cap ? ', capitão, conta ' + fmt(a.pts * 1.5) : ''}${a.jogou ? '' : ', não entrou em campo'}">
-      <div class="shirt">${esc(a.c)}${a.cap ? '<b class="rx-badge cap">C</b>' : a.lux ? '<b class="rx-badge lux">L</b>' : ''}</div>
+      <div class="shirt">${CAMISAS[a.c] ? `<img src="${esc(CAMISAS[a.c])}" alt="${esc(a.c)}" width="44" height="44">` : `<span class="sigla">${esc(a.c)}</span>`}${a.cap ? '<b class="rx-badge cap">C</b>' : a.lux ? '<b class="rx-badge lux">L</b>' : ''}</div>
       <div class="nm">${esc(a.n)}</div><div class="pt ${ptClass(a.pts)}">${fmt(a.pts)}</div></div>`;
   function time(lin, outro, cls, nome, sh) {
     const comuns = new Set(outro.atletas.map(a => a.i));
