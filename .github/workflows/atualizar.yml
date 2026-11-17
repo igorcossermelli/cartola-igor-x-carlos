@@ -38,7 +38,7 @@ jobs:
       - name: Publicar se mudou
         run: |
           # build/arquivo guarda cada temporada; temporadas/ tem as paginas das temporadas antigas
-          ARQS="index.html og.png build/ultimo_hash.txt build/ultima.txt build/arquivo temporadas"
+          ARQS="index.html og.png wrapped build/ultimo_hash.txt build/ultima.txt build/arquivo temporadas"
           if [ -n "$(git status --porcelain -- $ARQS)" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

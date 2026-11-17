@@ -135,6 +135,8 @@ nav.jump .wrap::-webkit-scrollbar { display: none; }
 .pg { appearance: none; cursor: pointer; display: grid; gap: 2px; text-align: left; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--rule); background: var(--surface); color: var(--ink); font: 800 20px/1.1 var(--display); text-transform: uppercase; letter-spacing: .03em; max-width: 48%; }
 .pg small { font: 600 12px var(--body); letter-spacing: .1em; color: var(--mute); }
 .pg.prox { margin-left: auto; text-align: right; }
+.pg { min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 400px) { .pg { font-size: 16px; padding: 10px 12px; } }
 .pg:hover, .pg:focus-visible { border-color: var(--red); outline: none; }
 
 section { padding-block: 44px 8px; scroll-margin-top: 64px; }
@@ -246,6 +248,47 @@ details.dobra > summary h3 { margin: 0; }
 details.dobra[open] > summary { margin-bottom: 8px; }
 details.dobra > summary:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; border-radius: 4px; }
 .band details.dobra > summary::after { border-color: var(--bandmute); }
+
+/* Retrospectiva (Wrapped) */
+.wr-grid2 { align-items: start; }
+.wr { container-type: inline-size; border-radius: 16px; padding: 22px; color: #fff; display: grid; gap: 18px; border-top: 6px solid var(--red); }
+.wr.c { background: linear-gradient(170deg, #2f62e8 0%, #16349a 100%); --wr-claro: #dce8ff; --wr-dest: #3fb4ff; --wr-bloco: rgba(10, 24, 80, .55); }
+.wr.i { background: linear-gradient(170deg, #1d1d1d 0%, #070707 100%); --wr-claro: #f2e4b4; --wr-dest: #f2c230; --wr-bloco: rgba(255, 255, 255, .07); }
+.wr-top { display: flex; align-items: center; gap: 12px; }
+.wr-top .sh { width: 40px; height: 48px; }
+.wr-top small, .wr-pers small { display: block; font: 600 13px var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--wr-claro); }
+.wr-top b { font: 900 clamp(26px, 9cqi, 36px)/1 var(--display); text-transform: uppercase; }
+.wr-pers strong { display: block; font: 900 clamp(30px, 11cqi, 46px)/1 var(--display); text-transform: uppercase; color: var(--wr-dest); margin-top: 4px; text-wrap: balance; }
+.wr-pers p { color: var(--wr-claro); font-size: 15px; margin-top: 8px; }
+.wr-itens { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.wr-item { background: var(--wr-bloco); border-radius: 12px; padding: 12px 14px; min-width: 0; display: grid; gap: 2px; }
+.wr-item .rot { font: 600 12px var(--display); letter-spacing: .12em; text-transform: uppercase; color: var(--wr-claro); }
+.wr-item .val { display: flex; align-items: center; gap: 8px; font: 800 clamp(20px, 7cqi, 30px)/1.1 var(--display); min-width: 0; }
+.wr-item .val span { min-width: 0; overflow-wrap: anywhere; }
+.wr-item .val img { width: 30px; height: 30px; flex: none; object-fit: contain; }
+.wr-item .sub { font-size: 13px; color: var(--wr-claro); overflow-wrap: anywhere; }
+.wr-share { justify-self: start; display: inline-flex; align-items: center; gap: 8px; font: 800 15px var(--display); letter-spacing: .08em; text-transform: uppercase; text-decoration: none; color: #0d1424; background: var(--wr-dest); padding: 10px 16px; border-radius: 999px; }
+.wr-share:hover, .wr-share:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+
+/* Medalhas */
+.medalhas { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.med { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 14px; display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 4px 12px; align-items: center; }
+.med svg { grid-row: span 3; width: 52px; height: 64px; }
+.med b { font: 800 19px/1.1 var(--display); text-transform: uppercase; letter-spacing: .02em; }
+.med .desc { font-size: 14px; color: var(--mute); line-height: 1.3; }
+.med .vals { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 8px; font-size: 14px; border-top: 1px dashed var(--rule); padding-top: 8px; margin-top: 6px; font-variant-numeric: tabular-nums; }
+.med .dono { justify-self: start; }
+
+/* Mapa de calor */
+.calor-wrap { overflow-x: auto; padding-bottom: 6px; }
+.calor { display: grid; gap: 3px; min-width: max-content; font-size: 12px; }
+.calor .lin { display: contents; }
+.calor .rot { font: 700 13px var(--display); letter-spacing: .06em; text-transform: uppercase; color: var(--mute); display: flex; align-items: center; padding-right: 8px; white-space: nowrap; }
+.calor .cel { width: 20px; height: 24px; border-radius: 3px; background: var(--surface-2); }
+.calor .tot { font: 800 14px var(--display); font-variant-numeric: tabular-nums; display: flex; align-items: center; justify-content: flex-end; padding-left: 8px; white-space: nowrap; }
+.calor .cab { font-size: 10px; color: var(--mute); text-align: center; align-self: end; }
+.calor-legenda { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; margin-bottom: 10px; }
+.calor-legenda i { flex: 0 1 180px; height: 10px; border-radius: 5px; background: linear-gradient(90deg, #2f62e8, var(--surface-2), #e8b10f); }
 
 /* E se...? */
 .cen { display: grid; gap: 6px; align-content: start; }
@@ -437,6 +480,12 @@ footer a { color: var(--night-ink); }
       <div class="legend"><span><i style="background:var(--carlos-fill)"></i>Carlos</span><span><i style="background:var(--igor-fill)"></i>Igor</span><span>Pontos em cada rodada</span></div>
       <div class="chart" id="roundChart"></div>
     </div>
+    <div class="panel">
+      <h3>Nível no Cartola</h3>
+      <p class="muted" style="font-size:15px">O Cartola separa os cartoleiros em níveis conforme o desempenho contra todos os outros jogadores. Quanto maior o nível, melhor. Ele muda uma vez por mês.</p>
+      <div class="legend"><span><i style="background:var(--carlos-fill)"></i>Carlos</span><span><i style="background:var(--igor-fill)"></i>Igor</span></div>
+      <div class="chart" id="nivelChart"></div>
+    </div>
     <div class="grid2">
       <div class="panel"><h3>Mês a mês</h3><div class="tbl"><table id="monthTable"></table></div></div>
       <div class="panel"><h3>Turnos e marcas</h3><div class="tbl"><table id="turnTable"></table></div></div>
@@ -532,6 +581,11 @@ footer a { color: var(--night-ink); }
     <div><div class="eyebrow">Cartoletas</div><h2>Custo-benefício</h2></div>
     <p class="lede">Quantos pontos cada um tirou de cada cartoleta gasta na escalação. O preço considerado é o que o jogador custava quando foi escalado.</p>
     <div class="grid3" id="custoStats"></div>
+    <div class="panel">
+      <h3>Patrimônio ao longo do ano</h3>
+      <div class="legend"><span><i style="background:var(--carlos-fill)"></i>Carlos</span><span><i style="background:var(--igor-fill)"></i>Igor</span><span>Cartoletas no fim de cada rodada</span></div>
+      <div class="chart" id="patChart"></div>
+    </div>
     <div class="grid2">
       <div class="panel"><h3 class="c"><i class="sh c"></i>Melhores compras do Carlos</h3><p class="muted" style="font-size:14px">Mínimo de 3 jogos escalado.</p><div class="tbl"><table id="buyC"></table></div></div>
       <div class="panel"><h3 class="i"><i class="sh i"></i>Melhores compras do Igor</h3><p class="muted" style="font-size:14px">Mínimo de 3 jogos escalado.</p><div class="tbl"><table id="buyI"></table></div></div>
@@ -606,6 +660,55 @@ footer a { color: var(--night-ink); }
     <div class="grid2">
       <div class="panel"><h3>Esquemas táticos</h3><div class="tbl"><table id="esqTable"></table></div></div>
       <div class="panel"><h3>Clubes mais usados</h3><div class="tbl"><table id="clubTable"></table></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="retro">
+  <div class="wrap">
+    <div><div class="eyebrow">Retrospectiva</div><h2>O ano de cada um</h2></div>
+    <p class="lede" id="retroLede"></p>
+    <div class="grid2 wr-grid2" id="wrapped"></div>
+  </div>
+</section>
+
+<section id="medalhas">
+  <div class="wrap">
+    <div><div class="eyebrow">Conquistas</div><h2>Medalhas</h2></div>
+    <p class="lede" id="medLede"></p>
+    <div class="medalhas" id="medList"></div>
+  </div>
+</section>
+
+<section id="divergentes">
+  <div class="wrap">
+    <div><div class="eyebrow">Duelo de escolhas</div><h2>Quando vocês discordaram</h2></div>
+    <p class="lede">Em cada rodada e em cada posição, comparamos os jogadores que só um de vocês escalou. Ganha a decisão quem teve a maior média de pontos ali. Posições em que os dois escalaram exatamente os mesmos jogadores ficam de fora.</p>
+    <div class="grid3" id="divStats"></div>
+    <div class="panel"><h3>Posição por posição</h3><div class="tbl"><table id="divTable"></table></div></div>
+    <div class="grid2" id="divMelhores"></div>
+  </div>
+</section>
+
+<section id="exclusivos">
+  <div class="wrap">
+    <div><div class="eyebrow">Onde a disputa se decide</div><h2>Jogadores exclusivos</h2></div>
+    <p class="lede" id="exLede"></p>
+    <div class="grid3" id="exStats"></div>
+    <div class="grid2">
+      <div class="panel"><h3 class="c"><i class="sh c"></i>Exclusivos que mais renderam ao Carlos</h3><div class="tbl"><table id="exC"></table></div></div>
+      <div class="panel"><h3 class="i"><i class="sh i"></i>Exclusivos que mais renderam ao Igor</h3><div class="tbl"><table id="exI"></table></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="calor">
+  <div class="wrap">
+    <div><div class="eyebrow">Setor por setor</div><h2>Mapa de calor</h2></div>
+    <p class="lede">Cada quadrado é uma posição numa rodada. A cor mostra quem fez mais pontos ali, e quanto mais forte a cor, maior a diferença. A coluna "no ano" soma a temporada inteira.</p>
+    <div class="panel">
+      <div class="calor-legenda"><span class="c">Carlos fez mais</span><i aria-hidden="true"></i><span class="i">Igor fez mais</span></div>
+      <div class="calor-wrap"><div class="calor" id="calorGrid" role="table" aria-label="Diferença de pontos por posição e rodada"></div></div>
     </div>
   </div>
 </section>
@@ -1234,11 +1337,165 @@ $('clubTable').innerHTML = pairTable(C.clubes, I.clubes, 'clube', 'Clube (escala
   calcular();
 }
 
+// ---- Graficos de linha: nivel no Cartola e patrimonio ----
+function serie(boxId, a, b, { labelA, labelB, h = 220, min, max, passo, fmtY = v => fmt(v, 0), degrau = false }) {
+  const box = $(boxId);
+  const { svg, W, H } = frame(box, h);
+  const m = { l: 52, r: 12, t: 12, b: 26 }, n = a.length;
+  let lo = min != null ? min : Math.floor(Math.min(...a, ...b)), hi = max != null ? max : Math.ceil(Math.max(...a, ...b));
+  if (hi === lo) hi = lo + 1;
+  const x = r => m.l + (n === 1 ? 0.5 : (r - 1) / (n - 1)) * (W - m.l - m.r);
+  const y = v => m.t + (hi - v) / (hi - lo) * (H - m.t - m.b);
+  const ticks = []; if (passo) for (let t = lo; t <= hi + 1e-9; t += passo) ticks.push(t); else for (let k = 0; k <= 4; k++) ticks.push(lo + (hi - lo) * k / 4);
+  yAxis(svg, m.l, W - m.r, y, ticks, fmtY);
+  xLabels(svg, n, x, H - 6, 5);
+  [[a, 'var(--carlos-fill)', 0], [b, 'var(--igor-fill)', degrau ? 3 : 0]].forEach(([s, col, off]) => {
+    let d = '';
+    s.forEach((v, k) => { const px = x(k + 1), py = y(v) + off; d += k === 0 ? `M${px},${py}` : degrau ? `H${px}V${py}` : `L${px},${py}`; });
+    el('path', { d, fill: 'none', stroke: col, 'stroke-width': 3, 'stroke-linejoin': 'round' }, svg);
+    el('circle', { cx: x(n), cy: y(s[n - 1]) + off, r: 5, fill: col, stroke: 'var(--surface)', 'stroke-width': 2 }, svg);
+  });
+  for (let k = 0; k < n; k++) {
+    const hit = el('rect', { x: x(k + 1) - (W / n) / 2, y: m.t, width: W / n, height: H - m.t - m.b, fill: 'transparent' }, svg);
+    bindTip(hit, `<b>Rodada ${k + 1}</b><br>${labelA(k)}<br>${labelB(k)}`);
+  }
+}
+function drawSeries() {
+  const nc = C.rodadas.map(r => r.nivel || 0), ni = I.rodadas.map(r => r.nivel || 0);
+  if (nc.some(Boolean) || ni.some(Boolean)) {
+    serie('nivelChart', nc, ni, { min: Math.max(0, Math.min(...nc, ...ni) - 1), max: Math.max(...nc, ...ni) + 1, passo: 1, fmtY: v => 'nível ' + v, degrau: true,
+      labelA: k => `Carlos: nível ${nc[k]}`, labelB: k => `Igor: nível ${ni[k]}`, h: 200 });
+  }
+  const pc = C.rodadas.map(r => r.patrimonio), pi = I.rodadas.map(r => r.patrimonio);
+  serie('patChart', pc, pi, { min: Math.floor(Math.min(...pc, ...pi) - 2), max: Math.ceil(Math.max(...pc, ...pi) + 2),
+    labelA: k => `Carlos: ${fmt(pc[k], 2)} cartoletas`, labelB: k => `Igor: ${fmt(pi[k], 2)} cartoletas` });
+}
+
+// ---- Retrospectiva: Wrapped e medalhas (os dados vem prontos do build, os mesmos das imagens) ----
+{
+  const R = DATA.retro, versao = META.ultima;
+  $('retroLede').textContent = `${N >= META.total ? 'A temporada' : 'A temporada até agora'}, em números. Cada cartão também existe como imagem pronta para mandar no WhatsApp.`;
+  const item = (rot, val, sub, cl) => `<div class="wr-item"><div class="rot">${rot}</div><div class="val">${cl && CAMISAS[cl] ? `<img src="${esc(CAMISAS[cl])}" alt="" width="30" height="30">` : ''}<span>${val}</span></div>${sub ? `<div class="sub">${sub}</div>` : ''}</div>`;
+  $('wrapped').innerHTML = ['c', 'i'].map(q => {
+    const p = R.pessoas[q];
+    return `<article class="wr ${q}">
+      <div class="wr-top"><i class="sh ${q}"></i><div><small>Retrospectiva ${META.temporada}</small><b>${esc(p.time)}</b></div></div>
+      <div class="wr-pers"><small>O personagem do ano</small><strong>${esc(p.personagem)}</strong><p>${esc(p.personagem_desc)}</p></div>
+      <div class="wr-itens">
+        ${item('Pontos no ano', fmt(p.total), `em ${p.rodadas} rodadas`)}
+        ${item('Rodadas vencidas', p.vitorias, 'no confronto direto')}
+        ${item('Jogador do ano', esc(p.jogador.nome), `${fmt(p.jogador.pts)} pontos em ${p.jogador.jogos} jogos`, p.jogador.clube)}
+        ${item('Capitão do ano', esc(p.capitao.nome), `${fmt(p.capitao.total)} pontos na ${p.capitao.rodada}ª`, p.capitao.clube)}
+        ${p.capitao_fav ? item('Capitão favorito', esc(p.capitao_fav.nome), `${p.capitao_fav.vezes} vezes com a braçadeira`) : ''}
+        ${p.clube ? item('Clube favorito', esc(p.clube.clube), `${p.clube.vezes} escalações`, p.clube.clube) : ''}
+        ${item('Melhor rodada', fmt(p.melhor_rodada.pts), `na ${p.melhor_rodada.rodada}ª rodada`)}
+        ${item('Pior rodada', fmt(p.pior_rodada.pts), `na ${p.pior_rodada.rodada}ª rodada`)}
+        ${item('Mês mais forte', esc(p.mes_forte.mes), `${fmt(p.mes_forte.media)} pontos por rodada`)}
+        ${item('Mês mais fraco', esc(p.mes_fraco.mes), `${fmt(p.mes_fraco.media)} pontos por rodada`)}
+        ${item('Cartoletas gastas', fmt(p.cartoletas, 0), 'somando todas as escalações')}
+        ${item('Medalhas', p.medalhas, `de ${R.medalhas.length} em disputa`)}
+      </div>
+      <a class="wr-share" href="wrapped/${q === 'c' ? 'carlos' : 'igor'}.png?v=${versao}" target="_blank" rel="noopener" download="retrospectiva-${META.temporada}-${q === 'c' ? 'carlos' : 'igor'}.png">Abrir a imagem para compartilhar</a>
+    </article>`;
+  }).join('');
+
+  const mc = R.medalhas.filter(m => m.dono === 'c').length, mi = R.medalhas.filter(m => m.dono === 'i').length, mx = R.medalhas.filter(m => m.dono === 'x').length;
+  $('medLede').textContent = `Das ${R.medalhas.length} medalhas, Carlos leva ${mc} e Igor leva ${mi}${mx ? `, e ${mx === 1 ? 'uma fica' : mx + ' ficam'} com os dois` : ''}. Algumas não são exatamente um elogio.`;
+  const cores = { c: ['#2f62e8', '#3fb4ff'], i: ['#111', '#f2c230'], x: ['#d9302a', '#ff8a80'] };
+  const icone = q => `<svg viewBox="0 0 52 64" aria-hidden="true"><path d="M14 0h10l6 22H20z" fill="${cores[q][0]}"/><path d="M38 0H28l-6 22h10z" fill="${cores[q][1]}"/><circle cx="26" cy="42" r="19" fill="${cores[q][1]}" stroke="${cores[q][0]}" stroke-width="4"/><circle cx="26" cy="42" r="11" fill="none" stroke="${cores[q][0]}" stroke-width="2" opacity=".6"/></svg>`;
+  $('medList').innerHTML = R.medalhas.map(m => `<div class="med">${icone(m.dono)}<b>${esc(m.nome)}</b><span class="desc">${esc(m.desc)}</span>
+    <span class="dono">${m.dono === 'x' ? '<span class="pill" style="background:var(--red);color:#fff">Os dois</span>' : m.dono === 'c' ? '<span class="pill c">Carlos</span>' : '<span class="pill i">Igor</span>'}</span>
+    <div class="vals"><span class="c">Carlos ${esc(m.c)}</span><span class="i">Igor ${esc(m.i)}</span></div></div>`).join('');
+}
+
+// ---- Duelo: escolhas divergentes, exclusivos e mapa de calor (calculados das escalacoes) ----
+{
+  const ESC = DATA.extras.escalacoes;
+  const POSS = [['GOL', 'Goleiro'], ['LAT', 'Laterais'], ['ZAG', 'Zagueiros'], ['MEI', 'Meias'], ['ATA', 'Atacantes'], ['TEC', 'Técnico']];
+  const media = arr => arr.reduce((s, a) => s + a.pts, 0) / arr.length;
+  const nomes = arr => arr.map(a => a.n).join(' e ');
+  const div = Object.fromEntries(POSS.map(([p]) => [p, { n: 0, c: 0, i: 0, e: 0 }]));
+  const melhor = { c: null, i: null };
+  const ex = { c: { pts: 0, n: 0, bonus: 0, jog: {} }, i: { pts: 0, n: 0, bonus: 0, jog: {} } };
+  let comum = 0;
+  const calor = { GOL: [], LAT: [], ZAG: [], MEI: [], ATA: [], TEC: [], CAP: [] };
+  for (let k = 0; k < N; k++) {
+    const lc = ESC.carlos[k], li = ESC.igor[k];
+    const idC = new Set(lc.atletas.map(a => a.i)), idI = new Set(li.atletas.map(a => a.i));
+    POSS.forEach(([p]) => {
+      const ec = lc.atletas.filter(a => a.p === p && !idI.has(a.i)), ei = li.atletas.filter(a => a.p === p && !idC.has(a.i));
+      const soma = (l) => l.atletas.filter(a => a.p === p).reduce((s, a) => s + a.pts, 0);
+      calor[p].push(soma(lc) - soma(li));
+      if (!ec.length || !ei.length) return;
+      const mc = media(ec), mi = media(ei), d = div[p];
+      d.n++; if (mc > mi) d.c++; else if (mi > mc) d.i++; else d.e++;
+      const reg = { r: k + 1, p, ec: nomes(ec), ei: nomes(ei), mc, mi };
+      if (mc - mi > 0 && (!melhor.c || mc - mi > melhor.c.mc - melhor.c.mi)) melhor.c = reg;
+      if (mi - mc > 0 && (!melhor.i || mi - mc > melhor.i.mi - melhor.i.mc)) melhor.i = reg;
+    });
+    const capC = lc.atletas.find(a => a.cap), capI = li.atletas.find(a => a.cap);
+    calor.CAP.push((capC ? capC.pts / 2 : 0) - (capI ? capI.pts / 2 : 0));
+    [['c', lc, idI], ['i', li, idC]].forEach(([q, l, outros]) => {
+      l.atletas.forEach(a => {
+        if (a.cap) ex[q].bonus += a.pts / 2;
+        if (outros.has(a.i)) return;
+        ex[q].pts += a.pts; ex[q].n++;
+        const j = ex[q].jog[a.i] = ex[q].jog[a.i] || { nome: a.n, pos: a.p, clube: a.c, jogos: 0, pts: 0 };
+        j.jogos++; j.pts += a.pts;
+      });
+    });
+    comum += lc.atletas.filter(a => idI.has(a.i)).reduce((s, a) => s + a.pts, 0);
+  }
+
+  // Escolhas divergentes
+  const tot = Object.values(div).reduce((s, d) => ({ n: s.n + d.n, c: s.c + d.c, i: s.i + d.i, e: s.e + d.e }), { n: 0, c: 0, i: 0, e: 0 });
+  const pct = (v, n) => n ? fmt(100 * v / n, 0) + '%' : '—';
+  const melhorPos = q => { const l = POSS.filter(([p]) => div[p].n >= 5).map(([p, nome]) => [nome, div[p][q] / div[p].n]).sort((a, b) => b[1] - a[1]); return l[0] || null; };
+  const bpC = melhorPos('c'), bpI = melhorPos('i');
+  $('divStats').innerHTML =
+    statVs('Decisões que cada um acertou', tot.c, tot.i, `De ${tot.n} vezes em que vocês escalaram jogadores diferentes na mesma posição${tot.e ? `, com ${tot.e} empates` : ''}`, 0) +
+    statVs('Taxa de acerto', pct(tot.c, tot.n), pct(tot.i, tot.n), 'Quem teve a melhor média nas posições em que vocês discordaram') +
+    statVs('Onde cada um mais acerta', bpC ? bpC[0] : '—', bpI ? bpI[0] : '—', `Posição com a maior taxa de acerto, com 5 decisões ou mais${bpC && bpI ? `: ${pct(bpC[1], 1)} e ${pct(bpI[1], 1)}` : ''}`);
+  $('divTable').innerHTML = '<thead><tr><th>Posição</th><th class="n">Decisões</th><th class="n">Carlos</th><th class="n">Igor</th><th class="n">Empates</th><th class="n">Acerta mais</th></tr></thead><tbody>' +
+    POSS.map(([p, nome]) => { const d = div[p]; return `<tr><td>${nome}</td><td class="n">${d.n}</td><td class="n">${d.c}</td><td class="n">${d.i}</td><td class="n muted">${d.e}</td><td class="n">${d.c === d.i ? '<span class="muted">empate</span>' : d.c > d.i ? `<span class="pill c">Carlos ${pct(d.c, d.n)}</span>` : `<span class="pill i">Igor ${pct(d.i, d.n)}</span>`}</td></tr>`; }).join('') + '</tbody>';
+  const posNome = Object.fromEntries(POSS);
+  const caso = (q, r) => r ? `<div class="panel"><h3 class="${q}"><i class="sh ${q}"></i>Maior acerto do ${q === 'c' ? 'Carlos' : 'Igor'}</h3><p>Na ${r.r}ª rodada, em ${posNome[r.p].toLowerCase()}, o Carlos foi de <b>${esc(r.ec)}</b> (${fmt(r.mc)} de média) e o Igor foi de <b>${esc(r.ei)}</b> (${fmt(r.mi)}).</p></div>` : '';
+  $('divMelhores').innerHTML = caso('c', melhor.c) + caso('i', melhor.i);
+
+  // Exclusivos
+  const gap = I.total - C.total, dEx = ex.i.pts - ex.c.pts, dBon = ex.i.bonus - ex.c.bonus;
+  const lider = gap >= 0 ? 'Igor' : 'Carlos';
+  $('exLede').textContent = `Jogador escalado pelos dois rende o mesmo para os dois, então não muda a disputa. Neste ano, os jogadores em comum somaram ${fmt(comum)} pontos para cada um. A diferença de ${fmt(Math.abs(gap))} pontos a favor do ${lider} vem de dois lugares: ${fmt(Math.abs(dEx))} dos jogadores exclusivos${Math.sign(dEx) !== Math.sign(gap) && dEx ? ' (contra)' : ''} e ${fmt(Math.abs(dBon))} do bônus do capitão${Math.sign(dBon) !== Math.sign(gap) && dBon ? ' (contra)' : ''}.`;
+  $('exStats').innerHTML =
+    statVs('Pontos de exclusivos', ex.c.pts, ex.i.pts, `Jogadores que só um dos dois tinha na rodada: ${ex.c.n} e ${ex.i.n} escalações`) +
+    statVs('Média por exclusivo', ex.c.n ? ex.c.pts / ex.c.n : 0, ex.i.n ? ex.i.pts / ex.i.n : 0, 'Pontos por escalação de jogador exclusivo', 2) +
+    statVs('Bônus do capitão', ex.c.bonus, ex.i.bonus, 'O 1,5x também conta quando o capitão é um jogador em comum');
+  const tabEx = q => '<thead><tr><th>Jogador</th><th class="n">Jogos</th><th class="n">Pontos</th></tr></thead><tbody>' +
+    Object.values(ex[q].jog).sort((a, b) => b.pts - a.pts).slice(0, 8).map(j => `<tr><td><span class="pos">${esc(j.pos)}</span>${mini(j.clube)}${esc(j.nome)} <span class="muted">${esc(j.clube)}</span></td><td class="n">${j.jogos}</td><td class="n">${fmt(j.pts)}</td></tr>`).join('') + '</tbody>';
+  $('exC').innerHTML = tabEx('c'); $('exI').innerHTML = tabEx('i');
+
+  // Mapa de calor
+  const linhas = POSS.concat([['CAP', 'Capitão (bônus)']]);
+  const maxAbs = Math.max(1, ...linhas.flatMap(([p]) => calor[p].map(Math.abs)));
+  const cor = v => { const a = Math.min(1, Math.abs(v) / maxAbs); return v > 0 ? `rgba(47, 98, 232, ${0.15 + 0.85 * a})` : v < 0 ? `rgba(232, 177, 15, ${0.15 + 0.85 * a})` : 'var(--surface-2)'; };
+  const g = $('calorGrid');
+  // o saldo do ano vem logo depois do nome, para aparecer mesmo quando a grade precisa rolar
+  g.style.gridTemplateColumns = `auto auto repeat(${N}, 20px)`;
+  let html = '<span></span><span class="cab" style="text-align:right;padding-right:8px">no ano</span>' + Array.from({ length: N }, (_, k) => `<span class="cab">${(k + 1) % 5 === 0 || k === 0 ? k + 1 : ''}</span>`).join('');
+  linhas.forEach(([p, nome]) => {
+    const total = calor[p].reduce((s, v) => s + v, 0);
+    html += `<span class="rot">${nome}</span><span class="tot ${total > 0 ? 'c' : total < 0 ? 'i' : ''}" style="padding:0 10px 0 0">${total === 0 ? '0' : (total > 0 ? 'Carlos +' : 'Igor +') + fmt(Math.abs(total))}</span>` +
+      calor[p].map((v, k) => `<span class="cel" style="background:${cor(v)}" data-tip="Rodada ${k + 1}, ${nome.toLowerCase()}: ${v === 0 ? 'empate' : (v > 0 ? 'Carlos' : 'Igor') + ' +' + fmt(Math.abs(v))}"></span>`).join('');
+  });
+  g.innerHTML = html;
+  g.querySelectorAll('.cel').forEach(c => bindTip(c, esc(c.dataset.tip)));
+}
+
 // ---- Tabelas grandes viram blocos recolhiveis (fechados no celular, abertos no computador) ----
 {
   const celular = window.matchMedia('(max-width: 640px)').matches;
   ['monthTable', 'capTopC', 'capTopI', 'luxoC', 'luxoI', 'golC', 'golI', 'buyC', 'buyI', 'flopC', 'flopI',
-   'corC', 'corI', 'palC', 'palI', 'escC', 'escI', 'actC', 'actI', 'esqTable', 'clubTable'].forEach(id => {
+   'corC', 'corI', 'palC', 'palI', 'escC', 'escI', 'actC', 'actI', 'esqTable', 'clubTable', 'exC', 'exI'].forEach(id => {
     const tabela = $(id), painel = tabela && tabela.closest('.panel');
     const titulo = painel && painel.querySelector('h3');
     if (!titulo || painel.querySelector('details')) return;
@@ -1261,7 +1518,7 @@ function drawAll() {
   grouped('roundChart', C.rodadas.map(r => r.pontos), I.rodadas.map(r => r.pontos), k => `Carlos: ${fmt(C.rodadas[k].pontos)}`, k => `Igor: ${fmt(I.rodadas[k].pontos)}`);
   const cc = C.capitao.rodadas, ci = I.capitao.rodadas;
   grouped('capChart', cc.map(c => c.total), ci.map(c => c.total), k => `Carlos: ${esc(cc[k].nome)} ${fmt(cc[k].pts)} vira ${fmt(cc[k].total)}`, k => `Igor: ${esc(ci[k].nome)} ${fmt(ci[k].pts)} vira ${fmt(ci[k].total)}`, 220);
-  drawIdeal(); drawCor(); drawHist();
+  drawIdeal(); drawCor(); drawHist(); drawSeries();
 }
 drawAll();
 let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(drawAll, 150); });
@@ -1269,9 +1526,11 @@ let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTime
 // ---- Abas: cada aba mostra algumas secoes; o endereco guarda a aba aberta (#aba-...) ----
 const ABAS = [
   { id: 'resumo', nome: 'Resumo', secoes: ['resumo', 'quesitos'] },
+  { id: 'retro', nome: 'Retrospectiva', secoes: ['retro', 'medalhas'] },
   { id: 'campeonato', nome: 'Campeonato', secoes: ['campeonato', 'projecao'] },
   { id: 'momentos', nome: 'Momentos', secoes: ['momentos'] },
   { id: 'rodadas', nome: 'Rodada a rodada', secoes: ['rodada'] },
+  { id: 'duelo', nome: 'Duelo', secoes: ['divergentes', 'exclusivos', 'calor'] },
   { id: 'escolhas', nome: 'Capitão e luxo', secoes: ['capitao', 'luxo'] },
   { id: 'elenco', nome: 'Elenco', secoes: ['setores', 'gols', 'jogadores'] },
   { id: 'mercado', nome: 'Mercado', secoes: ['custo', 'ideal'] },

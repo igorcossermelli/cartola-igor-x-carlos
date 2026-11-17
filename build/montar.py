@@ -60,7 +60,7 @@ def quesitos(o):
         ('Aproveitamento do time ideal (%)', 'time ideal', XC['ideal']['media'], XI['ideal']['media'], 1),
         ('Pontos de jogadores do Corinthians', 'pontos do Corinthians', C['corinthians']['pts'], I['corinthians']['pts'], 1),
         ('Patrimônio final (cartoletas)', 'patrimônio', ult(C)['patrimonio'], ult(I)['patrimonio'], 2),
-        ('Posição no ranking geral (menor é melhor)', 'ranking geral', ult(C)['ranking'], ult(I)['ranking'], -1),
+        ('Melhor nível alcançado no Cartola', 'nível no Cartola', C['melhor_nivel'], I['melhor_nivel'], 0),
     ]
     out = []
     for lbl, curto, a, b, d in lista:
@@ -68,6 +68,128 @@ def quesitos(o):
         out.append({'lbl': lbl, 'curto': curto, 'a': a, 'b': b, 'd': d,
                     'win': ('c' if (a < b if menor else a > b) else 'i' if (b < a if menor else b > a) else '')})
     return out
+
+
+# ---------- Retrospectiva: Wrapped de cada um e medalhas (o site e as imagens usam isto) ----------
+MESES_LONGOS = {'Jan': 'janeiro', 'Fev': 'fevereiro', 'Mar': 'março', 'Abr': 'abril', 'Mai': 'maio', 'Jun': 'junho',
+                'Jul': 'julho', 'Ago': 'agosto', 'Set': 'setembro', 'Out': 'outubro', 'Nov': 'novembro', 'Dez': 'dezembro'}
+
+
+def retrospectiva(o):
+    C, I = o['times']['carlos'], o['times']['igor']
+    XC, XI = o['extras']['times']['carlos'], o['extras']['times']['igor']
+    T = {'c': (C, XC, 'carlos', 'Carlos', 'RB Papai'), 'i': (I, XI, 'igor', 'Igor', 'Igor Pro F.C')}
+    ppc = lambda t, x: t['total'] / x['custo']['total'] if x['custo']['total'] else 0
+
+    # Medalhas: quem tem o numero melhor leva; empate e dos dois
+    meds = []
+
+    def medalha(mid, nome, desc, a, b, d=0, maior=True, minimo=None, sufixo=''):
+        if minimo is not None and max(a, b) < minimo:
+            return
+        dono = 'x' if a == b else (('c' if a > b else 'i') if maior else ('c' if a < b else 'i'))
+        meds.append({'id': mid, 'nome': nome, 'desc': desc, 'dono': dono,
+                     'c': fmt(a, d) + sufixo, 'i': fmt(b, d) + sufixo})
+    medalha('mitou', 'Mitou', 'Rodadas com 100 pontos ou mais', C['mitadas'], I['mitadas'], minimo=1)
+    medalha('capitao', 'Capitão de ouro', 'Mais pontos com a braçadeira', C['capitao']['total_bruto'], I['capitao']['total_bruto'], 1)
+    medalha('banco', 'Rei do banco', 'Mais pontos ganhos com o reserva de luxo', C['luxo']['ganho_total'], I['luxo']['ganho_total'], 1)
+    medalha('muralha', 'Muralha', 'Mais jogos sem sofrer gol', XC['scouts']['sg'], XI['scouts']['sg'])
+    medalha('artilharia', 'Artilharia', 'Mais gols dos jogadores escalados', XC['scouts']['gols'], XI['scouts']['gols'])
+    medalha('garcom', 'Garçom', 'Mais assistências dos jogadores escalados', XC['scouts']['assist'], XI['scouts']['assist'])
+    medalha('mao', 'Mão de vaca', 'Mais pontos por cartoleta gasta', ppc(C, XC), ppc(I, XI), 3)
+    medalha('patrao', 'Patrão', 'Maior patrimônio em cartoletas', C['rodadas'][-1]['patrimonio'], I['rodadas'][-1]['patrimonio'], 2)
+    medalha('embalado', 'Embalado', 'Maior sequência de rodadas vencidas', C['maior_sequencia'], I['maior_sequencia'], minimo=2)
+    medalha('faro', 'Faro de craque', 'Mais rodadas com o maior pontuador do Cartola no time', XC['ideal']['teve_destaque'], XI['ideal']['teve_destaque'], minimo=1)
+    medalha('timao', 'Corintiano raiz', 'Mais pontos com jogadores do Corinthians', C['corinthians']['pts'], I['corinthians']['pts'], 1, minimo=0.1)
+    medalha('elite', 'Elite', 'Melhor nível alcançado no Cartola', C['melhor_nivel'], I['melhor_nivel'], minimo=1)
+    medalha('fiel', 'Fiel ao elenco', 'Menos jogadores diferentes usados', C['atletas_diferentes'], I['atletas_diferentes'], maior=False)
+    medalha('dividido', 'Coração dividido', 'Mais palmeirenses escalados', XC['palmeiras']['escalacoes'], XI['palmeiras']['escalacoes'], minimo=1)
+    medalha('lanterna', 'Lanterna', 'A pior rodada do ano', min(r['pontos'] for r in C['rodadas']), min(r['pontos'] for r in I['rodadas']), 1, maior=False)
+
+    pessoas = {}
+    for q, (t, x, chave, nome, time) in T.items():
+        ot, ox = T['i' if q == 'c' else 'c'][:2]
+        outro = T['i' if q == 'c' else 'c'][3]
+        fiel = t['atletas_diferentes'] <= ot['atletas_diferentes']
+        caro = x['custo']['medio'] >= ox['custo']['medio']
+        titulo = 'O %s %s' % ('Fiel' if fiel else 'Rodízio', 'Investidor' if caro else 'Econômico')
+        desc = ('Usou %d jogadores diferentes, %s que o %s, ' % (t['atletas_diferentes'], 'menos' if fiel else 'mais', outro) +
+                'e montou times %s: %s cartoletas por rodada, em média.' % ('mais caros' if caro else 'mais baratos', fmt(x['custo']['medio'])))
+        medias = [(m['mes'], m[chave] / len(m['rodadas'])) for m in o['meses'] if m['rodadas']]
+        forte, fraco = max(medias, key=lambda m: m[1]), min(medias, key=lambda m: m[1])
+        rods = t['rodadas']
+        mr, pr = max(rods, key=lambda r: r['pontos']), min(rods, key=lambda r: r['pontos'])
+        j = t['mais_pontos'][0]
+        cap = t['capitao']['melhor']
+        fav = t['capitao']['mais_escolhidos'][0] if t['capitao']['mais_escolhidos'] else None
+        pessoas[q] = {
+            'nome': nome, 'time': time, 'personagem': titulo, 'personagem_desc': desc,
+            'total': t['total'], 'vitorias': o['vitorias'][chave], 'rodadas': len(rods),
+            'jogador': {'nome': j['nome'], 'clube': j['clube'], 'pts': j['pts'], 'jogos': j['jogos']},
+            'capitao': {'nome': cap['nome'], 'clube': cap.get('clube', ''), 'total': cap['total'], 'rodada': cap['rodada']},
+            'capitao_fav': {'nome': fav['nome'], 'vezes': fav['vezes']} if fav else None,
+            'melhor_rodada': {'rodada': mr['rodada'], 'pts': mr['pontos']}, 'pior_rodada': {'rodada': pr['rodada'], 'pts': pr['pontos']},
+            'mes_forte': {'mes': MESES_LONGOS.get(forte[0], forte[0]), 'media': round(forte[1], 2)},
+            'mes_fraco': {'mes': MESES_LONGOS.get(fraco[0], fraco[0]), 'media': round(fraco[1], 2)},
+            'cartoletas': x['custo']['total'], 'clube': t['clubes'][0] if t['clubes'] else None,
+            'atletas': t['atletas_diferentes'],
+            'medalhas': sum(1 for m in meds if m['dono'] in (q, 'x')),
+        }
+    return {'pessoas': pessoas, 'medalhas': meds}
+
+
+def caber(draw, texto, fonte, largura):
+    """Corta o texto com reticencias ate caber na largura."""
+    if draw.textlength(texto, font=fonte) <= largura:
+        return texto
+    while texto and draw.textlength(texto + '…', font=fonte) > largura:
+        texto = texto[:-1]
+    return texto.rstrip() + '…'
+
+
+def imagem_wrapped(o, q, destino):
+    """Cartao vertical (1080 x 1350) com a retrospectiva de uma pessoa, para mandar no WhatsApp."""
+    from PIL import Image, ImageDraw, ImageFont
+    p = o['retro']['pessoas'][q]
+    W, H = 1080, 1350
+    img = Image.new('RGB', (W, H), '#0d1424')
+    d = ImageDraw.Draw(img)
+    for yy in range(H):
+        f = yy / H
+        cor = (int(47 - 26 * f), int(98 - 52 * f), int(232 - 120 * f)) if q == 'c' else (int(28 - 20 * f),) * 3
+        d.line([(0, yy), (W, yy)], fill=cor)
+    destaque = '#3fb4ff' if q == 'c' else '#f2c230'
+    claro = (220, 232, 255) if q == 'c' else (242, 228, 180)
+    fonte = lambda n, peso='ExtraBold': ImageFont.truetype(os.path.join(AQUI, 'fontes', 'BarlowCondensed-%s.ttf' % peso), n)
+    d.rectangle([0, 0, W, 14], fill='#d9302a')
+    pts, mascara, cruz = escudo(d, 70, 70, 110, '#2f62e8' if q == 'c' else '#111111', destaque, '#d9302a')
+    img.paste(cruz, (0, 0), Image.composite(cruz, Image.new('RGBA', (W, H)), mascara))
+    d = ImageDraw.Draw(img)
+    d.line(pts + [pts[0]], fill='#d9302a', width=7, joint='curve')
+    d.text((210, 78), 'RETROSPECTIVA %s' % o['temporada'], font=fonte(36, 'SemiBold'), fill=claro)
+    d.text((210, 116), p['time'].upper(), font=fonte(72), fill='white')
+    d.text((70, 250), 'O PERSONAGEM DO ANO', font=fonte(30, 'SemiBold'), fill=claro)
+    d.text((70, 288), caber(d, p['personagem'].upper(), fonte(96), W - 140), font=fonte(96), fill=destaque)
+    blocos = [
+        ('PONTOS NO ANO', fmt(p['total']), 'em %d rodadas' % p['rodadas']),
+        ('RODADAS VENCIDAS', str(p['vitorias']), 'no confronto direto'),
+        ('JOGADOR DO ANO', p['jogador']['nome'], '%s pontos (%s)' % (fmt(p['jogador']['pts']), p['jogador']['clube'])),
+        ('CAPITÃO DO ANO', p['capitao']['nome'], '%s pontos na %dª rodada' % (fmt(p['capitao']['total']), p['capitao']['rodada'])),
+        ('MELHOR RODADA', fmt(p['melhor_rodada']['pts']), 'na %dª rodada' % p['melhor_rodada']['rodada']),
+        ('MÊS MAIS FORTE', p['mes_forte']['mes'].capitalize(), '%s pontos por rodada' % fmt(p['mes_forte']['media'])),
+        ('CARTOLETAS GASTAS', fmt(p['cartoletas'], 0), 'somando todas as escalações'),
+        ('MEDALHAS', str(p['medalhas']), 'de %d em disputa' % len(o['retro']['medalhas'])),
+    ]
+    x0, y0, cw, ch = 70, 440, (W - 140 - 30) // 2, 190
+    for k, (rot, val, sub) in enumerate(blocos):
+        x, y = x0 + (k % 2) * (cw + 30), y0 + (k // 2) * (ch + 20)
+        d.rounded_rectangle([x, y, x + cw, y + ch], radius=18, fill=(22, 40, 110) if q == 'c' else (34, 34, 34))
+        d.text((x + 26, y + 22), rot, font=fonte(26, 'SemiBold'), fill=claro)
+        d.text((x + 26, y + 58), caber(d, val, fonte(66), cw - 52), font=fonte(66), fill='white')
+        d.text((x + 26, y + 136), caber(d, sub, fonte(28, 'SemiBold'), cw - 52), font=fonte(28, 'SemiBold'), fill=claro)
+    d.rectangle([0, H - 70, W, H], fill='#0d1424')
+    d.text((W // 2, H - 35), 'igorcossermelli.github.io/cartola-igor-x-carlos', font=fonte(30, 'SemiBold'), fill='#9aa6bd', anchor='mm')
+    img.save(destino, 'PNG', optimize=True)
 
 
 # ---------- Imagem de previa (1200 x 630) ----------
@@ -176,6 +298,7 @@ def renderizar(o, pasta_saida, base, links, atual, aviso, hash_curto):
     """Gera index.html e og.png de uma temporada. base: caminho ate a raiz do site a partir da pagina."""
     ultima = o['ultima']
     o = dict(o)
+    o['retro'] = retrospectiva(o)
     o['meta'] = {'ultima': ultima, 'total': TOTAL, 'restantes': (TOTAL - ultima) if atual else 0,
                  'atual': atual, 'temporada': o['temporada'], 'aviso': aviso,
                  'temporadas': sorted(links, reverse=True), 'links': {str(k): v for k, v in links.items()},
@@ -195,6 +318,9 @@ def renderizar(o, pasta_saida, base, links, atual, aviso, hash_curto):
     with open(os.path.join(pasta_saida, 'index.html'), 'w', encoding='utf-8', newline='\n') as f:
         f.write(t)
     imagem_previa(o, o['quesitos'], os.path.join(pasta_saida, 'og.png'))
+    os.makedirs(os.path.join(pasta_saida, 'wrapped'), exist_ok=True)
+    for q, nome in [('c', 'carlos'), ('i', 'igor')]:
+        imagem_wrapped(o, q, os.path.join(pasta_saida, 'wrapped', '%s.png' % nome))
     return qc, qi
 
 

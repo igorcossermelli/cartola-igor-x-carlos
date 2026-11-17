@@ -145,8 +145,14 @@ for key, tid, dono, nome in TIMES:
             j['pts'] += a['pontos_num']
             if a['pontos_num'] > j['max']:
                 j['max'], j['max_rodada'] = a['pontos_num'], r
+        # O "ranking" da API e mensal e por nivel: ranking_id e o nivel do cartoleiro (maior e melhor)
+        # e posicao e a colocacao dentro do ranking daquele nivel no mes. Posicoes de niveis diferentes
+        # nao se comparam, entao o site usa o nivel.
+        rk = d.get('ranking') or {}
         rod.append({'rodada': r, 'pontos': r2(d['pontos']), 'acum': r2(d['pontos_campeonato']),
-                    'patrimonio': r2(d['patrimonio']), 'ranking': d['ranking']['atual'].get('posicao'),
+                    'patrimonio': r2(d['patrimonio']),
+                    'nivel': (rk.get('atual') or {}).get('ranking_id'), 'mes_nivel': (rk.get('atual') or {}).get('mes'),
+                    'melhor_nivel': rk.get('melhor_ranking_id'),
                     'esquema': esquemas.get(d.get('esquema_id'), '?'), 'cap_pts': r2(cap_pts)})
 
     for j in jog.values():
@@ -191,6 +197,7 @@ for key, tid, dono, nome in TIMES:
         'corinthians': cor_block(key, tid, cap_rows, luxo_rows, sum(pts)),
         'mitadas': sum(1 for p in pts if p >= 100),
         'atletas_diferentes': len(jl),
+        'melhor_nivel': max([x['melhor_nivel'] or 0 for x in rod] + [x['nivel'] or 0 for x in rod]),
     }
 
 # Comparacoes entre os dois
