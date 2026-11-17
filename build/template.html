@@ -64,7 +64,7 @@
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.55 var(--body); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.55 var(--body); padding-bottom: env(safe-area-inset-bottom, 0px); }
 .wrap { max-width: 1080px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 h1, h2, h3, .num, .eyebrow { font-family: var(--display); }
 h2 { font-size: clamp(32px, 5.4vw, 52px); line-height: .95; font-weight: 900; text-transform: uppercase; letter-spacing: .005em; margin: 0; text-wrap: balance; }
@@ -112,11 +112,25 @@ a { color: inherit; }
 
 nav.jump { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); border-bottom: 1px solid var(--rule); }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 11; background: var(--surface); }
-nav.jump .wrap { display: flex; gap: 6px; overflow-x: auto; padding-block: 10px; scrollbar-width: none; }
-nav.jump a { flex: none; font-family: var(--display); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: 14px; text-decoration: none; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--rule); }
-nav.jump a:hover, nav.jump a:focus-visible { border-color: var(--red); color: var(--red); outline: none; }
+nav.jump { box-shadow: 0 2px 10px rgba(14, 22, 38, .06); }
+nav.jump .wrap { overflow-x: auto; scrollbar-width: none; }
+nav.jump .wrap::-webkit-scrollbar { display: none; }
+.abas { display: flex; gap: 2px; }
+.aba { flex: none; appearance: none; border: 0; background: none; cursor: pointer; color: var(--mute); font: 700 16px/1 var(--display); letter-spacing: .06em; text-transform: uppercase; padding: 16px 14px 13px; border-bottom: 4px solid transparent; white-space: nowrap; }
+.aba:hover { color: var(--ink); }
+.aba[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--red); }
+.aba:focus-visible { outline: 2px solid var(--red); outline-offset: -6px; border-radius: 6px; }
+@media (max-width: 640px) {
+  nav.jump .wrap { -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); }
+  .aba { font-size: 15px; padding: 14px 11px 11px; }
+}
+.pager { display: flex; justify-content: space-between; gap: 12px; padding-block: 40px 8px; }
+.pg { appearance: none; cursor: pointer; display: grid; gap: 2px; text-align: left; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--rule); background: var(--surface); color: var(--ink); font: 800 20px/1.1 var(--display); text-transform: uppercase; letter-spacing: .03em; max-width: 48%; }
+.pg small { font: 600 12px var(--body); letter-spacing: .1em; color: var(--mute); }
+.pg.prox { margin-left: auto; text-align: right; }
+.pg:hover, .pg:focus-visible { border-color: var(--red); outline: none; }
 
-section { padding-block: 56px 8px; scroll-margin-top: 56px; }
+section { padding-block: 44px 8px; scroll-margin-top: 64px; }
 section > .wrap { display: grid; gap: 20px; }
 .lede { color: var(--mute); font-size: 17px; }
 .panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 18px; min-width: 0; }
@@ -181,7 +195,8 @@ td.n, th.n { text-align: right; white-space: nowrap; }
 .gain { color: var(--good); font-weight: 600; }
 
 /* Faixas de clube */
-.band { margin-top: 56px; padding-block: 0; color: var(--night-ink); }
+.band { margin-top: 32px; padding-block: 0; color: var(--night-ink); }
+#corinthians { margin-top: 0; }
 .band .wrap { padding-block: 48px; }
 .band .lede, .band .stat .k, .band .stat .s, .band .muted, .band th, .band .legend { color: var(--bandmute); }
 .band .chart text { fill: var(--bandmute); }
@@ -224,6 +239,38 @@ details.dobra > summary h3 { margin: 0; }
 details.dobra[open] > summary { margin-bottom: 8px; }
 details.dobra > summary:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; border-radius: 4px; }
 .band details.dobra > summary::after { border-color: var(--bandmute); }
+
+/* E se...? */
+.cen { display: grid; gap: 6px; align-content: start; }
+.cen-placar { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; font: 900 clamp(26px, 11cqi, 42px)/1 var(--display); font-variant-numeric: tabular-nums; margin-top: 4px; }
+.cen-placar .x { color: var(--mute); font-size: .55em; }
+.cen-placar .lose { opacity: .45; }
+.cen-linha { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 15px; }
+.cen-flag { font: 800 12px var(--display); letter-spacing: .1em; text-transform: uppercase; background: var(--red); color: #fff; padding: 3px 8px; border-radius: 4px; }
+.lab h3 { margin-bottom: 2px; }
+.lab-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 24px; margin-top: 14px; }
+.lab-grupo { display: grid; gap: 6px; margin-bottom: 18px; }
+.lab-grupo .lbl { font-family: var(--display); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: 13px; color: var(--mute); }
+.lab-grupo label { font-size: 15px; }
+.lab-grupo input[type="range"] { width: 100%; accent-color: var(--red); margin: 0 0 6px; }
+.lab-checks, .lab-presets { display: flex; flex-wrap: wrap; gap: 6px; }
+.chk { display: inline-flex; align-items: center; gap: 6px; padding: 6px 11px; border: 1px solid var(--rule); border-radius: 999px; cursor: pointer; font-size: 15px; user-select: none; background: var(--surface); }
+.chk input { accent-color: var(--red); margin: 0; }
+.chk:has(input:checked) { border-color: var(--red); background: var(--surface-2); }
+.chk:has(input:focus-visible) { outline: 2px solid var(--red); outline-offset: 2px; }
+.btn-sm { font: 700 13px var(--display); letter-spacing: .06em; text-transform: uppercase; padding: 6px 11px; border-radius: 999px; border: 1px solid var(--rule); background: var(--surface); color: var(--ink); cursor: pointer; }
+.btn-sm:hover, .btn-sm:focus-visible { border-color: var(--red); color: var(--red); outline: none; }
+.lab-res { container-type: inline-size; align-self: start; display: grid; gap: 12px; background: var(--night); color: var(--night-ink); border-radius: 12px; padding: 20px; border-top: 5px solid var(--red); }
+.lab-res .lbl, .lab-res .muted { color: var(--night-mute); }
+.lab-placar { display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; font-family: var(--display); }
+.lab-placar > div { min-width: 0; }
+.lab-placar b { display: block; font-size: clamp(30px, 15cqi, 60px); font-weight: 900; line-height: 1; font-variant-numeric: tabular-nums; }
+.lab-placar .r { text-align: right; }
+.lab-placar .c { color: #8fb3ff; } .lab-placar .i { color: #f2c230; }
+.lab-placar .xx { color: var(--night-mute); font-size: 26px; padding-bottom: 6px; }
+.lab-veredito { font: 800 clamp(18px, 7cqi, 24px)/1.15 var(--display); text-transform: uppercase; letter-spacing: .03em; }
+.lab-res p { font-size: 15px; max-width: none; }
+@media (max-width: 760px) { .lab-grid { grid-template-columns: 1fr; } }
 
 /* Linha do tempo */
 .tl { list-style: none; margin: 0; padding: 0; position: relative; display: grid; gap: 18px; }
@@ -346,9 +393,9 @@ footer a { color: var(--night-ink); }
 </header>
 <div class="strip"><div class="wrap" id="boardSub"></div></div>
 
-<nav class="jump" aria-label="Seções">
+<nav class="jump" aria-label="Abas do site">
   <div class="wrap">
-    <a href="#quesitos">Quesitos</a><a href="#campeonato">Campeonato</a><a href="#momentos">Momentos</a><a href="#rodada">Rodada a rodada</a><a href="#capitao">Capitão</a><a href="#luxo">Reserva de luxo</a><a href="#setores">Setores</a><a href="#gols">Gols</a><a href="#custo">Custo</a><a href="#ideal">Time ideal</a><a href="#corinthians">Corinthians</a><a href="#palmeiras">Palmeiras</a><a href="#projecao">Projeção</a><a href="#jogadores">Jogadores</a>
+    <div class="abas" role="tablist" id="abas" aria-label="Abas do site"></div>
   </div>
 </nav>
 
@@ -554,6 +601,41 @@ footer a { color: var(--night-ink); }
     </div>
   </div>
 </section>
+
+<section id="ese">
+  <div class="wrap">
+    <div><div class="eyebrow">Simulações</div><h2>E se...?</h2></div>
+    <p class="lede">O que mudaria no placar com outras escolhas ou outras regras. Cada cenário mostra também o placar real, para comparar.</p>
+    <div class="grid2" id="eseCenarios"></div>
+    <div class="panel lab" id="lab">
+      <h3>Monte o seu "e se"</h3>
+      <p class="muted" style="font-size:15px">Escolha as rodadas, o que conta na pontuação e quantas rodadas ruins cada um pode descartar.</p>
+      <div class="lab-grid">
+        <div class="lab-ctl">
+          <div class="lab-grupo">
+            <span class="lbl">Rodadas</span>
+            <label for="labDe">Da rodada <b id="labDeV"></b></label>
+            <input type="range" id="labDe" min="1" step="1">
+            <label for="labAte">Até a rodada <b id="labAteV"></b></label>
+            <input type="range" id="labAte" min="1" step="1">
+            <div class="lab-presets" id="labPresets"></div>
+          </div>
+          <div class="lab-grupo">
+            <span class="lbl">O que conta na pontuação</span>
+            <div class="lab-checks" id="labChecks"></div>
+          </div>
+          <div class="lab-grupo">
+            <label for="labDesc" class="lbl">Descartar as piores rodadas de cada um: <b id="labDescV"></b></label>
+            <input type="range" id="labDesc" min="0" max="5" step="1" value="0">
+          </div>
+        </div>
+        <div class="lab-res" id="labRes" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap pager" id="pager"></div>
 
 <footer>
   <div class="wrap">
@@ -1027,8 +1109,7 @@ function drawCor() {
 
 // ---- Projecao ----
 if (!META.restantes) {
-  $('projecao').hidden = true;
-  document.querySelector('a[href="#projecao"]').hidden = true;
+  $('projecao').dataset.fora = '1'; // campeonato encerrado: as abas nunca mostram a projecao
 } else {
   const R = META.restantes;
   const igorLidera = PJ.vantagem >= 0;
@@ -1067,6 +1148,73 @@ function pairTable(a, b, key, label, top) {
 $('esqTable').innerHTML = pairTable(C.esquemas, I.esquemas, 'nome', 'Esquema (rodadas)');
 $('clubTable').innerHTML = pairTable(C.clubes, I.clubes, 'clube', 'Clube (escalações)', 10);
 
+// ---- E se...? ----
+{
+  const real = { c: C.total, i: I.total };
+  const somaCap = t => t.capitao.rodadas.reduce((s, c) => s + c.pts, 0);
+  function cenario(titulo, desc, vc, vi) {
+    const ganhaReal = real.i > real.c ? 'i' : 'c', ganha = vi > vc ? 'i' : vc > vi ? 'c' : '';
+    const nomeG = ganha === 'c' ? 'Carlos' : ganha === 'i' ? 'Igor' : '';
+    return `<div class="panel stat cen"><div class="k">${titulo}</div>
+      <div class="cen-placar"><span class="c ${ganha === 'i' ? 'lose' : ''}">${fmt(vc)}</span><span class="x">×</span><span class="i ${ganha === 'c' ? 'lose' : ''}">${fmt(vi)}</span></div>
+      <div class="cen-linha">${ganha ? `<span class="pill ${ganha}">${nomeG}</span> por ${fmt(Math.abs(vc - vi))} pontos` : 'Empate'}${ganha && ganha !== ganhaReal ? '<span class="cen-flag">O resultado vira</span>' : ''}</div>
+      <p class="s">${desc}</p>
+      <p class="s foot">Na vida real: Carlos ${fmt(real.c)} × ${fmt(real.i)} Igor</p></div>`;
+  }
+  const troca = (a, b) => a.total + 0.5 * (somaCap(b) - somaCap(a));
+  $('eseCenarios').innerHTML = [
+    cenario('Sem capitão', 'Ninguém ganha o bônus de 1,5x. Fica só o que os 12 escalados fizeram.', C.total - C.capitao.bonus_total, I.total - I.capitao.bonus_total),
+    cenario('Capitão sempre certo', 'Em toda rodada, a braçadeira vai para o jogador de linha que mais pontuou no próprio time.', C.total + capLost(C), I.total + capLost(I)),
+    cenario('Capitães trocados', 'Cada um recebe, rodada a rodada, os pontos do capitão que o outro escolheu.', troca(C, I), troca(I, C)),
+    cenario('Sem reserva de luxo', 'Tira o que o reserva de luxo rendeu a mais nas trocas que deram para medir.', C.total - C.luxo.ganho_total, I.total - I.luxo.ganho_total),
+    cenario('Sem o Corinthians', 'Os jogadores do Corinthians zeram, incluindo o bônus quando foram capitães.', C.total - C.corinthians.pts - C.corinthians.bonus_capitao, I.total - I.corinthians.pts - I.corinthians.bonus_capitao),
+    cenario('Sem o Palmeiras', 'Os jogadores do Palmeiras zeram, incluindo o bônus quando foram capitães.', C.total - XC.palmeiras.pts - 0.5 * XC.palmeiras.capitao_pts, I.total - XI.palmeiras.pts - 0.5 * XI.palmeiras.capitao_pts),
+  ].join('');
+
+  // Laboratorio: pontos de cada rodada separados por posicao e pelo bonus do capitao
+  const PARTES = [['GOL', 'Goleiro'], ['LAT', 'Laterais'], ['ZAG', 'Zagueiros'], ['MEI', 'Meias'], ['ATA', 'Atacantes'], ['TEC', 'Técnico'], ['CAP', 'Bônus do capitão']];
+  const partes = k => DATA.extras.escalacoes[k].map(l => {
+    const o = { GOL: 0, LAT: 0, ZAG: 0, MEI: 0, ATA: 0, TEC: 0, CAP: 0 };
+    l.atletas.forEach(a => { o[a.p] += a.pts; if (a.cap) o.CAP += a.pts * 0.5; });
+    return o;
+  });
+  const PC = partes('carlos'), PI = partes('igor');
+  const de = $('labDe'), ate = $('labAte'), desc = $('labDesc');
+  de.max = ate.max = N; de.value = 1; ate.value = N;
+  $('labChecks').innerHTML = PARTES.map(([k, n]) => `<label class="chk"><input type="checkbox" id="lab_${k}" value="${k}" checked>${n}</label>`).join('');
+  const presets = [['Tudo', 1, N], ['1º turno', 1, Math.min(19, N)], ['2º turno', Math.min(20, N), N], ['Últimas 5', Math.max(1, N - 4), N]];
+  $('labPresets').innerHTML = presets.map(([n, a, b], k) => `<button type="button" class="btn-sm" data-p="${k}">${n}</button>`).join('');
+  $('labPresets').addEventListener('click', e => { const b = e.target.closest('[data-p]'); if (!b) return; const p = presets[+b.dataset.p]; de.value = p[1]; ate.value = p[2]; calcular(); });
+  function calcular() {
+    let a = +de.value, b = +ate.value;
+    if (a > b) { if (document.activeElement === de) ate.value = b = a; else de.value = a = b; }
+    $('labDeV').textContent = a + 'ª'; $('labAteV').textContent = b + 'ª';
+    const n = b - a + 1, dsc = Math.min(+desc.value, n - 1);
+    $('labDescV').textContent = dsc === 0 ? 'nenhuma' : dsc === 1 ? '1 rodada' : dsc + ' rodadas';
+    const sel = PARTES.map(p => p[0]).filter(k => $('lab_' + k).checked);
+    if (!sel.length) { $('labRes').innerHTML = '<p class="lab-veredito">Marque pelo menos uma parte do time.</p>'; return; }
+    const rod = (P, k) => sel.reduce((s, x) => s + P[k][x], 0);
+    const rc = [], ri = [];
+    for (let k = a - 1; k < b; k++) { rc.push(rod(PC, k)); ri.push(rod(PI, k)); }
+    const vit = { c: rc.filter((v, k) => v > ri[k]).length, i: ri.filter((v, k) => v > rc[k]).length };
+    const descarta = arr => arr.slice().sort((x, y) => x - y).slice(dsc).reduce((s, v) => s + v, 0);
+    const tc = descarta(rc), ti = descarta(ri);
+    const realC = C.rodadas.slice(a - 1, b).reduce((s, r) => s + r.pontos, 0), realI = I.rodadas.slice(a - 1, b).reduce((s, r) => s + r.pontos, 0);
+    const ganha = ti > tc ? 'Igor' : tc > ti ? 'Carlos' : '';
+    const ganhaReal = realI > realC ? 'Igor' : realC > realI ? 'Carlos' : '';
+    $('labRes').innerHTML = `
+      <div class="lbl">${n === 1 ? `Rodada ${a}` : `Rodadas ${a} a ${b}`}${dsc ? `, sem as ${dsc} piores de cada um` : ''}</div>
+      <div class="lab-placar"><div><span class="lbl">Carlos</span><b class="c">${fmt(tc)}</b></div><span class="xx">×</span><div class="r"><span class="lbl">Igor</span><b class="i">${fmt(ti)}</b></div></div>
+      <p class="lab-veredito">${ganha ? `${ganha} venceria por ${fmt(Math.abs(tc - ti))}` : 'Daria empate'}</p>
+      ${ganha && ganhaReal && ganha !== ganhaReal ? '<span class="cen-flag" style="justify-self:start">O resultado vira</span>' : ''}
+      <p class="muted">Rodadas vencidas nesse recorte: Carlos ${vit.c} × ${vit.i} Igor.</p>
+      <p class="muted">Na vida real, nessas mesmas rodadas: Carlos ${fmt(realC)} × ${fmt(realI)} Igor.</p>`;
+  }
+  [de, ate, desc].forEach(x => x.addEventListener('input', calcular));
+  $('labChecks').addEventListener('change', calcular);
+  calcular();
+}
+
 // ---- Tabelas grandes viram blocos recolhiveis (fechados no celular, abertos no computador) ----
 {
   const celular = window.matchMedia('(max-width: 640px)').matches;
@@ -1098,6 +1246,57 @@ function drawAll() {
 }
 drawAll();
 let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(drawAll, 150); });
+
+// ---- Abas: cada aba mostra algumas secoes; o endereco guarda a aba aberta (#aba-...) ----
+const ABAS = [
+  { id: 'resumo', nome: 'Resumo', secoes: ['resumo', 'quesitos'] },
+  { id: 'campeonato', nome: 'Campeonato', secoes: ['campeonato', 'projecao'] },
+  { id: 'momentos', nome: 'Momentos', secoes: ['momentos'] },
+  { id: 'rodadas', nome: 'Rodada a rodada', secoes: ['rodada'] },
+  { id: 'escolhas', nome: 'Capitão e luxo', secoes: ['capitao', 'luxo'] },
+  { id: 'elenco', nome: 'Elenco', secoes: ['setores', 'gols', 'jogadores'] },
+  { id: 'mercado', nome: 'Mercado', secoes: ['custo', 'ideal'] },
+  { id: 'clubes', nome: 'Clubes', secoes: ['corinthians', 'palmeiras'] },
+  { id: 'ese', nome: 'E se...?', secoes: ['ese'] },
+];
+$('abas').innerHTML = ABAS.map(a => `<button type="button" class="aba" role="tab" id="tab-${a.id}" data-aba="${a.id}" aria-selected="false" tabindex="-1">${a.nome}</button>`).join('');
+const navAbas = document.querySelector('nav.jump');
+function topoDasAbas() { return navAbas.getBoundingClientRect().top + window.scrollY - (parseFloat(getComputedStyle(navAbas).top) || 0); }
+function abrirAba(id, { hash = true, rolar = true, foco = false } = {}) {
+  const aba = ABAS.find(a => a.id === id) || ABAS[0];
+  ABAS.forEach(a => a.secoes.forEach(s => { const el = $(s); if (el) el.hidden = a !== aba || el.dataset.fora === '1'; }));
+  document.querySelectorAll('.aba').forEach(b => {
+    const sel = b.dataset.aba === aba.id;
+    b.setAttribute('aria-selected', sel); b.tabIndex = sel ? 0 : -1;
+    if (sel) { const w = b.closest('.wrap'); w.scrollTo({ left: b.offsetLeft - (w.clientWidth - b.offsetWidth) / 2 }); if (foco) b.focus(); }
+  });
+  const i = ABAS.indexOf(aba), ant = ABAS[i - 1], prox = ABAS[i + 1];
+  $('pager').innerHTML = (ant ? `<button type="button" class="pg" data-aba="${ant.id}"><small>‹ ANTERIOR</small>${ant.nome}</button>` : '') +
+    (prox ? `<button type="button" class="pg prox" data-aba="${prox.id}"><small>PRÓXIMA ›</small>${prox.nome}</button>` : '');
+  drawAll(); // graficos de secoes escondidas precisam da largura real
+  if (hash) history.replaceState(null, '', '#aba-' + aba.id);
+  if (rolar && window.scrollY > topoDasAbas()) window.scrollTo({ top: topoDasAbas(), behavior: 'instant' });
+}
+$('abas').addEventListener('click', e => { const b = e.target.closest('.aba'); if (b) abrirAba(b.dataset.aba); });
+$('abas').addEventListener('keydown', e => {
+  if (!['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(e.key)) return;
+  const i = ABAS.findIndex(a => a.id === document.activeElement.dataset.aba);
+  const j = e.key === 'Home' ? 0 : e.key === 'End' ? ABAS.length - 1 : (i + (e.key === 'ArrowRight' ? 1 : -1) + ABAS.length) % ABAS.length;
+  e.preventDefault(); abrirAba(ABAS[j].id, { foco: true, rolar: false });
+});
+$('pager').addEventListener('click', e => { const b = e.target.closest('[data-aba]'); if (b) abrirAba(b.dataset.aba); });
+function rotear() {
+  const h = decodeURIComponent(location.hash.slice(1));
+  let m = /^rodada-(\d+)$/.exec(h);
+  if (m) { abrirAba('rodadas', { hash: false, rolar: false }); const alvo = $(h); if (alvo) alvo.scrollIntoView({ behavior: 'instant' }); return; }
+  m = /^aba-(.+)$/.exec(h);
+  if (m && ABAS.some(a => a.id === m[1])) { abrirAba(m[1], { hash: false, rolar: false }); return; }
+  const dona = h && ABAS.find(a => a.secoes.includes(h)); // links antigos, como #capitao
+  if (dona) { abrirAba(dona.id, { hash: false, rolar: false }); $(h).scrollIntoView({ behavior: 'instant' }); return; }
+  abrirAba('resumo', { hash: false, rolar: false });
+}
+window.addEventListener('hashchange', rotear);
+rotear();
 </script>
 </body>
 </html>
