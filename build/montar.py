@@ -52,10 +52,14 @@ def quesitos(o):
         ('Patrimônio final (cartoletas)', ult(C)['patrimonio'], ult(I)['patrimonio'], 2),
         ('Posição no ranking geral (menor é melhor)', ult(C)['ranking'], ult(I)['ranking'], -1),
     ]
+    # nomes curtos, usados nas frases do resumo
+    curtos = ['total de pontos', 'rodadas vencidas', '1º turno', '2º turno', 'meses vencidos', 'maior sequência de vitórias',
+              'maior rodada', 'capitães', 'reserva de luxo', 'goleiro', 'defesa', 'meio-campo', 'ataque', 'técnico',
+              'gols', 'assistências', 'pontos por cartoleta', 'time ideal', 'pontos do Corinthians', 'patrimônio', 'ranking geral']
     out = []
-    for lbl, a, b, d in lista:
+    for (lbl, a, b, d), curto in zip(lista, curtos):
         menor = d == -1
-        out.append({'lbl': lbl, 'a': a, 'b': b, 'd': d,
+        out.append({'lbl': lbl, 'curto': curto, 'a': a, 'b': b, 'd': d,
                     'win': ('c' if (a < b if menor else a > b) else 'i' if (b < a if menor else b > a) else '')})
     return out
 

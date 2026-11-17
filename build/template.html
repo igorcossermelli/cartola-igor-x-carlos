@@ -193,6 +193,36 @@ td.n, th.n { text-align: right; white-space: nowrap; }
 .timao h2 { letter-spacing: .02em; }
 .verdao { background: linear-gradient(170deg, #0e5a33 0%, #073d22 100%); --bandmute: #a9cdb8; --bandpanel: rgba(0,0,0,.22); --bandrule: rgba(255,255,255,.14); --bandaccent: #ffffff; }
 
+/* Resumo */
+.resumo { padding-block: 36px 0; }
+.resumo-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; font-size: clamp(17px, 2.3vw, 21px); line-height: 1.45; max-width: 72ch; }
+.resumo-lista li { position: relative; padding-left: 24px; }
+.resumo-lista li::before { content: ""; position: absolute; left: 0; top: .5em; width: 10px; height: 10px; border-radius: 2px; background: var(--red); }
+.resumo-lista b.c, .resumo-lista b.i { font-weight: 700; }
+
+/* Camisas dos clubes */
+.cam { width: 56px; height: 56px; object-fit: contain; display: block; filter: drop-shadow(0 2px 4px rgba(0,0,0,.2)); }
+.cam-vazia { display: grid; place-items: center; font: 800 13px var(--display); border: 1px solid var(--rule); border-radius: 8px; }
+.mini { width: 22px; height: 22px; object-fit: contain; vertical-align: -6px; margin-right: 5px; }
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 6px; }
+.duo > div { display: grid; grid-template-columns: auto 1fr; gap: 0 10px; align-items: center; min-width: 0; }
+.duo .cam { grid-row: span 2; }
+.duo .big { font-size: 34px; }
+.duo .big.lose { opacity: .45; }
+.duo .nm { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.duo .nm span { color: var(--mute); font-weight: 400; }
+.duo .nm span::before { content: " · "; }
+
+/* Tabelas recolhiveis */
+details.dobra > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+details.dobra > summary::-webkit-details-marker { display: none; }
+details.dobra > summary::after { content: ""; flex: none; width: 9px; height: 9px; margin-right: 6px; border-right: 2.5px solid var(--mute); border-bottom: 2.5px solid var(--mute); transform: rotate(45deg); transition: transform .2s; }
+details.dobra[open] > summary::after { transform: rotate(225deg); }
+details.dobra > summary h3 { margin: 0; }
+details.dobra[open] > summary { margin-bottom: 8px; }
+details.dobra > summary:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; border-radius: 4px; }
+.band details.dobra > summary::after { border-color: var(--bandmute); }
+
 /* Explorador de rodada */
 .rx-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .rx-nav { width: 42px; height: 42px; border-radius: 10px; border: 1px solid var(--rule); background: var(--surface); color: var(--ink); font: 700 26px/1 var(--display); cursor: pointer; }
@@ -254,6 +284,13 @@ footer a { color: var(--night-ink); }
   .q .lbl { grid-column: 1 / -1; grid-row: 1; }
   .q .v.win::after { content: "✓"; }
   .fly .row { grid-template-columns: 1fr 66px 1fr; }
+  .duo { gap: 8px; }
+  .duo > div { gap: 0 6px; }
+  .duo .cam { width: 40px; height: 40px; }
+  .duo .big { font-size: 26px; }
+  .duo .nm { font-size: 13px; line-height: 1.25; }
+  .duo .nm span { display: block; font-size: 12px; }
+  .duo .nm span::before { content: none; }
 }
 @media (prefers-reduced-motion: no-preference) {
   .plate { animation: drop .7s ease-out both; }
@@ -290,6 +327,13 @@ footer a { color: var(--night-ink); }
     <a href="#quesitos">Quesitos</a><a href="#campeonato">Campeonato</a><a href="#rodada">Rodada a rodada</a><a href="#capitao">Capitão</a><a href="#luxo">Reserva de luxo</a><a href="#setores">Setores</a><a href="#gols">Gols</a><a href="#custo">Custo</a><a href="#ideal">Time ideal</a><a href="#corinthians">Corinthians</a><a href="#palmeiras">Palmeiras</a><a href="#projecao">Projeção</a><a href="#jogadores">Jogadores</a>
   </div>
 </nav>
+
+<section id="resumo" class="resumo">
+  <div class="wrap">
+    <div class="eyebrow">Resumo</div>
+    <ul class="resumo-lista" id="resumoLista"></ul>
+  </div>
+</section>
 
 <section id="quesitos">
   <div class="wrap">
@@ -524,6 +568,39 @@ $('qList').innerHTML = DATA.quesitos.map(({ lbl, a, b, d, win }) => {
   return `<div class="q"><div class="v c ${win === 'c' ? 'win' : ''}">${f(a)}</div><div class="lbl">${esc(lbl)}</div><div class="v i r ${win === 'i' ? 'win' : ''}">${f(b)}</div></div>`;
 }).join('');
 $('qC').textContent = qC; $('qI').textContent = qI;
+
+// ---- Camisas dos clubes (a API nao tem foto dos jogadores; o campo foto e a camisa do clube) ----
+const CAMISAS = DATA.extras.camisas || {};
+const camisa = cl => CAMISAS[cl] ? `<img class="cam" src="${esc(CAMISAS[cl])}" alt="Camisa do ${esc(cl)}" width="56" height="56">` : `<span class="cam cam-vazia">${esc(cl)}</span>`;
+const mini = cl => CAMISAS[cl] ? `<img class="mini" src="${esc(CAMISAS[cl])}" alt="" width="22" height="22">` : '';
+
+// ---- Resumo ----
+{
+  const nome = k => `<b class="${k}">${k === 'c' ? 'Carlos' : 'Igor'}</b>`;
+  const outro = k => k === 'c' ? 'i' : 'c';
+  const linhas = [];
+  const lid = I.total >= C.total ? 'i' : 'c';
+  const vc = DATA.vitorias.carlos, vi = DATA.vitorias.igor;
+  const vrod = vc === vi ? `cada um venceu ${vc} rodadas` : `${nome(vi > vc ? 'i' : 'c')} venceu ${Math.max(vc, vi)} rodadas e ${nome(vi > vc ? 'c' : 'i')} venceu ${Math.min(vc, vi)}`;
+  linhas.push(`${nome(lid)} ${META.restantes ? 'lidera' : 'terminou na frente'} por ${fmt(Math.abs(I.total - C.total))} pontos depois de ${N} rodadas. No confronto rodada a rodada, ${vrod}.`);
+  if (N > 19) {
+    const t1 = C.turno1 > I.turno1 ? 'c' : 'i', t2 = C.turno2 > I.turno2 ? 'c' : 'i';
+    linhas.push(`O 1º turno ficou com ${nome(t1)}, por ${fmt(Math.abs(C.turno1 - I.turno1))} pontos. No 2º turno, ${nome(t2)} ${N < 38 ? 'está na frente' : 'venceu'} por ${fmt(Math.abs(C.turno2 - I.turno2))}${t1 !== t2 ? ', e foi aí que a briga virou' : ''}.`);
+  }
+  const Q = DATA.quesitos, ganhosC = Q.filter(q => q.win === 'c'), ganhosI = Q.filter(q => q.win === 'i');
+  const [menor, mk] = ganhosC.length <= ganhosI.length ? [ganhosC, 'c'] : [ganhosI, 'i'];
+  if (menor.length) {
+    const lista = menor.map(q => q.curto);
+    const texto = lista.length === 1 ? lista[0] : lista.slice(0, -1).join(', ') + ' e ' + lista[lista.length - 1];
+    linhas.push(`Dos ${Q.length} quesitos do placar, ${nome(outro(mk))} venceu ${Math.max(ganhosC.length, ganhosI.length)} e ${nome(mk)} venceu ${menor.length}: ${texto}.`);
+  }
+  if (META.restantes) {
+    const igorLidera = PJ.vantagem >= 0, atras = igorLidera ? 'c' : 'i';
+    const chance = igorLidera ? PJ.chance_carlos : PJ.chance_igor;
+    linhas.push(`${META.restantes === 1 ? 'Falta 1 rodada' : `Faltam ${META.restantes} rodadas`}. Nas simulações, ${nome(atras)} vira em ${fmt(chance, chance < 1 ? 2 : 1)}% das vezes.`);
+  }
+  $('resumoLista').innerHTML = linhas.map(l => `<li>${l}</li>`).join('');
+}
 $('boardSub').innerHTML = `<span>Pontos: <b class="num">${fmt(C.total)}</b> × <b class="num">${fmt(I.total)}</b></span><span>Rodadas vencidas: <b class="num">${DATA.vitorias.carlos}</b> × <b class="num">${DATA.vitorias.igor}</b></span><span>Vantagem do ${PJ.vantagem >= 0 ? 'Igor' : 'Carlos'}: <b class="num">${fmt(Math.abs(PJ.vantagem))}</b> pontos</span>`;
 
 // ---- Tooltip ----
@@ -711,6 +788,13 @@ function statVs(k, a, b, s, d = 1, lower = false) {
   return `<div class="panel stat"><div class="k">${k}</div><div class="vs"><div><div class="big c ${cw || a === b ? '' : 'lose'}">${show(a)}</div><div class="s">Carlos</div></div><div><div class="big i ${iw || a === b ? '' : 'lose'}">${show(b)}</div><div class="s">Igor</div></div></div>${s ? `<div class="s foot">${s}</div>` : ''}</div>`;
 }
 
+// Cartao com a camisa do clube de cada jogador; a e b sao {nome, clube, v}
+function statDuo(k, a, b, s, d = 1, lower = false, prefixo = '') {
+  const cw = lower ? a.v < b.v : a.v > b.v, iw = lower ? b.v < a.v : b.v > a.v;
+  const lado = (x, cls, win, dono) => `<div>${camisa(x.clube)}<div class="big ${cls} ${win || a.v === b.v ? '' : 'lose'}">${prefixo}${fmt(x.v, d)}</div><div class="nm" title="${esc(x.nome)}">${esc(x.nome)}<span>${dono}</span></div></div>`;
+  return `<div class="panel stat"><div class="k">${k}</div><div class="duo">${lado(a, 'c', cw, 'Carlos')}${lado(b, 'i', iw, 'Igor')}</div>${s ? `<div class="s foot">${s}</div>` : ''}</div>`;
+}
+
 function statOne(k, v, cls, s) {
   return `<div class="panel stat"><div class="k">${k}</div><div class="big ${cls}" style="margin-top:4px">${v}</div>${s ? `<div class="s foot">${s}</div>` : ''}</div>`;
 }
@@ -721,7 +805,7 @@ const bc = C.capitao.melhor, bi = I.capitao.melhor;
 $('capStats').innerHTML =
   statVs('Pontos dos capitães', C.capitao.total_bruto, I.capitao.total_bruto, `Bônus do 1,5x: +${fmt(C.capitao.bonus_total)} e +${fmt(I.capitao.bonus_total)}`) +
   statVs('Média do capitão', C.capitao.media, I.capitao.media, 'Pontos por rodada, antes do 1,5x', 2) +
-  statVs('Maior capitão', bc.total, bi.total, `${esc(bc.nome)} na ${bc.rodada}ª e ${esc(bi.nome)} na ${bi.rodada}ª, já com o 1,5x`) +
+  statDuo('Maior capitão', { nome: bc.nome, clube: bc.clube, v: bc.total }, { nome: bi.nome, clube: bi.clube, v: bi.total }, `Na ${bc.rodada}ª e na ${bi.rodada}ª rodada, já com o 1,5x`) +
   statVs('Capitão foi o melhor do time', C.capitao.acertos + '/' + N, I.capitao.acertos + '/' + N, 'Rodadas em que nenhum jogador de linha pontuou mais que o capitão') +
   statVs('Pontos deixados no banco', capLost(C), capLost(I), 'O que o 1,5x teria rendido a mais com o melhor jogador de linha como capitão. Menor é melhor.', 1, true) +
   statVs('Pior capitão', C.capitao.pior.pts, I.capitao.pior.pts, `${esc(C.capitao.pior.nome)} na ${C.capitao.pior.rodada}ª e ${esc(I.capitao.pior.nome)} na ${I.capitao.pior.rodada}ª`);
@@ -736,7 +820,7 @@ const lb = t => t.luxo.melhor;
 $('luxoStats').innerHTML =
   statVs('Ganho total', C.luxo.ganho_total, I.luxo.ganho_total, 'Pontos a mais em relação ao titular que saiu') +
   statVs('Vezes que entrou', C.luxo.acionado, I.luxo.acionado, `Superou um titular que jogou: ${realLuxo(C).length} e ${realLuxo(I).length}. Titular não jogou: ${ausLuxo(C).length} e ${ausLuxo(I).length}.`, 0) +
-  statVs('Melhor troca', lb(C).ganho, lb(I).ganho, `${esc(lb(C).nome)} no lugar de ${esc(lb(C).substituiu)} na ${lb(C).rodada}ª. ${esc(lb(I).nome)} no lugar de ${esc(lb(I).substituiu)} na ${lb(I).rodada}ª.`);
+  statDuo('Melhor troca', { nome: lb(C).nome, clube: lb(C).clube, v: lb(C).ganho }, { nome: lb(I).nome, clube: lb(I).clube, v: lb(I).ganho }, `${esc(lb(C).nome)} no lugar de ${esc(lb(C).substituiu)} na ${lb(C).rodada}ª. ${esc(lb(I).nome)} no lugar de ${esc(lb(I).substituiu)} na ${lb(I).rodada}ª.`, 1, false, '+');
 const luxoTable = t => '<thead><tr><th class="n">Rod.</th><th>Entrou</th><th>Saiu</th><th class="n">Ganho</th></tr></thead><tbody>' +
   t.luxo.usos.map(u => `<tr><td class="n muted">${u.rodada}ª</td><td><span class="pos">${esc(u.pos)}</span>${esc(u.nome)} <span class="muted">${fmt(u.pts)}</span></td><td>${u.substituiu == null ? '<span class="muted">sem dados</span>' : `${esc(u.substituiu)} <span class="muted">${fmt(u.substituido_pts)}${u.substituido_jogou ? '' : ', titular não jogou'}</span>`}</td><td class="n ${u.ganho != null ? 'gain' : 'muted'}">${u.ganho == null ? 'sem dados' : '+' + fmt(u.ganho)}</td></tr>`).join('') + '</tbody>';
 $('luxoC').innerHTML = luxoTable(C); $('luxoI').innerHTML = luxoTable(I);
@@ -749,15 +833,17 @@ $('fly').innerHTML = SETORES.map(([k, n, s]) => {
 }).join('') + `<p class="muted" style="font-size:13px;text-align:center;max-width:none">Escalações no campeonato: ${SETORES.map(([k, n]) => `${n.toLowerCase()} ${C.setores[k].n} e ${I.setores[k].n}`).join(' · ')}</p>`;
 $('bestSector').innerHTML = '<thead><tr><th>Setor</th><th>Carlos</th><th>Igor</th></tr></thead><tbody>' +
   SETORES.map(([k, n]) => { const a = C.melhor_por_setor[k], b = I.melhor_por_setor[k];
-    return `<tr><td>${n}</td><td>${esc(a.nome)} <span class="muted">${fmt(a.pts)} pts em ${a.jogos} jogos</span></td><td>${esc(b.nome)} <span class="muted">${fmt(b.pts)} pts em ${b.jogos} jogos</span></td></tr>`; }).join('') + '</tbody>';
+    return `<tr><td>${n}</td><td>${mini(a.clube)}${esc(a.nome)} <span class="muted">${fmt(a.pts)} pts em ${a.jogos} jogos</span></td><td>${mini(b.clube)}${esc(b.nome)} <span class="muted">${fmt(b.pts)} pts em ${b.jogos} jogos</span></td></tr>`; }).join('') + '</tbody>';
 
 // ---- Gols e scouts ----
 {
   const a = XC.scouts, b = XI.scouts;
   $('golsText').textContent = `Os escalados do Igor fizeram ${b.gols} gols, contra ${a.gols} dos escalados do Carlos. Nas assistências o Carlos leva, ${a.assist} a ${b.assist}, e a defesa dele ficou mais vezes sem sofrer gol. Só entram os jogadores que estavam no time na rodada, sem bônus de capitão.`;
   $('golStats').innerHTML =
-    statVs('Gols', a.gols, b.gols, `Artilheiros: ${esc(a.artilheiros[0].nome)} (${a.artilheiros[0].n}) e ${esc(b.artilheiros[0].nome)} (${b.artilheiros[0].n})`, 0) +
-    statVs('Assistências', a.assist, b.assist, `Garçons: ${esc(a.garcons[0].nome)} (${a.garcons[0].n}) e ${esc(b.garcons[0].nome)} (${b.garcons[0].n})`, 0) +
+    statVs('Gols', a.gols, b.gols, 'Gols marcados pelos jogadores escalados', 0) +
+    statVs('Assistências', a.assist, b.assist, 'Passes para gol dos jogadores escalados', 0) +
+    statDuo('Artilheiro', { nome: a.artilheiros[0].nome, clube: a.artilheiros[0].clube, v: a.artilheiros[0].n }, { nome: b.artilheiros[0].nome, clube: b.artilheiros[0].clube, v: b.artilheiros[0].n }, 'Gols marcados nas rodadas em que estava escalado', 0) +
+    statDuo('Garçom', { nome: a.garcons[0].nome, clube: a.garcons[0].clube, v: a.garcons[0].n }, { nome: b.garcons[0].nome, clube: b.garcons[0].clube, v: b.garcons[0].n }, 'Assistências nas rodadas em que estava escalado', 0) +
     statVs('Jogos sem sofrer gol', a.sg, b.sg, 'Soma de goleiros, defensores e técnicos com saldo de gol', 0) +
     statVs('Defesas do goleiro', a.defesas, b.defesas, `Desarmes de todo o time: ${int(a.desarmes)} e ${int(b.desarmes)}`, 0) +
     statVs('Cartões', a.amarelos + a.vermelhos, b.amarelos + b.vermelhos, `Amarelos ${a.amarelos} e ${b.amarelos}. Vermelhos ${a.vermelhos} e ${b.vermelhos}. Menos é melhor.`, 0, true) +
@@ -773,9 +859,11 @@ $('bestSector').innerHTML = '<thead><tr><th>Setor</th><th>Carlos</th><th>Igor</t
   $('custoStats').innerHTML =
     statVs('Pontos por cartoleta', ptsPorC(C, XC), ptsPorC(I, XI), `Total de pontos dividido pelo total gasto nas ${N} escalações`, 3) +
     statVs('Custo médio do time', a.medio, b.medio, 'Cartoletas por rodada, somando os 12 escalados. Menor é melhor.', 1, true) +
-    statVs('Total gasto', a.total, b.total, `Em cartoletas, nas ${N} rodadas`, 0, true);
+    statVs('Total gasto', a.total, b.total, `Em cartoletas, nas ${N} rodadas`, 0, true) +
+    statDuo('Melhor compra', { nome: a.melhores[0].nome, clube: a.melhores[0].clube, v: a.melhores[0].pts_por_c }, { nome: b.melhores[0].nome, clube: b.melhores[0].clube, v: b.melhores[0].pts_por_c }, 'Pontos por cartoleta, com 3 jogos ou mais', 2) +
+    (a.decepcoes.length && b.decepcoes.length ? statDuo('Maior decepção', { nome: a.decepcoes[0].nome, clube: a.decepcoes[0].clube, v: a.decepcoes[0].pts_por_c }, { nome: b.decepcoes[0].nome, clube: b.decepcoes[0].clube, v: b.decepcoes[0].pts_por_c }, `Pontos por cartoleta. Preço médio de ${esc(fmt(a.decepcoes[0].preco_medio, 2))} e ${esc(fmt(b.decepcoes[0].preco_medio, 2))}. Menor é pior.`, 2, true) : '');
   const buy = list => '<thead><tr><th>Jogador</th><th class="n">Jogos</th><th class="n">Preço médio</th><th class="n">Pontos</th><th class="n">Pts/C$</th></tr></thead><tbody>' +
-    list.map(j => `<tr><td><span class="pos">${esc(j.pos)}</span>${esc(j.nome)} <span class="muted">${esc(j.clube)}</span></td><td class="n">${j.jogos}</td><td class="n">${fmt(j.preco_medio, 2)}</td><td class="n">${fmt(j.pts)}</td><td class="n">${fmt(j.pts_por_c, 2)}</td></tr>`).join('') + '</tbody>';
+    list.map(j => `<tr><td><span class="pos">${esc(j.pos)}</span>${mini(j.clube)}${esc(j.nome)} <span class="muted">${esc(j.clube)}</span></td><td class="n">${j.jogos}</td><td class="n">${fmt(j.preco_medio, 2)}</td><td class="n">${fmt(j.pts)}</td><td class="n">${fmt(j.pts_por_c, 2)}</td></tr>`).join('') + '</tbody>';
   $('buyC').innerHTML = buy(a.melhores); $('buyI').innerHTML = buy(b.melhores);
   $('flopC').innerHTML = buy(a.decepcoes); $('flopI').innerHTML = buy(b.decepcoes);
 }
@@ -815,7 +903,7 @@ $('corStats').innerHTML =
   statVs('Média por corintiano', KC.media, KI.media, 'Pontos por escalação, sem o bônus do capitão', 2) +
   statVs('Capitão corintiano', KC.capitao_vezes, KI.capitao_vezes, `Pontos desses capitães: ${fmt(KC.capitao_pts)} e ${fmt(KI.capitao_pts)}`, 0) +
   statVs('Reserva de luxo corintiano', KC.luxo_ganho, KI.luxo_ganho, `Ganho em ${KC.luxo_usos} e ${KI.luxo_usos} trocas`) +
-  statVs('Melhor atuação', KC.melhor_jogo.pts, KI.melhor_jogo.pts, `${esc(KC.melhor_jogo.nome)} na ${KC.melhor_jogo.rodada}ª e ${esc(KI.melhor_jogo.nome)} na ${KI.melhor_jogo.rodada}ª`);
+  statDuo('Melhor atuação', { nome: KC.melhor_jogo.nome, clube: 'COR', v: KC.melhor_jogo.pts }, { nome: KI.melhor_jogo.nome, clube: 'COR', v: KI.melhor_jogo.pts }, `Na ${KC.melhor_jogo.rodada}ª e na ${KI.melhor_jogo.rodada}ª rodada`);
 const clubTable = list => '<thead><tr><th>Jogador</th><th class="n">Jogos</th><th class="n">Pontos</th><th class="n">Média</th></tr></thead><tbody>' +
   list.slice(0, 8).map(j => `<tr><td><span class="pos">${esc(j.pos)}</span>${esc(j.nome)}</td><td class="n">${j.jogos}</td><td class="n">${fmt(j.pts)}</td><td class="n">${fmt(j.media, 2)}</td></tr>`).join('') + '</tbody>';
 $('corC').innerHTML = clubTable(KC.jogadores); $('corI').innerHTML = clubTable(KI.jogadores);
@@ -864,7 +952,7 @@ if (!META.restantes) {
 // ---- Jogadores ----
 function playersTable(list, mode) {
   const head = mode === 'esc' ? '<th class="n">Jogos</th><th class="n">Pontos</th><th class="n">Média</th>' : '<th class="n">Pontos</th><th class="n">Rodada</th>';
-  return `<thead><tr><th>Jogador</th>${head}</tr></thead><tbody>` + list.slice(0, 6).map(j => `<tr><td><span class="pos">${esc(j.pos)}</span>${esc(j.nome)} <span class="muted">${esc(j.clube)}</span></td>${mode === 'esc' ? `<td class="n">${j.jogos}</td><td class="n">${fmt(j.pts)}</td><td class="n">${fmt(j.media, 2)}</td>` : `<td class="n">${fmt(j.max)}</td><td class="n">${j.max_rodada}ª</td>`}</tr>`).join('') + '</tbody>';
+  return `<thead><tr><th>Jogador</th>${head}</tr></thead><tbody>` + list.slice(0, 6).map(j => `<tr><td><span class="pos">${esc(j.pos)}</span>${mini(j.clube)}${esc(j.nome)} <span class="muted">${esc(j.clube)}</span></td>${mode === 'esc' ? `<td class="n">${j.jogos}</td><td class="n">${fmt(j.pts)}</td><td class="n">${fmt(j.media, 2)}</td>` : `<td class="n">${fmt(j.max)}</td><td class="n">${j.max_rodada}ª</td>`}</tr>`).join('') + '</tbody>';
 }
 $('escC').innerHTML = playersTable(C.mais_escalados, 'esc'); $('escI').innerHTML = playersTable(I.mais_escalados, 'esc');
 $('actC').innerHTML = playersTable(C.melhores_jogos, 'act'); $('actI').innerHTML = playersTable(I.melhores_jogos, 'act');
@@ -878,6 +966,27 @@ function pairTable(a, b, key, label, top) {
 }
 $('esqTable').innerHTML = pairTable(C.esquemas, I.esquemas, 'nome', 'Esquema (rodadas)');
 $('clubTable').innerHTML = pairTable(C.clubes, I.clubes, 'clube', 'Clube (escalações)', 10);
+
+// ---- Tabelas grandes viram blocos recolhiveis (fechados no celular, abertos no computador) ----
+{
+  const celular = window.matchMedia('(max-width: 640px)').matches;
+  ['monthTable', 'capTopC', 'capTopI', 'luxoC', 'luxoI', 'golC', 'golI', 'buyC', 'buyI', 'flopC', 'flopI',
+   'corC', 'corI', 'palC', 'palI', 'escC', 'escI', 'actC', 'actI', 'esqTable', 'clubTable'].forEach(id => {
+    const tabela = $(id), painel = tabela && tabela.closest('.panel');
+    const titulo = painel && painel.querySelector('h3');
+    if (!titulo || painel.querySelector('details')) return;
+    const linhas = tabela.querySelectorAll('tbody tr').length;
+    const det = document.createElement('details');
+    det.className = 'dobra';
+    det.open = !celular;
+    const sum = document.createElement('summary');
+    sum.appendChild(titulo);
+    if (celular && linhas) sum.insertAdjacentHTML('beforeend', `<span class="muted" style="font-size:13px;margin-left:auto">${linhas} ${linhas === 1 ? 'linha' : 'linhas'}</span>`);
+    det.appendChild(sum);
+    while (painel.firstChild) det.appendChild(painel.firstChild);
+    painel.appendChild(det);
+  });
+}
 
 // ---- Desenho responsivo ----
 function drawAll() {

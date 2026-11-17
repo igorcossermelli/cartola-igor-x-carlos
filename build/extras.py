@@ -67,7 +67,14 @@ for r in RODADAS:
     melhor['destaque_id'] = int([k for k, v in p['atletas'].items() if v is maior][0])
     ideal[r] = melhor
 
-extras = {'ideal': [dict(rodada=r, **ideal[r]) for r in RODADAS], 'times': {}, 'escalacoes': {}}
+extras = {'ideal': [dict(rodada=r, **ideal[r]) for r in RODADAS], 'times': {}, 'escalacoes': {}, 'camisas': {}}
+
+# A API nao tem foto dos jogadores em 2026: o campo "foto" e a camisa do clube. Guardamos uma por clube.
+for r in RODADAS:
+    for a in load('pontuados/%d.json' % r)['atletas'].values():
+        sigla = clube(a['clube_id'])
+        if sigla and a.get('foto') and sigla not in extras['camisas']:
+            extras['camisas'][sigla] = a['foto'].replace('FORMATO', '140x140')
 
 
 def escalado(a, d):
@@ -78,7 +85,7 @@ def escalado(a, d):
 
 for key, tid in TIMES:
     t = out['times'][key]
-    gols, assist = defaultdict(lambda: [None, 0]), defaultdict(lambda: [None, 0])
+    gols, assist = defaultdict(lambda: [None, 0, '']), defaultdict(lambda: [None, 0, ''])
     sc_tot = defaultdict(int)
     custo_rod, pts_rod = [], []
     jog = {}
@@ -103,9 +110,11 @@ for key, tid in TIMES:
             if s.get('G'):
                 gols[a['atleta_id']][0] = a['apelido']
                 gols[a['atleta_id']][1] += s['G']
+                gols[a['atleta_id']][2] = clube(a['clube_id'])
             if s.get('A'):
                 assist[a['atleta_id']][0] = a['apelido']
                 assist[a['atleta_id']][1] += s['A']
+                assist[a['atleta_id']][2] = clube(a['clube_id'])
             # preco_num e o preco depois da rodada; o preco pago e preco - variacao
             pago = a['preco_num'] - (a.get('variacao_num') or 0)
             custo += pago
@@ -133,7 +142,7 @@ for key, tid in TIMES:
             teve_destaque += 1
 
     def top(dct, n=3):
-        return [{'nome': v[0], 'n': v[1]} for v in sorted(dct.values(), key=lambda v: -v[1])[:n]]
+        return [{'nome': v[0], 'n': v[1], 'clube': v[2]} for v in sorted(dct.values(), key=lambda v: -v[1])[:n]]
 
     jl = []
     for j in jog.values():
