@@ -63,6 +63,8 @@
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
+/* "hidden" sempre esconde, mesmo em elementos que tem display proprio (como as setas da barra de abas) */
+[hidden] { display: none !important; }
 html { scroll-behavior: smooth; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.55 var(--body); padding-bottom: env(safe-area-inset-bottom, 0px); }
 .wrap { max-width: 1080px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
@@ -120,16 +122,26 @@ a { color: inherit; }
 nav.jump { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); border-bottom: 1px solid var(--rule); }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 11; background: var(--surface); }
 nav.jump { box-shadow: 0 2px 10px rgba(14, 22, 38, .06); }
-nav.jump .wrap { overflow-x: auto; scrollbar-width: none; }
+/* Barra de abas: no computador as abas quebram de linha em vez de esconder; em telas menores a barra
+   rola para o lado e ganha setas nas pontas quando ha abas escondidas daquele lado. */
+nav.jump .wrap { max-width: 1280px; overflow-x: auto; scrollbar-width: none; scroll-behavior: smooth; padding-left: 0; padding-right: 0; }
 nav.jump .wrap::-webkit-scrollbar { display: none; }
-.abas { display: flex; gap: 2px; }
-.aba { flex: none; appearance: none; border: 0; background: none; cursor: pointer; color: var(--mute); font: 700 16px/1 var(--display); letter-spacing: .06em; text-transform: uppercase; padding: 16px 14px 13px; border-bottom: 4px solid transparent; white-space: nowrap; }
+/* o respiro lateral fica dentro da fileira: assim a ultima aba aparece inteira quando a barra rola ate o fim */
+.abas { display: flex; gap: 2px; width: max-content; min-width: 100%; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.aba { flex: none; appearance: none; border: 0; background: none; cursor: pointer; color: var(--mute); font: 700 15px/1 var(--display); letter-spacing: .05em; text-transform: uppercase; padding: 15px 12px 12px; border-bottom: 4px solid transparent; white-space: nowrap; }
 .aba:hover { color: var(--ink); }
 .aba[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--red); }
 .aba:focus-visible { outline: 2px solid var(--red); outline-offset: -6px; border-radius: 6px; }
+@media (min-width: 900px) {
+  nav.jump .wrap { overflow: visible; }
+  .abas { flex-wrap: wrap; justify-content: center; width: auto; }
+}
+.seta-abas { position: absolute; top: 0; bottom: 0; z-index: 2; width: 44px; border: 0; padding: 0; cursor: pointer; display: grid; place-items: center; color: var(--ink); font: 800 26px/1 var(--display); }
+.seta-abas.esq { left: 0; padding-right: 10px; background: linear-gradient(90deg, var(--surface) 60%, transparent); }
+.seta-abas.dir { right: 0; padding-left: 10px; background: linear-gradient(270deg, var(--surface) 60%, transparent); }
+.seta-abas:hover, .seta-abas:focus-visible { color: var(--red); outline: none; }
 @media (max-width: 640px) {
-  nav.jump .wrap { -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); }
-  .aba { font-size: 15px; padding: 14px 11px 11px; }
+  .aba { padding: 14px 11px 11px; }
 }
 .pager { display: flex; justify-content: space-between; gap: 12px; padding-block: 40px 8px; }
 .pg { appearance: none; cursor: pointer; display: grid; gap: 2px; text-align: left; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--rule); background: var(--surface); color: var(--ink); font: 800 20px/1.1 var(--display); text-transform: uppercase; letter-spacing: .03em; max-width: 48%; }
@@ -1529,9 +1541,9 @@ const ABAS = [
   { id: 'retro', nome: 'Retrospectiva', secoes: ['retro', 'medalhas'] },
   { id: 'campeonato', nome: 'Campeonato', secoes: ['campeonato', 'projecao'] },
   { id: 'momentos', nome: 'Momentos', secoes: ['momentos'] },
-  { id: 'rodadas', nome: 'Rodada a rodada', secoes: ['rodada'] },
+  { id: 'rodadas', nome: 'Rodadas', secoes: ['rodada'] },
   { id: 'duelo', nome: 'Duelo', secoes: ['divergentes', 'exclusivos', 'calor'] },
-  { id: 'escolhas', nome: 'Capitão e luxo', secoes: ['capitao', 'luxo'] },
+  { id: 'escolhas', nome: 'Capitão', secoes: ['capitao', 'luxo'] },
   { id: 'elenco', nome: 'Elenco', secoes: ['setores', 'gols', 'jogadores'] },
   { id: 'mercado', nome: 'Mercado', secoes: ['custo', 'ideal'] },
   { id: 'clubes', nome: 'Clubes', secoes: ['corinthians', 'palmeiras'] },
@@ -1539,6 +1551,21 @@ const ABAS = [
 ];
 $('abas').innerHTML = ABAS.map(a => `<button type="button" class="aba" role="tab" id="tab-${a.id}" data-aba="${a.id}" aria-selected="false" tabindex="-1">${a.nome}</button>`).join('');
 const navAbas = document.querySelector('nav.jump');
+// Setas da barra: aparecem so quando ha abas escondidas daquele lado
+const trilho = navAbas.querySelector('.wrap');
+navAbas.insertAdjacentHTML('beforeend', '<button type="button" class="seta-abas esq" aria-label="Ver as abas anteriores" hidden>‹</button><button type="button" class="seta-abas dir" aria-label="Ver mais abas" hidden>›</button>');
+const [setaEsq, setaDir] = navAbas.querySelectorAll('.seta-abas');
+function atualizarSetas() {
+  const resto = trilho.scrollWidth - trilho.clientWidth;
+  setaEsq.hidden = resto <= 2 || trilho.scrollLeft <= 2;
+  setaDir.hidden = resto <= 2 || trilho.scrollLeft >= resto - 2;
+}
+// alem do evento de rolagem, atualiza depois de cada clique (a rolagem suave termina em ~300 ms)
+const depoisDeRolar = () => { atualizarSetas(); setTimeout(atualizarSetas, 400); };
+setaEsq.addEventListener('click', () => { trilho.scrollBy({ left: -trilho.clientWidth * 0.7 }); depoisDeRolar(); });
+setaDir.addEventListener('click', () => { trilho.scrollBy({ left: trilho.clientWidth * 0.7 }); depoisDeRolar(); });
+trilho.addEventListener('scroll', atualizarSetas, { passive: true });
+window.addEventListener('resize', atualizarSetas);
 function topoDasAbas() { return navAbas.getBoundingClientRect().top + window.scrollY - (parseFloat(getComputedStyle(navAbas).top) || 0); }
 function abrirAba(id, { hash = true, rolar = true, foco = false } = {}) {
   const aba = ABAS.find(a => a.id === id) || ABAS[0];
@@ -1552,6 +1579,7 @@ function abrirAba(id, { hash = true, rolar = true, foco = false } = {}) {
   $('pager').innerHTML = (ant ? `<button type="button" class="pg" data-aba="${ant.id}"><small>‹ ANTERIOR</small>${ant.nome}</button>` : '') +
     (prox ? `<button type="button" class="pg prox" data-aba="${prox.id}"><small>PRÓXIMA ›</small>${prox.nome}</button>` : '');
   drawAll(); // graficos de secoes escondidas precisam da largura real
+  depoisDeRolar();
   if (hash) history.replaceState(null, '', '#aba-' + aba.id);
   if (rolar && window.scrollY > topoDasAbas()) window.scrollTo({ top: topoDasAbas(), behavior: 'instant' });
 }
