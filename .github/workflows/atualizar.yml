@@ -38,7 +38,12 @@ jobs:
       - name: Publicar se mudou
         run: |
           # build/arquivo guarda cada temporada; temporadas/ tem as paginas das temporadas antigas
-          ARQS="index.html og.png wrapped build/ultimo_hash.txt build/ultima.txt build/arquivo temporadas"
+          # So entram os caminhos que existem: o git add falha (codigo 128) com um caminho
+          # inexistente, e temporadas/ so aparece quando ha mais de uma temporada guardada.
+          ARQS=""
+          for p in index.html og.png wrapped build/ultimo_hash.txt build/ultima.txt build/arquivo temporadas; do
+            if [ -e "$p" ] || [ -n "$(git ls-files -- "$p")" ]; then ARQS="$ARQS $p"; fi
+          done
           if [ -n "$(git status --porcelain -- $ARQS)" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
